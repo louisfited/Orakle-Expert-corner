@@ -34,6 +34,8 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
   // } else {
   // }
   medicalCases = await getAllMedicalCases()
+  // console.log(medicalCases);
+  
 
   
   

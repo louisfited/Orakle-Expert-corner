@@ -52,6 +52,10 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
   faculty
   title
   caseDescription {html}
+  patient {
+  profileImage { url }
+  }
+  
   }
 
   medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC) {

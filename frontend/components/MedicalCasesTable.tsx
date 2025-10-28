@@ -217,6 +217,8 @@ setIsMounted(true)
           {filteredMedicalCases?.map((medicalCase) => {
             const isVisibleToUser = !medicalCase.countries?.length || medicalCase.countries.includes(countryCode)
 
+            
+            
             if (!isVisibleToUser) return null
 
             return (
