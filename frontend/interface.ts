@@ -153,6 +153,7 @@ export interface WebinarVideo {
     supporter: string;
     faculty: string;
     title: string;
+    finishUrl:string;
     caseDescription: {
       html: string;
     } | null;

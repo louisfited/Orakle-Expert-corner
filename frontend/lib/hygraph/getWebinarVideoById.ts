@@ -166,6 +166,7 @@ async function getWebinarVideoById(id: string, { email, password }: any): Promis
                     faculty
                     title
                     caseDescription {html}
+                    finishUrl
     }
                 }`,
     }),

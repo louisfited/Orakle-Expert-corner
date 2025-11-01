@@ -8,11 +8,13 @@ import { Button } from "./ui/button";
 interface VideoPlayerProps {
   url: string;
   className?: string;
+  finishUrl?:string;
   aspectRatio?: string; 
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
   url,
+  finishUrl,
   className = "",
   aspectRatio = "16/9",
 }) => {
@@ -32,7 +34,12 @@ setIsMounted(true)
      {isMounted && <ReactPlayer
      onEnded={()=>{
       // console.log("finished");
-      router.push("https://tally.so/r/mROxAQ")
+      if (!finishUrl) {
+        return
+      }
+
+      // router.push("")
+      router.push(finishUrl)
      }}
         url={url}
         width="100%"

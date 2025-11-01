@@ -111,6 +111,9 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
   const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
 
+  // console.log([...video,...v2,...v1,]);
+  console.log(res?.data?.medicalCasesV2);
+  
   
   return [...video,...v2,...v1,]
 }

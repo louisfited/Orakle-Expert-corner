@@ -59,11 +59,14 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
    
 <VideoPlayer
   url= {webinarVideo.videoUrl}
+  finishUrl = {webinarVideo.finishUrl}
   className = "shadow-2xl shadow-black"
   aspectRatio = "16/9"
 
 />
-<VideoPlayerBtn/>
+<VideoPlayerBtn 
+finishUrl={webinarVideo.finishUrl}
+/>
 
   </div>
 }
