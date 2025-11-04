@@ -20,7 +20,7 @@ async function Page({searchParams, params}: {  searchParams: Promise<{password: 
 const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
 
   const medicalCase = await getMedicalCaseById(id, {email, password})
-  // console.log(medicalCase);
+ 
   
   if (!medicalCase) {
     return <div>{languageTexts(lang).medicalCaseNotFound}</div>
