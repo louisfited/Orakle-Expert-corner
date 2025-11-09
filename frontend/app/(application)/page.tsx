@@ -67,7 +67,7 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
         <Link
           href="https://www.orakle.digital/clinics"
           target="_blank"
-          className="flex flex-wrap justify-center mb-8"
+          className="flex flex-wrap justify-center mb-8 "
         ></Link>
       </footer>
 
