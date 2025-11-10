@@ -15,6 +15,8 @@ import { cookies } from 'next/headers'
 
 const staging_invite_only = 'Staging - Invite Only'
 
+// const play = "play"
+
 export default async function Home() {
   const { data: bookmarks } = await getBookmarks()
 
