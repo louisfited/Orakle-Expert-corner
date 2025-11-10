@@ -37,7 +37,7 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
   // console.log(medicalCases);
   
 
-  
+  // 
   
   // Ensure caseDescription is always defined
   medicalCases = medicalCases?.map((mc: any) => ({
