@@ -48,6 +48,8 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
   description
   videoUrl
   contentType
+  countries
+  categories
   supporter
   faculty
   title
