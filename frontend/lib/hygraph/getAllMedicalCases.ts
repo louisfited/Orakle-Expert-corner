@@ -48,6 +48,7 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
   description
   videoUrl
   contentType
+  createdAt
   countries
   categories
   supporter
@@ -68,6 +69,7 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
   contentType
   countries
   categories
+  createdAt
   likes
   caseDescription { html }
   preCaseInformation { html }
@@ -93,6 +95,7 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
   title
   supporter
   faculty
+  createdAt
   caseDescription { html }
   patient {
     id
@@ -114,10 +117,13 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
   const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
 
   // console.log([...video,...v2,...v1,]);
-  console.log(res?.data?.medicalCasesV2);
+  // console.log(res?.data?.medicalCasesV2);
+  const data = [...video,...v2,...v1,]
+  const sorted = data.sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
   
-  
-  return [...video,...v2,...v1,]
+  return sorted
 }
 
 // medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC) {

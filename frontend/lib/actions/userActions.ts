@@ -17,6 +17,7 @@ import { RequestEvidenceEmailTemplate } from '@/components/email-templates/reque
 import { resend } from '@/lib/resend'
 import { getAllValidatedSuffixes } from '../hygraph/getAllValidatedSuffixes'
 import { getSafeUser } from '@/lib/auth/safe-user'
+import { cookies } from 'next/headers'
 
 export async function loginAction(formData: FormData, originalUrl: string | null) {
   const supabase = createSupabaseServerClient()
@@ -67,6 +68,13 @@ export async function loginAction(formData: FormData, originalUrl: string | null
   }
 
   revalidatePath('/', 'layout')
+
+  const prevAddress:string | null = cookies().get("redirect")?.value as string | null
+// console.log(originalUrl, "original url");
+
+  if (prevAddress ) {
+    redirect(prevAddress)
+  }
 
   if (originalUrl) {
     redirect(originalUrl)
