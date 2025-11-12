@@ -53,6 +53,7 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
   categories
   supporter
   faculty
+  preCaseInformation { html }
   title
   caseDescription {html}
   patient {
@@ -94,6 +95,7 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
   id
   title
   supporter
+  contentType
   faculty
   createdAt
   caseDescription { html }
@@ -111,6 +113,9 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
   const res = await response.json()
   
   // console.log(res.data,"data");
+
+  console.log(res?.data?.webinarVideos);
+  
   
   const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: '20m', ...v }))
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))

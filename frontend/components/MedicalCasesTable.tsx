@@ -140,26 +140,31 @@ setIsMounted(true)
 
     if (!selectedCase) return
 
-    if (isVideo) {
-      
-      
-      router.push(`/webinar-video/${id}`)
-      return
-      
-    }
+
 
     if (isV2) {
       router.push(`/cases-v2/${id}`)
     } else if (selectedCase.preCaseInformation && !checkEmptyRichText(selectedCase.preCaseInformation.html)) {
       setSelectedMedicalCase(selectedCase)
       onConfirmationToggle()
-    } else {
+    }
+    else if (isVideo) {
+      router.push(`/webinar-video/${id}`)
+    }
+    else {
       router.push(`/cases/${id}`)
     }
   }
 
   const handlePreCaseDialogButton = () => {
     onConfirmationToggle()
+   const isVideo = selectedMedicalCase?.version == "20m"
+
+   if (isVideo) {
+    router.push(`/webinar-video/${selectedMedicalCase.id}`)
+    return
+    
+  }
     router.push(`/cases/${selectedMedicalCase?.id}`)
   }
 
