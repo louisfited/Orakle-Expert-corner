@@ -21,6 +21,8 @@ export const LoginForm = () => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       setOriginalUrl(params.get('redirect'));
+      console.log(params.get('redirect'))
+      
     }
   }, []);
 

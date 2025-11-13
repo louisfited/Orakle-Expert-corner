@@ -15,6 +15,8 @@ import { cookies } from 'next/headers'
 
 const staging_invite_only = 'Staging - Invite Only'
 
+
+
 export default async function Home() {
   const { data: bookmarks } = await getBookmarks()
 
@@ -37,7 +39,7 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
   // console.log(medicalCases);
   
 
-  
+  // 
   
   // Ensure caseDescription is always defined
   medicalCases = medicalCases?.map((mc: any) => ({
@@ -67,7 +69,7 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
         <Link
           href="https://www.orakle.digital/clinics"
           target="_blank"
-          className="flex flex-wrap justify-center mb-8"
+          className="flex flex-wrap justify-center mb-8 "
         ></Link>
       </footer>
 
