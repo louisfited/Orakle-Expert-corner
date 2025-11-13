@@ -113,7 +113,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
       ),
     },
     {
-      title: 'CIDP Treatment',
+      title: 'Management',
       content: (
         <div className="space-y-4">
           {cidpTreatment?.length ? <AddCidpTreatment cidpTreatmentData={cidpTreatment} /> : null}

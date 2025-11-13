@@ -36,7 +36,7 @@ const [isMounted,setIsMounted] = useState<boolean>(false)
 
 <Select 
 onValueChange={(value)=>{
-    // console.log(value)
+    
     document.cookie = `language=${value};`
     window.location.reload()
     

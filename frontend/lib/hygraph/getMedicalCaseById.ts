@@ -1,5 +1,6 @@
 import { MedicalCase } from '@/interface'
 import { HYGRAPH_URL } from '@/lib/hygraph/hygraph'
+import { cookies } from 'next/headers'
 
 // TODO: Keeping these incase we have to split it up
 const BASIC_QUERY = `
@@ -142,6 +143,7 @@ const ADDITIONAL_QUERY = `
 }`
 
 async function getMedicalCaseById(id: string, { email, password }: any): Promise<MedicalCase | null> {
+  const languageValue:string | undefined = cookies().get("language")?.value
   let type = ''
   if (email && password) {
     type = ', stage: DRAFT'
@@ -156,7 +158,7 @@ async function getMedicalCaseById(id: string, { email, password }: any): Promise
     cache: 'no-store',
     body: JSON.stringify({
       query: `{
-                    medicalCase(where: {id: "${id}"}${type}) {
+                    medicalCase(locales:[${languageValue ? languageValue : "en"}],where: {id: "${id}"}${type}) {
                         id
                         title
                         finishUrl

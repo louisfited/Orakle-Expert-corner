@@ -9,7 +9,7 @@ export const languageTexts = (lang:"en" | "fr" |"de" = "en")=>{
 
 // const lang = Cookies.get("language")
 
-console.log("cookies from language ", lang);
+
 
 
 if (lang == "fr") {

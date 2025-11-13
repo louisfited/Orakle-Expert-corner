@@ -87,7 +87,6 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
   profileImage { url }
   }
 
-
 }
 
 
