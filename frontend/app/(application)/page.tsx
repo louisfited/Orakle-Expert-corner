@@ -52,7 +52,7 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
     <div className="h-full flex flex-col">
      
       <LanguageDropDown/>
-      <Container className="flex-grow ">
+      <Container className="flex-grow">
         <div className="flex items-center justify-between my-4">
          {userProfile?.first_name && <h2 className="text-xl font-medium">{languageTexts(lang).welcomeBack}, {userProfile?.first_name}</h2>}
         </div>
