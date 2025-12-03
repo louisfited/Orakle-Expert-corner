@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import React, { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 import { Check, ChevronDown, Cog, Download, LogOut, User } from 'lucide-react'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 import Link from 'next/link'
@@ -106,6 +107,15 @@ export const UserDropdown = () => {
 
   async function handleSignOut() {
     try {
+      try {
+        Cookies.remove('language')
+      } catch (e) {
+        e
+        try {
+          document.cookie = 'language=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;'
+        } catch (err) {}
+      }
+
       const { error } = await supabase.auth.signOut()
       if (error) {
         console.error('Sign out error', error)

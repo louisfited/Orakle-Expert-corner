@@ -1,0 +1,94 @@
+{
+  "parentFields": [
+    "medicalCases",
+    "pastTests",
+    "medicationSelections",
+    "pastVisits",
+    "orders",
+    "nonMedicationOrders",
+    "medicalCaseInformations",
+    "medications",
+    "cidpTreatments",
+    "webinarVideos"
+  ],
+  "references": [
+    {
+      "fieldName": "patient",
+      "parent": ["medicalCases", "medicalCaseV2", "webinarVideos"],
+      "modelName": "patients"
+    },
+    {
+      "fieldName": "medicationSelection",
+      "parent": ["medicalCases"],
+      "modelName": "medicationSelections"
+    },
+    {
+      "fieldName": "pastTests",
+      "parent": ["medicalCases"],
+      "modelName": "pastTests"
+    },
+    {
+      "fieldName": "pastVisits",
+      "parent": ["medicalCases"],
+      "modelName": "pastVisits"
+    },
+    {
+      "fieldName": "tests",
+      "parent": ["medicalCases"],
+      "modelName": "tests"
+    },
+    {
+      "fieldName": "diagnose",
+      "parent": ["medicalCases", "medicalCaseV2"],
+      "modelName": "diagnoses"
+    },
+    {
+      "fieldName": "order",
+      "parent": ["medicalCases", "medications"],
+      "modelName": "orders"
+    },
+    {
+      "fieldName": "nonMedicationOrder",
+      "parent": ["medicalCases"],
+      "modelName": "nonMedicationOrders"
+    },
+    {
+      "fieldName": "actionText",
+      "parent": [
+        "pastTests",
+        "medicationSelections",
+        "pastVistis",
+        "orders",
+        "nonMedicationOrders",
+        "medications",
+        "cidpTreatments"
+      ],
+      "modelName": "actionTexts"
+    },
+    {
+      "fieldName": "actionFinding",
+      "parent": ["pastTests"],
+      "modelName": "actionFindings"
+    },
+    {
+      "fieldName": "actionResult",
+      "parent": ["pastTests"],
+      "modelName": "actionResults"
+    },
+    {
+      "fieldName": "audioUrl",
+      "parent": ["medicalCaseInformations"],
+      "modelName": "audioUrls"
+    },
+    {
+      "fieldName": "medicalCaseInformation",
+      "parent": ["medicalCaseV2"],
+      "modelName": "medicalCaseInformations"
+    },
+    {
+      "fieldName": "treatment",
+      "parent": ["medicalCaseV2"],
+      "modelName": "cidpTreatments"
+    }
+  ]
+}
