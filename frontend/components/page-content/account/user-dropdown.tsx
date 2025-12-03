@@ -110,10 +110,7 @@ export const UserDropdown = () => {
       try {
         Cookies.remove('language')
       } catch (e) {
-        e
-        try {
-          document.cookie = 'language=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;'
-        } catch (err) {}
+        document.cookie = 'language=; path=/;'
       }
 
       const { error } = await supabase.auth.signOut()
