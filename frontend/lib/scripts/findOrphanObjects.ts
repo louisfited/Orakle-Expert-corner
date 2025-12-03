@@ -21,12 +21,10 @@ const HYGRAPH_TOKEN = (() => {
   return token
 })()
 
-// Load parentFields and references from external JSON file
 const referenceModelsPath = path.resolve(__dirname, 'reference_models.json')
 let parentFields: string[] = []
 let references: Reference[] = []
 try {
-  // Use require to load JSON at runtime
   const refData = require(referenceModelsPath) as { parentFields: string[]; references: Reference[] }
   parentFields = refData.parentFields
   references = refData.references
