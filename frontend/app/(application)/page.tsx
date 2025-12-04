@@ -47,9 +47,14 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
     caseDescription: mc.caseDescription ?? { html: '' },
   }))
  
+  console.log('=== DEBUG ===')
+  console.log('medicalCases count:', medicalCases?.length)
+  console.log('userProfile:', userProfile)
+  console.log('bookmarks:', bookmarks?.length)
+  console.log('likes:', likes?.length)
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex flex-col min-h-full">
      
       <LanguageDropDown/>
       <Container className="flex-grow">

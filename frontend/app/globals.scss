@@ -7,8 +7,8 @@ html {
 }
 
 body {
-  @apply font-light flex flex-col shrink-0;
-  @apply text-textGray
+  @apply font-light min-h-screen;
+  @apply text-textGray;
 }
 
 h1 {

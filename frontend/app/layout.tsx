@@ -43,7 +43,7 @@ export default function RootLayout({
           />
         </head>
         <body className={ubuntu.className}>
-          <div className="relative">{children}</div>
+          {children}
           <Toaster />
         </body>
       </html>

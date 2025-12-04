@@ -26,11 +26,11 @@ const Navbar: FC<Props> = () => {
     router.push('/')
   }
   return (
-    <nav className={cn('w-full z-50 lg:max-w-4xl xl:max-w-7xl mx-auto')}>
-      <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-4 lg:py-0 lg:h-24 gap-4">
-        <div className="flex flex-col sm:flex-row items-center justify-between w-full lg:w-auto mb-4 lg:mb-0">
+    <nav className={cn('w-full z-50 lg:max-w-4xl xl:max-w-7xl mx-auto shrink-0')}>
+      <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-2 lg:py-0 lg:h-24 gap-2 lg:gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between w-full lg:w-auto gap-2 sm:gap-4">
           <div
-            className="cursor-pointer mb-4 sm:mb-0"
+            className="cursor-pointer"
             onClick={() => handleNavigation(isFormDirty)}
           >
             <Image
@@ -47,7 +47,7 @@ const Navbar: FC<Props> = () => {
         </div>
 
         {medicalCase?.showBannerTopBarImage && (
-          <div className="w-full lg:w-auto mb-4 lg:mb-0">
+          <div className="w-full lg:w-auto">
             <Image
               src={medicalCase?.bannerTopBarImage?.url}
               alt="SEI-healthcare-logo"

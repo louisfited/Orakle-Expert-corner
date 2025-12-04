@@ -9,7 +9,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children, className = '', noBorder = false }) => {
   return (
-    <div className={twMerge(`${noBorder ? '' : 'border border-gray-300'} rounded-md p-4`, className)}>{children}</div>
+    <div className={twMerge(`${noBorder ? '' : 'border border-gray-300'} p-4 bg-stone-50 rounded-2xl`, className)}>{children}</div>
   )
 }
 

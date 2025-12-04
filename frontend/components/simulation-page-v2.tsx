@@ -63,15 +63,15 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
         />
       ),
     },
-    // {
-    //   title: 'Follow-up',
-    //   content: (
-    //     <RenderHTML
-    //       className="no-margin"
-    //       htmlString={shortenString(medicalCaseV2.medicalCaseInformation.followUp.html, 500)}
-    //     />
-    //   ),
-    // },
+    {
+      title: 'Follow-up',
+      content: (
+        <RenderHTML
+          className="no-margin"
+          htmlString={shortenString(medicalCaseV2?.medicalCaseInformation?.followUp?.html, 500)}
+        />
+      ),
+    },
     {
       title: 'Diagnostic Tests',
       content: (
@@ -133,9 +133,33 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
   }
 
   return (
-    <div className="relative md:h-[calc(100vh-96px)] md:flex md:flex-col">
-      <div className="md:flex md:flex-1 md:overflow-hidden md:pb-0 md:px-12 px-1 pb-48">
-        <div className="order-1 md:order-2 w-full md:w-1/3 flex flex-col items-center justify-start p-4 md:p-0 md:h-full md:min-h-0 overflow-hidden">
+    <div className="h-[calc(100vh-55px)] lg:h-[calc(100vh-96px)] flex flex-col overflow-hidden">
+      <div className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden px-4 md:px-12 pt-6 gap-4 md:gap-6">
+        
+        <div className="w-full md:w-1/3 flex flex-col md:h-full md:min-h-0 order-2 md:order-1">
+          <div className="py-6 px-4 flex-shrink-0">
+            <TopProfileMedicalCaseV2
+              patientCase={patientCase}
+              medicalCaseV2={medicalCaseV2}
+            />
+          </div>
+          <div className="md:flex-1 md:overflow-y-auto space-y-6 px-4 pb-6">
+            {cardStepsLeft.map((step, i) => (
+              <Card
+                key={i}
+                noBorder
+                className={`p-6 space-y-4 transition-opacity duration-300 ${
+                  currentCardIndex === i ? 'opacity-100' : 'opacity-30 pointer-events-none select-none'
+                }`}
+              >
+                <h2 className="text-lg font-semibold">{step.title}</h2>
+                {step.content}
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        <div className="w-full md:w-1/3 flex flex-col items-center justify-start md:overflow-hidden order-1 md:order-2">
           <p className="text-2xl font-semibold text-center mb-8">Delayed CIDP Diagnosis</p>
           <div className="hidden md:block w-full max-w-sm aspect-[3/4] relative rounded-xl overflow-hidden">
             <Image
@@ -158,31 +182,8 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
           </div>
         </div>
 
-        <div className="order-2 md:order-1 w-full md:w-1/3 bg-stone-50 rounded-2xl flex flex-col md:h-full md:min-h-0">
-          <div className="py-6 px-4">
-            <TopProfileMedicalCaseV2
-              patientCase={patientCase}
-              medicalCaseV2={medicalCaseV2}
-            />
-          </div>
-          <div className="flex-1 overflow-y-auto space-y-6 px-4 pb-6">
-            {cardStepsLeft.map((step, i) => (
-              <Card
-                key={i}
-                noBorder
-                className={`p-6 space-y-4 transition-opacity duration-300 ${
-                  currentCardIndex === i ? 'opacity-100' : 'opacity-30 pointer-events-none select-none'
-                }`}
-              >
-                <h2 className="text-lg font-semibold">{step.title}</h2>
-                {step.content}
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        <div className="order-3 md:order-3 w-full md:w-1/3 bg-stone-50 rounded-2xl flex flex-col md:h-full md:min-h-0">
-          <div className="flex-1 overflow-y-auto space-y-6 px-4 pt-6 pb-4">
+        <div className="w-full md:w-1/3 flex flex-col md:h-full md:min-h-0 order-3">
+          <div className="md:flex-1 md:overflow-y-auto space-y-6 px-4 pt-6 pb-4">
             {cardStepsRight.map((step, i) => {
               const idx = cardStepsLeft.length + i
               return (
@@ -199,7 +200,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
               )
             })}
           </div>
-          <div className="px-6 py-4 border-t border-gray-200">
+          <div className="px-6 py-4 border-t border-gray-200 flex-shrink-0">
             <Button
               className="w-full"
               onClick={handleFinish}
@@ -210,7 +211,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 w-full mt-4 bg-white px-4 py-4 md:py-6 mx-auto md:relative md:bottom-auto md:left-auto">
+      <div className="bg-white px-4 py-4 md:py-6 flex-shrink-0 border-t border-gray-200">
         <AudioStories
           sources={getAudioFiles()}
           onTrackChange={setCurrentCardIndex}

@@ -31,7 +31,7 @@ type MergedMedicalCase = {
 export const getAllMedicalCases = async (): Promise<MergedMedicalCase[]> => {
   const languageValue:string | undefined = cookies().get("language")?.value
 
- 
+  console.log('Language value:', languageValue)
   
   const response = await fetch(HYGRAPH_URL, {
     method: 'POST',
@@ -111,7 +111,12 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
 
   const res = await response.json()
   
-  // console.log(res.data,"data");
+  console.log('=== HYGRAPH RESPONSE ===')
+  console.log('Full response:', JSON.stringify(res, null, 2))
+  console.log('Errors:', res.errors)
+  console.log('webinarVideos:', res?.data?.webinarVideos?.length)
+  console.log('medicalCases:', res?.data?.medicalCases?.length)
+  console.log('medicalCasesV2:', res?.data?.medicalCasesV2?.length)
 
   console.log(res?.data?.webinarVideos);
   
