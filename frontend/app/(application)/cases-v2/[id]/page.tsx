@@ -40,15 +40,13 @@ async function Page({
   const { data: likes } = await getLikesByMedicalCaseId(id)
 
   return (
-    <div className="h-[calc(100vh-55px)] lg:h-[calc(100vh-96px)] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/gradient.png)' }}>
-      <SimulationPageWrapperV2
-        medicalCaseV2={medicalCase}
-        patientCase={patientCase}
-        medicalCaseV2Id={id}
-        bookmark={bookmark as any}
-        likes={likes as any}
-      />
-    </div>
+    <SimulationPageWrapperV2
+      medicalCaseV2={medicalCase}
+      patientCase={patientCase}
+      medicalCaseV2Id={id}
+      bookmark={bookmark as any}
+      likes={likes as any}
+    />
   )
 }
 

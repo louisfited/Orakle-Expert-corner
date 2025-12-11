@@ -25,7 +25,8 @@ interface Props {
 
 export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medicalCaseV2Id, bookmark, likes }) => {
   const router = useRouter()
-  const { setMedicalCaseV2, setPatientCase, setBookmark, setMedicalCaseV2Id, setLikes } = useCaseContext()
+  const { setMedicalCaseV2, setPatientCase, setBookmark, setMedicalCaseV2Id, setLikes, setNavbarTitle } =
+    useCaseContext()
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
 
   useEffect(() => {
@@ -34,6 +35,11 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
     setMedicalCaseV2Id(medicalCaseV2Id)
     setBookmark(bookmark)
     setLikes(likes)
+    setNavbarTitle('Delayed CIDP Diagnosis')
+
+    return () => {
+      setNavbarTitle('')
+    }
   }, [
     patientCase,
     medicalCaseV2,
@@ -45,6 +51,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
     setMedicalCaseV2Id,
     setBookmark,
     setLikes,
+    setNavbarTitle,
   ])
 
   if (!medicalCaseV2 || !patientCase) return <div>Medical case not found</div>
@@ -100,7 +107,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
     {
       title: 'Diagnosis',
       content: (
-        <div className="space-y-4">
+        <div className="space-y-4 text-textDark">
           {newDiagnoses.length ? (
             <DiagnoseList
               setDisabledNext={() => {}}
@@ -135,7 +142,6 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
   return (
     <div className="h-[calc(100vh-55px)] lg:h-[calc(100vh-96px)] flex flex-col overflow-hidden">
       <div className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden px-4 md:px-12 pt-6 gap-4 md:gap-6">
-        
         <div className="w-full md:w-1/3 flex flex-col md:h-full md:min-h-0 order-2 md:order-1">
           <div className="py-6 px-4 flex-shrink-0">
             <TopProfileMedicalCaseV2
@@ -148,11 +154,12 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
               <Card
                 key={i}
                 noBorder
-                className={`p-6 space-y-4 transition-opacity duration-300 ${
+                className={`p-6 space-y-4 transition-opacity duration-300  ${
                   currentCardIndex === i ? 'opacity-100' : 'opacity-30 pointer-events-none select-none'
                 }`}
               >
-                <h2 className="text-lg font-semibold">{step.title}</h2>
+                <h2 className="text-lg font-semibold text-textPrimary">{step.title}</h2>
+                <hr />
                 {step.content}
               </Card>
             ))}
@@ -160,8 +167,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
         </div>
 
         <div className="w-full md:w-1/3 flex flex-col items-center justify-start md:overflow-hidden order-1 md:order-2">
-          <p className="text-2xl font-semibold text-center mb-8">Delayed CIDP Diagnosis</p>
-          <div className="hidden md:block w-full max-w-sm aspect-[3/4] relative rounded-xl overflow-hidden">
+          <div className="hidden md:block w-full lg:h-full max-w-sm aspect-[3/4] relative rounded-xl overflow-hidden">
             <Image
               src={medicalCaseV2.silhouette?.url ?? '/silhouette.png'}
               alt="silhouette"
@@ -169,15 +175,17 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
               className="object-contain"
             />
           </div>
-          <div className="flex items-center text-gray-800 mt-6">
+          <div className="flex items-center text-gray-800 m-6">
             <div className="flex-1 text-center">
               <div className="uppercase text-xs text-gray-500">GENDER</div>
-              <div className="mt-1 font-semibold text-lg">{medicalCaseV2.patient.gender}</div>
+              <div className="mt-1 font-semibold text-lg text-textPrimary">{medicalCaseV2.patient.gender}</div>
             </div>
             <div className="h-8 border-l border-gray-300 mx-6" />
             <div className="flex-1 text-center">
               <div className="uppercase text-xs text-gray-500">Age</div>
-              <div className="mt-1 font-semibold text-lg whitespace-nowrap">{medicalCaseV2.patient.age} years</div>
+              <div className="mt-1 font-semibold text-lg whitespace-nowrap text-textPrimary">
+                {medicalCaseV2.patient.age} years
+              </div>
             </div>
           </div>
         </div>
@@ -194,7 +202,8 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
                     currentCardIndex === idx ? 'opacity-100' : 'opacity-30 pointer-events-none'
                   }`}
                 >
-                  <h2 className="text-lg font-semibold">{step.title}</h2>
+                  <h2 className="text-lg font-semibold text-textPrimary">{step.title}</h2>
+                  <hr />
                   {step.content}
                 </Card>
               )
@@ -211,7 +220,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
         </div>
       </div>
 
-      <div className="bg-white px-4 py-4 md:py-6 flex-shrink-0 border-t border-gray-200">
+      <div className="bg-white px-2 mb-6 mx-7 py-3 flex-shrink-0 border border-gray-200 rounded-full">
         <AudioStories
           sources={getAudioFiles()}
           onTrackChange={setCurrentCardIndex}

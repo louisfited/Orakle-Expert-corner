@@ -44,6 +44,7 @@ export const UserDropdown = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
   const [user, setUser] = useState<any>(null)
   const [email, setEmail] = useState<string>('')
+  const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
   const pathname = usePathname()
   const { isFormDirty } = useCaseContext()
@@ -70,19 +71,61 @@ export const UserDropdown = () => {
         // Handle user data
         if (userResult.error) {
           console.error('Error fetching user:', userResult.error)
+          router.push('/login')
+          return
         } else if (userResult.data?.user) {
           setUser(userResult.data.user)
           setEmail(userResult.data.user.email || '')
+        } else {
+          // No user found, redirect to login
+          router.push('/login')
+          return
         }
 
         // Handle profile data
         if (profileResult.error) {
           console.error('Error fetching user profile:', profileResult.error)
-        } else {
+          // Set empty profile if error, but don't block the dropdown
+          setUserProfile({
+            country_of_practice: '',
+            created_at: '',
+            first_name: 'User',
+            id: userResult.data.user.id,
+            is_admin: false,
+            is_application: false,
+            last_name: '',
+            license_number: '',
+            occupation: '',
+            phone_number: '',
+            primary_specialization: '',
+            qualifications: '',
+            secondary_specialization: '',
+          })
+        } else if (profileResult.data) {
           setUserProfile(profileResult.data)
+        } else {
+          // Set default profile if none exists
+          setUserProfile({
+            country_of_practice: '',
+            created_at: '',
+            first_name: 'User',
+            id: userResult.data.user.id,
+            is_admin: false,
+            is_application: false,
+            last_name: '',
+            license_number: '',
+            occupation: '',
+            phone_number: '',
+            primary_specialization: '',
+            qualifications: '',
+            secondary_specialization: '',
+          })
         }
       } catch (err) {
         console.error('Error in fetchUserData:', err)
+        router.push('/login')
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -99,11 +142,12 @@ export const UserDropdown = () => {
         setUser(null)
         setEmail('')
         setUserProfile(null)
+        router.push('/login')
       }
     })
 
     return () => subscription.unsubscribe()
-  }, [supabase.auth])
+  }, [supabase.auth, router])
 
   async function handleSignOut() {
     try {
@@ -159,6 +203,16 @@ export const UserDropdown = () => {
     } else if (fileType === 'csv') {
       XLSX.writeFile(workbook, 'SimulationsSummary.csv', { bookType: 'csv' })
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex gap-2 items-center w-fit px-2 py-1 lg:px-4 lg:py-3 rounded-lg">
+        <div className="flex flex-col items-end gap-1 lg:gap-2">
+          <p className="font-medium text-sm md:text-base">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
   if (!userProfile) {
@@ -238,16 +292,16 @@ export const UserDropdown = () => {
 
 const MenuTrigger = ({ userProfile, email }: UserFields) => {
   return (
-    <div className="flex gap-2 bg-[#1026C40A] items-center w-fit px-2 py-1 lg:px-4 lg:py-3 rounded-lg">
-      <div className="flex flex-col items-end gap-1 lg:gap-2">
-        <p className="font-medium text-sm md:text-base">
+    <div className="flex gap-4  items-center w-fit px-2 py-1 lg:px-4 lg:py-3 rounded-lg">
+      <div className="flex flex-col items-end gap-1">
+        <p className="font-medium text-sm md:text-base text-textPrimary">
           {userProfile?.first_name} {userProfile?.last_name}
         </p>
-        <p className="text-xs md:text-base">{email}</p>
+        <p className="text-xs md:text-base text-textPrimary">{email}</p>
       </div>
       <ChevronDown
         size={20}
-        className="text-gray-500"
+        className="text-textPrimary"
       />
     </div>
   )

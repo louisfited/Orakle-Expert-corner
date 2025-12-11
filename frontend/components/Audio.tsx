@@ -94,8 +94,35 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
 
   return (
     <div className="w-full space-y-4">
-      <div className="flex md:flex-row gap-12 flex-col mb-10">
-        <div className="flex space-x-1 h-2 w-full items-center">
+      <div className="flex md:flex-row gap-12 flex-col">
+        <div className="flex space-x-4 justify-center">
+          {/*
+          <button
+            onClick={prev}
+            aria-label="Previous"
+            className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
+          >
+            <FaBackward />
+          </button>
+           */}
+          <button
+            onClick={toggle}
+            aria-label={playing ? 'Pause' : 'Play'}
+            className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
+          >
+            {playing ? <FaPause /> : <FaPlay />}
+          </button>
+          {/*
+          <button
+            onClick={next}
+            aria-label="Next"
+            className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
+          >
+            <FaForward />
+          </button>
+              */}
+        </div>
+        <div className="flex h-2 w-full items-center my-auto">
           <span className="text-textPrimary mr-2 font-semibold">{fmt(elapsed)}</span>
           {durations.map((dur, idx) => {
             const cBefore = durations.slice(0, idx).reduce((a, b) => a + b, 0)
@@ -105,7 +132,7 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
             return (
               <div
                 key={idx}
-                className="flex-1 bg-gray-200 rounded h-2"
+                className="flex-1 bg-gray-200 rounded h-2 mr-2"
               >
                 <div
                   className="bg-textPrimary h-2"
@@ -115,7 +142,7 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
             )
           })}
 
-          <span className="text-textPrimary ml-2 font-semibold">{fmt(total)}</span>
+          <span className="text-textPrimary ml-auto font-semibold">{fmt(total)}</span>
         </div>
 
         <div className="flex items-center space-x-2 px-2 mt-[-3px]">
@@ -131,30 +158,6 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
             style={{ accentColor: '#1026C4' }}
           />
         </div>
-      </div>
-
-      <div className="flex space-x-4 justify-center">
-        <button
-          onClick={prev}
-          aria-label="Previous"
-          className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
-        >
-          <FaBackward />
-        </button>
-        <button
-          onClick={toggle}
-          aria-label={playing ? 'Pause' : 'Play'}
-          className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
-        >
-          {playing ? <FaPause /> : <FaPlay />}
-        </button>
-        <button
-          onClick={next}
-          aria-label="Next"
-          className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
-        >
-          <FaForward />
-        </button>
       </div>
 
       <audio ref={audioRef} />

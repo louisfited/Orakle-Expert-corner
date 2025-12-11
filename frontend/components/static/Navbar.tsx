@@ -11,7 +11,7 @@ interface Props {}
 const Navbar: FC<Props> = () => {
   const router = useRouter()
   const pathname = usePathname()
-  const { isFormDirty, medicalCase } = useCaseContext()
+  const { isFormDirty, medicalCase, navbarTitle } = useCaseContext()
   const handleNavigation = (isFormDirty: boolean) => {
     const isCases = pathname?.split('/').filter(Boolean).slice(-2, -1)[0] === 'cases'
     if (isCases && isFormDirty) {
@@ -46,7 +46,7 @@ const Navbar: FC<Props> = () => {
           </div>
         </div>
 
-        {medicalCase?.showBannerTopBarImage && (
+        {medicalCase?.showBannerTopBarImage ? (
           <div className="w-full lg:w-auto">
             <Image
               src={medicalCase?.bannerTopBarImage?.url}
@@ -56,6 +56,12 @@ const Navbar: FC<Props> = () => {
               className="mx-auto"
             />
           </div>
+        ) : navbarTitle ? (
+          <div className="hidden lg:flex flex-1 justify-center">
+            <h1 className="text-xl font-semibold text-textPrimary">{navbarTitle}</h1>
+          </div>
+        ) : (
+          <div className="hidden lg:flex flex-1" />
         )}
 
         <div className="hidden lg:flex">
