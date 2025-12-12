@@ -5,7 +5,7 @@ type MergedMedicalCase = {
   version: '15m' | '5m'
   id: string
   title: string
-  contentType:string
+  contentType: string
   supporter: string
   faculty: string
   countries?: string[]
@@ -29,10 +29,9 @@ type MergedMedicalCase = {
 }
 
 export const getAllMedicalCases = async (): Promise<MergedMedicalCase[]> => {
-  const languageValue:string | undefined = cookies().get("language")?.value
+  const languageValue: string | undefined = cookies().get("language")?.value
 
-  console.log('Language value:', languageValue)
-  
+
   const response = await fetch(HYGRAPH_URL, {
     method: 'POST',
     headers: {
@@ -110,28 +109,20 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
   })
 
   const res = await response.json()
-  
-  console.log('=== HYGRAPH RESPONSE ===')
-  console.log('Full response:', JSON.stringify(res, null, 2))
-  console.log('Errors:', res.errors)
-  console.log('webinarVideos:', res?.data?.webinarVideos?.length)
-  console.log('medicalCases:', res?.data?.medicalCases?.length)
-  console.log('medicalCasesV2:', res?.data?.medicalCasesV2?.length)
 
   console.log(res?.data?.webinarVideos);
-  
-  
+
   const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: '20m', ...v }))
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
   const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
 
   // console.log([...video,...v2,...v1,]);
   // console.log(res?.data?.medicalCasesV2);
-  const data = [...video,...v2,...v1,]
+  const data = [...video, ...v2, ...v1,]
   const sorted = data.sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
-  
+
   return sorted
 }
 
@@ -222,7 +213,7 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
 // }
 
 export const getAllMedicalCasesForStaging = async (): Promise<MergedMedicalCase[]> => {
-  const languageValue:string | undefined = cookies().get("language")?.value
+  const languageValue: string | undefined = cookies().get("language")?.value
 
 
   const response = await fetch(HYGRAPH_URL, {

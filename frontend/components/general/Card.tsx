@@ -11,7 +11,7 @@ const Card: React.FC<CardProps> = ({ children, className = '', noBorder = false 
   return (
     <div
       className={twMerge(
-        `${noBorder ? '' : 'border border-gray-300'} p-4 bg-stone-50 rounded-2xl text-textDark`,
+        `card ${noBorder ? '' : 'border border-gray-300'} p-4 bg-stone-50 rounded-2xl text-textDark`,
         className
       )}
     >

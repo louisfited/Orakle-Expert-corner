@@ -96,7 +96,6 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
     <div className="w-full space-y-4">
       <div className="flex md:flex-row gap-12 flex-col">
         <div className="flex space-x-4 justify-center">
-          {/*
           <button
             onClick={prev}
             aria-label="Previous"
@@ -104,7 +103,7 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
           >
             <FaBackward />
           </button>
-           */}
+
           <button
             onClick={toggle}
             aria-label={playing ? 'Pause' : 'Play'}
@@ -112,7 +111,7 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
           >
             {playing ? <FaPause /> : <FaPlay />}
           </button>
-          {/*
+
           <button
             onClick={next}
             aria-label="Next"
@@ -120,7 +119,6 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
           >
             <FaForward />
           </button>
-              */}
         </div>
         <div className="flex h-2 w-full items-center my-auto">
           <span className="text-textPrimary mr-2 font-semibold">{fmt(elapsed)}</span>

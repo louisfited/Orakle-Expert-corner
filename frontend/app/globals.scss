@@ -61,6 +61,15 @@ strong {
       @apply text-md;
     }
   }
+}
+
+// Inside Cards, richtext should have 14px font size
+.card .richtext {
+  font-size: 14px;
+  
+  p {
+    font-size: 14px;
+  }
 
   h1 {
     @apply mb-4 scroll-mt-[20px];
