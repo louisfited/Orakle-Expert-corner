@@ -35,7 +35,7 @@ interface UserProfile {
 }
 
 interface UserFields {
-  userProfile: UserProfile
+  user: any
   email: string
 }
 
@@ -48,7 +48,6 @@ export const UserDropdown = () => {
   const router = useRouter()
   const pathname = usePathname()
   const { isFormDirty } = useCaseContext()
-
   const handleNavigation = (targetPath: string, isFormDirty: boolean) => {
     const isCases = pathname?.split('/').filter(Boolean).slice(-2, -1)[0] === 'cases'
     if (isCases && isFormDirty) {
@@ -65,67 +64,27 @@ export const UserDropdown = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Fetch both user and profile data
         const [userResult, profileResult] = await Promise.all([supabase.auth.getUser(), getUserProfile()])
 
-        // Handle user data
-        if (userResult.error) {
-          console.error('Error fetching user:', userResult.error)
-          router.push('/login')
-          return
-        } else if (userResult.data?.user) {
-          setUser(userResult.data.user)
-          setEmail(userResult.data.user.email || '')
-        } else {
-          // No user found, redirect to login
+        if (userResult.error || !userResult.data?.user) {
+          setIsLoading(false)
           router.push('/login')
           return
         }
 
-        // Handle profile data
-        if (profileResult.error) {
-          console.error('Error fetching user profile:', profileResult.error)
-          // Set empty profile if error, but don't block the dropdown
-          setUserProfile({
-            country_of_practice: '',
-            created_at: '',
-            first_name: 'User',
-            id: userResult.data.user.id,
-            is_admin: false,
-            is_application: false,
-            last_name: '',
-            license_number: '',
-            occupation: '',
-            phone_number: '',
-            primary_specialization: '',
-            qualifications: '',
-            secondary_specialization: '',
-          })
-        } else if (profileResult.data) {
-          setUserProfile(profileResult.data)
-        } else {
-          // Set default profile if none exists
-          setUserProfile({
-            country_of_practice: '',
-            created_at: '',
-            first_name: 'User',
-            id: userResult.data.user.id,
-            is_admin: false,
-            is_application: false,
-            last_name: '',
-            license_number: '',
-            occupation: '',
-            phone_number: '',
-            primary_specialization: '',
-            qualifications: '',
-            secondary_specialization: '',
-          })
+        setUser(userResult.data.user)
+        setEmail(userResult.data.user.email || '')
+        setIsLoading(false)
+
+        if (profileResult.error || !profileResult.data) {
+          return
         }
+
+        setUserProfile(profileResult.data)
       } catch (err) {
         console.error('Error in fetchUserData:', err)
-        router.push('/login')
-      } finally {
         setIsLoading(false)
+        router.push('/login')
       }
     }
 
@@ -205,17 +164,8 @@ export const UserDropdown = () => {
     }
   }
 
-  if (isLoading) {
-    return (
-      <div className="flex gap-2 items-center w-fit px-2 py-1 lg:px-4 lg:py-3 rounded-lg">
-        <div className="flex flex-col items-end gap-1 lg:gap-2">
-          <p className="font-medium text-sm md:text-base">Loading...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!userProfile) {
+  // If no user, don't render
+  if (!user) {
     return null
   }
 
@@ -223,7 +173,7 @@ export const UserDropdown = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <MenuTrigger
-          userProfile={userProfile}
+          user={user}
           email={email}
         />
       </DropdownMenuTrigger>
@@ -290,19 +240,37 @@ export const UserDropdown = () => {
   )
 }
 
-const MenuTrigger = ({ userProfile, email }: UserFields) => {
+const MenuTrigger = ({ user, email }: UserFields) => {
+  const firstName = user?.user_metadata?.first_name || ''
+  const lastName = user?.user_metadata?.last_name || ''
+  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
+
   return (
-    <div className="flex gap-4  items-center w-fit px-2 py-1 lg:px-4 lg:py-3 rounded-lg">
-      <div className="flex flex-col items-end gap-1">
-        <p className="font-medium text-sm md:text-base text-textPrimary">
-          {userProfile?.first_name} {userProfile?.last_name}
-        </p>
-        <p className="text-xs md:text-base text-textPrimary">{email}</p>
+    <>
+      {/* Mobile: Avatar with chevron */}
+      <div className="flex sm:hidden items-center gap-1">
+        <div className="w-8 h-8 rounded-full bg-textPrimary text-white flex items-center justify-center text-sm font-semibold">
+          {initials}
+        </div>
+        <ChevronDown
+          size={16}
+          className="text-textPrimary"
+        />
       </div>
-      <ChevronDown
-        size={20}
-        className="text-textPrimary"
-      />
-    </div>
+
+      {/* Desktop: Full info */}
+      <div className="hidden sm:flex gap-4 items-center w-fit px-2 py-1 lg:px-4 lg:py-3 rounded-lg">
+        <div className="flex flex-col items-end gap-1">
+          <p className="font-medium text-sm md:text-base text-textPrimary">
+            {firstName} {lastName}
+          </p>
+          <p className="text-xs md:text-base text-textPrimary">{email}</p>
+        </div>
+        <ChevronDown
+          size={20}
+          className="text-textPrimary"
+        />
+      </div>
+    </>
   )
 }

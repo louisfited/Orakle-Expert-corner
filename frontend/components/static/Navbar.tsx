@@ -28,7 +28,7 @@ const Navbar: FC<Props> = () => {
   return (
     <nav className={cn('w-full z-50 lg:max-w-4xl xl:max-w-7xl mx-auto shrink-0')}>
       <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-2 lg:py-0 lg:h-24 gap-2 lg:gap-4">
-        <div className="flex flex-col sm:flex-row items-center justify-between w-full lg:w-auto gap-2 sm:gap-4">
+        <div className="flex flex-row items-center justify-between w-full lg:w-auto gap-2 sm:gap-4">
           <div
             className="cursor-pointer"
             onClick={() => handleNavigation(isFormDirty)}

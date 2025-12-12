@@ -140,17 +140,15 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
   }
 
   return (
-    <div className="h-[calc(100vh-55px)] lg:h-[calc(100vh-96px)] flex flex-col overflow-hidden">
-      <div className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden px-4 md:px-12 pt-6 gap-4 md:gap-6">
+    <div className="h-[calc(100vh-76px)] lg:h-[calc(100vh-96px)] flex flex-col overflow-hidden lg:max-w-4xl xl:max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden  pt-6 gap-4 md:gap-6">
         <div className="w-full md:w-1/3 flex flex-col md:h-full md:min-h-0 order-2 md:order-1">
-          {/*
           <div className="py-6 px-4 flex-shrink-0">
             <TopProfileMedicalCaseV2
               patientCase={patientCase}
               medicalCaseV2={medicalCaseV2}
             />
           </div>
-          */}
           <div className="md:flex-1 md:overflow-y-auto space-y-6 px-4 pb-6">
             {cardStepsLeft.map((step, i) => (
               <Card
@@ -222,7 +220,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
         </div>
       </div>
 
-      <div className="bg-white px-2 mb-6 mx-7 py-3 flex-shrink-0 border border-gray-200 rounded-full">
+      <div className="bg-white px-2 mb-6 mx-7 py-3 flex-shrink-0 border border-gray-200 lg:rounded-full rounded-xl">
         <AudioStories
           sources={getAudioFiles()}
           onTrackChange={setCurrentCardIndex}

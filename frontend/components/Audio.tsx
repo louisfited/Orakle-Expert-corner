@@ -94,8 +94,8 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
 
   return (
     <div className="w-full space-y-4">
-      <div className="flex md:flex-row gap-12 flex-col">
-        <div className="flex space-x-4 justify-center">
+      <div className="grid grid-cols-2 lg:flex gap-4 lg:gap-12">
+        <div className="flex space-x-4 justify-start">
           <button
             onClick={prev}
             aria-label="Previous"
@@ -120,7 +120,22 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
             <FaForward />
           </button>
         </div>
-        <div className="flex h-2 w-full items-center my-auto">
+
+        <div className="flex items-center space-x-2 px-2 mt-[-3px] justify-end lg:order-last">
+          {volume > 0 ? <FaVolumeUp className="text-textPrimary" /> : <FaVolumeMute className="text-textPrimary" />}
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            value={volume}
+            onChange={(e) => setVolume(parseFloat(e.target.value))}
+            className="flex-1 h-2 bg-gray-300 rounded-lg cursor-pointer"
+            style={{ accentColor: '#1026C4' }}
+          />
+        </div>
+
+        <div className="flex h-2 w-full items-center my-auto col-span-2 lg:col-span-1">
           <span className="text-textPrimary mr-2 font-semibold">{fmt(elapsed)}</span>
           {durations.map((dur, idx) => {
             const cBefore = durations.slice(0, idx).reduce((a, b) => a + b, 0)
@@ -141,20 +156,6 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
           })}
 
           <span className="text-textPrimary ml-auto font-semibold">{fmt(total)}</span>
-        </div>
-
-        <div className="flex items-center space-x-2 px-2 mt-[-3px]">
-          {volume > 0 ? <FaVolumeUp className="text-textPrimary" /> : <FaVolumeMute className="text-textPrimary" />}
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            value={volume}
-            onChange={(e) => setVolume(parseFloat(e.target.value))}
-            className="flex-1 h-2 bg-gray-300 rounded-lg cursor-pointer"
-            style={{ accentColor: '#1026C4' }}
-          />
         </div>
       </div>
 
