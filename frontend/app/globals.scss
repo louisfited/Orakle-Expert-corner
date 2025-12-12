@@ -7,8 +7,8 @@ html {
 }
 
 body {
-  @apply font-light flex flex-col shrink-0;
-  @apply text-textGray
+  @apply font-light min-h-screen;
+  @apply text-textGray;
 }
 
 h1 {
@@ -49,8 +49,9 @@ strong {
 }
 
 .richtext {
+  @apply text-textDark;
   p {
-    @apply mb-4;
+    @apply mb-4 text-textDark;
 
   }
 
@@ -59,6 +60,14 @@ strong {
       @apply mb-0;
       @apply text-md;
     }
+  }
+}
+
+.card .richtext {
+  font-size: 14px;
+  
+  p {
+    font-size: 14px;
   }
 
   h1 {
@@ -78,10 +87,41 @@ strong {
   }
 
   & > ul {
-    @apply mb-6 ml-4 list-outside list-disc flex flex-col gap-3;
+    @apply mb-6 ml-4 list-outside flex flex-col gap-3 text-textDark;
+    list-style: none;
+
+    li {
+      position: relative;
+      padding-left: 1.2rem;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.5em;
+        width: 7px;
+        height: 10px;
+        background-image: url('/triangle-bullet.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+    }
 
     ul {
-      @apply ml-4 list-outside list-disc;
+      @apply ml-4 list-outside;
+      list-style: none;
+
+      li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.5em;
+        width: 7px;
+        height: 10px;
+        background-image: url('/triangle-bullet.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
     }
   }
 
