@@ -23,15 +23,13 @@ export const LikesButton = ({
   const [isUpdating, setIsUpdating] = React.useState(false)
   const router = useRouter()
 
-
-
   const onClick = async () => {
     // check if user is signedIn
-   const {userSignedIn} = await checkUserAuth()
-    console.log("check user SignediN", userSignedIn);
-    
+    const { userSignedIn } = await checkUserAuth()
+    console.log('check user SignediN', userSignedIn)
+
     if (!userSignedIn) {
-      router.push("/login")
+      router.push('/login')
       return
     }
 
@@ -60,13 +58,14 @@ export const LikesButton = ({
     <Button
       onClick={onClick}
       variant="unstyled"
+      className="px-1"
     >
-      <div className="flex items-center gap-1  mr-2 text-textGray">
+      <div className="flex items-center gap-1 mr-2 text-textGray bg-grayBg01 p-2 rounded-full">
         {formatNumber(likes)}
         {isLiked ? (
           <HeartFilledIcon className={cn('h-6 w-6 text-textPrimary', isUpdating ? 'animate-pulse' : '')} />
         ) : (
-          <Heart className={cn('h-6 w-6 text-textPrimary', isUpdating ? 'animate-pulse' : '')} />
+          <HeartFilledIcon className={cn('h-6 w-6 text-fadedIcon', isUpdating ? 'animate-pulse' : '')} />
         )}
       </div>
     </Button>
