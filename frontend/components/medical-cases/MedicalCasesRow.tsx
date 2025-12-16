@@ -38,23 +38,8 @@ export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) =
       .map(([key, label]) => ({ value: key, label })),
   ]
 
-  const handleFilterByCategory = (selectedCategory: string) => {
-    selectedCategory === ''
-      ? setFilteredCases(medicalCases)
-      : setFilteredCases(medicalCases.filter((medicalCase) => medicalCase.categories?.includes(selectedCategory)))
-  }
-
   return (
     <div className=" scroll-smooth no-scrollbar h-[400px]">
-      {filter && filter === 'categories' && (
-        <Select
-          options={categoryOptions}
-          onChange={(selected: any) => handleFilterByCategory(selected[0].value)}
-          values={categoryOptions}
-          placeholder="Search or select a category"
-          className="mt-1 mb-4 block w-[40px] border-gray-300 rounded-md shadow-sm"
-        />
-      )}
       <div className="flex flex-row gap-3 min-h-[350px] overflow-visible ">
         {filteredCases.map((medicalCase) => (
           <div
