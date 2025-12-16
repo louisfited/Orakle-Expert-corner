@@ -29,7 +29,7 @@ const config = {
       },
       colors: {
         'sei-standard': '#403E99',
-        'textGray': '#454A6',
+        'textGray': '#454A6C',
         'black': '#2D2E31',
         'textPrimary': '#1026C4',
         'grayBg': '#F5F7FF',
@@ -38,6 +38,7 @@ const config = {
         'red': '#E10028',
         'redBg': '#C410301A',
         'borderBottom': '#1026C41A',
+        'darkBlue': '#18276D',
       },
       fontWeight: {
         'semibold': '500',
