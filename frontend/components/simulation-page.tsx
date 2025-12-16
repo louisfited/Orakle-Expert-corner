@@ -227,7 +227,7 @@ export const SimulationPage: FC<Props> = ({ medicalCase, patientCase, medicalCas
     onConfirmationToggle()
     setCurrentStep(currentStep + 1)
   }
-
+  console.log(allSteps)
   const progress = (currentStep / allSteps.length) * 100
 
   if (!medicalCase || !patientCase) {
@@ -307,7 +307,7 @@ export const SimulationPage: FC<Props> = ({ medicalCase, patientCase, medicalCas
 }
 
 const StepCard = ({ currentStep, allSteps }: { currentStep: number; allSteps: ReactElement[] }) => (
-  <Card className="col-span-2 w-full flex-grow flex flex-col overflow-y-scroll bg-white border-none rounded-3xl p-4 lg:p-8">
+  <Card className="col-span-2 w-full flex-grow flex flex-col overflow-y-scroll bg-white border-none rounded-t-3xl rounded-b-none p-4 lg:p-8">
     {allSteps[currentStep]}
   </Card>
 )

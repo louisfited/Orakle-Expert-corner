@@ -10,23 +10,23 @@ import { H2, Label, Title } from '@/components/Title'
 import { Import } from 'lucide-react'
 import Cookies from 'js-cookie'
 import languageTexts from '@/lib/utils/language'
+import { PlusIcon, ChevronRightIcon, CheckIcon } from '@radix-ui/react-icons'
 
 const Tests = ({ setDisabledNext }: { setDisabledNext: (state: boolean) => void }) => {
   const { medicalCase } = useCaseContext()
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
 
-
-
-  useEffect(()=>{
+  useEffect(() => {
     setIsMounted(true)
-      },[])
+  }, [])
   return (
     <div className="flex flex-col gap-4">
-      <Title title={isMounted ? languageTexts(lang).tests : "Tests"} />
-      <Label title={isMounted ? languageTexts(lang).selectAppropriateTests : "Select appropriate tests for the patient."} />
+      <Title title={isMounted ? languageTexts(lang).tests : 'Tests'} />
+      <Label
+        title={isMounted ? languageTexts(lang).selectAppropriateTests : 'Select appropriate tests for the patient.'}
+      />
       {medicalCase && (
         <TestsTable
           setDisabledNext={setDisabledNext}
@@ -49,20 +49,16 @@ const TestsTable = ({ tests, setDisabledNext }: TestsTableProps) => {
   const { isOpen: isOnlyGuidanceOpen, onToggle: onOnlyGuidanceToggle } = useDisclose()
   const { isOpen: isOnlyFindingOpen, onToggle: onOnlyFindingToggle } = useDisclose()
 
-
   const [selectedTestContent, setSelectedTestContent] = React.useState<any>(null)
   const [testsState, setTestsState] = useState<ExtendedTest[]>(tests as ExtendedTest[])
   const { updateItemToReview, removeItemFromReview } = useCaseContext()
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
 
-
-
-  useEffect(()=>{
+  useEffect(() => {
     setIsMounted(true)
-      },[])
+  }, [])
   // Function to check whether to disable the "Next" button
   useEffect(() => {
     const shouldDisableNext = testsState?.some((test) => test.showGuidance && !test.guidance)
@@ -77,7 +73,7 @@ const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "f
       return o
     })
     setTestsState(_tests)
-    updateItemToReview({ ...test, reviewed: true },languageTexts(lang).test || 'test')
+    updateItemToReview({ ...test, reviewed: true }, languageTexts(lang).test || 'test')
     setSelectedTestContent(test)
     onToggle()
   }
@@ -157,7 +153,7 @@ const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "f
         open={isOnlyFindingOpen}
         onOpenChange={onOnlyFindingToggle}
         icon={<GuidanceIcon guidance={selectedTestContent?.guidance} />}
-        title={<p className='capitalize'>{languageTexts(lang).findings}</p>}
+        title={<p className="capitalize">{languageTexts(lang).findings}</p>}
         content={
           !selectedTestContent?.guidance ? (
             <div>
@@ -182,17 +178,13 @@ type TestListProps = {
 }
 
 const TestList = ({ tests, onClick, guidanceOnClick, handleRemoveTestClick }: TestListProps) => {
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
 
-  
-const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-
-
-
-  useEffect(()=>{
+  useEffect(() => {
     setIsMounted(true)
-      },[])
+  }, [])
 
   return (
     <ul>
@@ -205,12 +197,20 @@ const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "f
           <div className="flex items-center gap-4">
             {test?.showGuidance ? (
               test.guidance ? (
-                <Button
-                  variant="outline"
-                  onClick={() => onClick(test)}
-                >
-                 {isMounted && languageTexts(lang).view}
-                </Button>
+                <>
+                  <div className="flex items-center gap-2 text-sm text-textPrimary font-medium">
+                    {isMounted && languageTexts(lang).ordered}
+                    <CheckIcon className="h-4 w-4" />
+                  </div>
+                  <Button
+                    variant="primary"
+                    onClick={() => onClick(test)}
+                    className="gap-1"
+                  >
+                    {isMounted && languageTexts(lang).viewResults}
+                    <ChevronRightIcon className="h-4 w-4" />
+                  </Button>
+                </>
               ) : (
                 <Button
                   variant="outline"
@@ -221,11 +221,12 @@ const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "f
               )
             ) : (
               <Button
-                variant="outline"
-                className='capitalize'
+                variant="primary"
+                className="capitalize gap-1"
                 onClick={() => onClick(test)}
               >
                 {isMounted && languageTexts(lang).order}
+                <PlusIcon className="h-4 w-4" />
               </Button>
             )}
             <div

@@ -73,6 +73,8 @@ export const fr = {
   remove: "Supprimer",
   add: "Ajouter",
   view: "voir",
+  ordered: "Commandé",
+  viewResults: "Voir les résultats",
   close: "fermer",
   back: "Retour",
   diagnoses: "diagnostics",

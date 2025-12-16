@@ -10,6 +10,7 @@ import { H2, Label, MedicationLabel } from '@/components/Title'
 import { RationalesDialog } from '@/components/custom/RationalesDialog'
 import Cookies from 'js-cookie'
 import languageTexts from '@/lib/utils/language'
+import { MinusIcon, PlusIcon } from 'lucide-react'
 
 type AddMedicationSelectionProps = {
   medicationSelectionData?: MedicationSelection[]
@@ -28,16 +29,13 @@ export const AddMedicationSelection = ({
   const [medications, setMedications] = React.useState<ExtendedOrder[]>(medicationSelectionData as ExtendedOrder[])
   const { isOpen, onToggle } = useDisclose()
   const { updateItemToReview, removeItemFromReview } = useCaseContext()
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-  const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-  
-  
-  
-    useEffect(()=>{
-      setIsMounted(true)
-        },[])
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
   function handleIconClick(medication: ExtendedOrder) {
     setCurrentMedicationSelection(medication)
     onToggle()
@@ -68,15 +66,18 @@ export const AddMedicationSelection = ({
 
   return (
     <div className="mt-8">
-      <H2 title={isMounted ? languageTexts(lang).addMedications : "Add Medications"} />
+      <H2 title={isMounted ? languageTexts(lang).addMedications : 'Add Medications'} />
       <div className="flex justify-end font-bold">
         <MedicationLabel
-          title={isMounted &&
-            medicationAmount > 0
-              ? languageTexts(lang).pleaseSelect+ " " +
-                medicationAmount + " "+ 
-                (medicationAmount > 1 ? languageTexts(lang).medications : languageTexts(lang).medication) + " " + 
-               languageTexts(lang).toProceedToNextPage
+          title={
+            isMounted && medicationAmount > 0
+              ? languageTexts(lang).pleaseSelect +
+                ' ' +
+                medicationAmount +
+                ' ' +
+                (medicationAmount > 1 ? languageTexts(lang).medications : languageTexts(lang).medication) +
+                ' ' +
+                languageTexts(lang).toProceedToNextPage
               : languageTexts(lang).dontSelectAnyMedicationToProceed
           }
         />
@@ -95,11 +96,16 @@ export const AddMedicationSelection = ({
 
               <div className="flex items-center gap-4">
                 <Button
-                  variant="outline"
-                  className='capitalize'
+                  variant="primary"
+                  className="capitalize"
                   onClick={() => handleMedicationButtonClick(medication)}
                 >
                   {isMounted && medication.showGuidance ? languageTexts(lang).remove : languageTexts(lang).add}
+                  {isMounted && medication.showGuidance ? (
+                    <MinusIcon className="h-4 w-4" />
+                  ) : (
+                    <PlusIcon className="h-4 w-4" />
+                  )}
                 </Button>
 
                 {medication.showGuidance && (

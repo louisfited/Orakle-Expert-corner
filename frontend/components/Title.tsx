@@ -19,5 +19,5 @@ export const MedicationLabel = ({ title }: { title: string }) => {
 }
 
 export const DialogTitle = ({ title }: { title: string }) => {
-  return <h2 className="text-black font-semibold text-xl">{title}</h2>
+  return <h2 className="font-semibold text-xl text-textPrimary">{title}</h2>
 }
