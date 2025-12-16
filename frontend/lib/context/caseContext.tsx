@@ -20,6 +20,8 @@ const defaultValue = {
   likes: null as any,
   setBookmark: (_: Tables<'bookmarks'> | null) => {},
   setLikes: (_: Tables<'likes'> | null) => {},
+  navbarTitle: '',
+  setNavbarTitle: (_: string) => {},
   isFormDirty: false,
   updateItemToReview: (_item: any, _type?: string, _version?: 'v2') => {},
   removeItemFromReview: (_item: any, _type?: string, _version?: 'v2') => {},
@@ -35,6 +37,7 @@ export const CaseContextProvider = ({ children }: { children: React.ReactNode })
   const [medicalCaseV2Id, setMedicalCaseV2Id] = useState<string | null>(null)
   const [bookmark, setBookmark] = useState<Tables<'bookmarks'> | null>(null)
   const [likes, setLikes] = useState<Tables<'likes'> | null>(null)
+  const [navbarTitle, setNavbarTitle] = useState<string>('')
   const [isFormDirty, setIsFormDirty] = useState(false)
 
   const [initialMedicalCaseV2, setInitialMedicalCaseV2] = useState<MedicalCaseV2 | null>(null)
@@ -78,7 +81,7 @@ export const CaseContextProvider = ({ children }: { children: React.ReactNode })
         setMedicalCaseV2({
           ...medicalCaseV2,
           diagnose: upd(medicalCaseV2.diagnose),
-         treatment: upd(medicalCaseV2.treatment),
+          treatment: upd(medicalCaseV2.treatment),
         })
       } else if (medicalCase) {
         const upd = (arr: any[]) =>
@@ -144,6 +147,8 @@ export const CaseContextProvider = ({ children }: { children: React.ReactNode })
       setBookmark,
       likes,
       setLikes,
+      navbarTitle,
+      setNavbarTitle,
       isFormDirty,
       updateItemToReview,
       removeItemFromReview,
@@ -156,6 +161,7 @@ export const CaseContextProvider = ({ children }: { children: React.ReactNode })
       medicalCaseV2Id,
       bookmark,
       likes,
+      navbarTitle,
       isFormDirty,
       updateItemToReview,
       removeItemFromReview,

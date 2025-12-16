@@ -31,6 +31,7 @@ const config = {
         'sei-standard': '#403E99',
         'textGray': '#454A6C',
         'black': '#2D2E31',
+        'textDark': '#18276D',
         'textPrimary': '#1026C4',
         'grayBg': '#F5F7FF',
         'green': '#00BB8E',
