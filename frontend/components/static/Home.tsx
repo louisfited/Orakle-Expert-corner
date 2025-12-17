@@ -7,7 +7,7 @@ export default function Home({ children }: { children: ReactNode }) {
   return (
     <CaseContextProvider>
       <div
-        className="min-h-screen bg-cover bg-center bg-no-repeat"
+        className="min-h-screen bg-cover bg-center bg-no-repeat bg-lightBlue"
         style={{ backgroundImage: 'url(/gradient.png)' }}
       >
         <Navbar />

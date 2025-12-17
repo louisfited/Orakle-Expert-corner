@@ -40,17 +40,15 @@ export const SimulationPage: FC<Props> = ({ medicalCase, patientCase, medicalCas
   const [diagnosisUrl, setDiagnosisUrl] = useState('')
   const { isFormDirty } = useCaseContext()
   let allSteps: any[]
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
 
   const router = useRouter()
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsMounted(true)
-      },[])
+  }, [])
 
   const hasIntroduction = () => {
     return (
@@ -86,47 +84,59 @@ const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "f
   }
 
   const baseSteps = [
-    { component: <Introduction key={isMounted ? languageTexts(lang).introduction  : ""} />, key: isMounted ? languageTexts(lang).introduction  : "", isStep: hasIntroduction() },
-    { component: <PatientInterview key={isMounted ? languageTexts(lang).patientInterview  : ""} />, key: isMounted ? languageTexts(lang).consultation  : "", isStep: hasPatientInterview() },
+    {
+      component: <Introduction key={isMounted ? languageTexts(lang).introduction : ''} />,
+      key: isMounted ? languageTexts(lang).introduction : '',
+      isStep: hasIntroduction(),
+    },
+    {
+      component: <PatientInterview key={isMounted ? languageTexts(lang).patientInterview : ''} />,
+      key: isMounted ? languageTexts(lang).consultation : '',
+      isStep: hasPatientInterview(),
+    },
     {
       component: (
         <Tests
           setDisabledNext={setDisabledNext}
-          key={isMounted ? languageTexts(lang).tests  : ""}
+          key={isMounted ? languageTexts(lang).tests : ''}
         />
       ),
-      key: isMounted ? languageTexts(lang).tests  : "",
+      key: isMounted ? languageTexts(lang).tests : '',
       isStep: hasTests(),
     },
     {
       component: (
         <Diagnoses
           setDisabledNext={setDisabledNext}
-          key={isMounted ? languageTexts(lang).diagnoses  : ""}
+          key={isMounted ? languageTexts(lang).diagnoses : ''}
         />
       ),
-      key:isMounted ? languageTexts(lang).diagnoses  : "",
+      key: isMounted ? languageTexts(lang).diagnoses : '',
       isStep: hasDiagnoses(),
     },
     {
       component: (
         <Orders
           setDisabledNext={setDisabledNext}
-          key={isMounted ? languageTexts(lang).orders  : ""}
+          key={isMounted ? languageTexts(lang).orders : ''}
         />
       ),
-      key: isMounted ? languageTexts(lang).treatment  : "",
+      key: isMounted ? languageTexts(lang).treatment : '',
       isStep: hasOrders(),
     },
-    { component: <DecisionReview key={isMounted ? languageTexts(lang).DecisionReview : "DecisionReview"} />, key: isMounted ? languageTexts(lang).decisions : "Decisions", isStep: true },
+    {
+      component: <DecisionReview key={isMounted ? languageTexts(lang).DecisionReview : 'DecisionReview'} />,
+      key: isMounted ? languageTexts(lang).decisions : 'Decisions',
+      isStep: true,
+    },
     {
       component: (
         <CaseReview
           setDiagnosisUrl={setDiagnosisUrl}
-          key={isMounted ? languageTexts(lang).CaseReview : "CaseReview"}
+          key={isMounted ? languageTexts(lang).CaseReview : 'CaseReview'}
         />
       ),
-      key:isMounted ? languageTexts(lang).summary :  'Summary',
+      key: isMounted ? languageTexts(lang).summary : 'Summary',
       isStep: hasCaseReview(),
     },
     ,
@@ -217,7 +227,6 @@ const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "f
     onConfirmationToggle()
     setCurrentStep(currentStep + 1)
   }
-
   const progress = (currentStep / allSteps.length) * 100
 
   if (!medicalCase || !patientCase) {
@@ -278,7 +287,7 @@ const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "f
                 onClick={onConfirmationToggle}
                 className="p-6 flex-1"
               >
-               {languageTexts(lang).addOrders}
+                {languageTexts(lang).addOrders}
               </Button>
               <Button
                 variant="outline"
@@ -297,7 +306,7 @@ const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "f
 }
 
 const StepCard = ({ currentStep, allSteps }: { currentStep: number; allSteps: ReactElement[] }) => (
-  <Card className="col-span-2 w-full flex-grow flex flex-col overflow-y-scroll bg-white border-none rounded-xl p-4 lg:p-8">
+  <Card className="col-span-2 w-full flex-grow flex flex-col overflow-y-scroll bg-white border-none rounded-t-3xl rounded-b-none p-4 lg:p-8">
     {allSteps[currentStep]}
   </Card>
 )

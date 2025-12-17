@@ -9,6 +9,8 @@ import { useCaseContext } from '@/lib/context/caseContext'
 import { H2, Label } from '@/components/Title'
 import Cookies from 'js-cookie'
 import languageTexts from '@/lib/utils/language'
+import { PlusIcon } from '@radix-ui/react-icons'
+import { MinusIcon } from 'lucide-react'
 
 type AddNonMedicationOrdersProps = {
   nonMedicationOrderData?: NonMedicationOrder[]
@@ -23,20 +25,17 @@ export const AddNonMedicationOrders = ({ nonMedicationOrderData, setDisabledNext
   const { isOpen, onToggle } = useDisclose()
   const { updateItemToReview, removeItemFromReview } = useCaseContext()
 
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-  const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-  
-  
-  
-    useEffect(()=>{
-      setIsMounted(true)
-        },[])
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Check if any non-medication order requires guidance and update the "Next" button state
   useEffect(() => {
-    const anyRequiresGuidance = orders?.some(order => order?.showGuidance && !order?.guidance)
+    const anyRequiresGuidance = orders?.some((order) => order?.showGuidance && !order?.guidance)
     setDisabledNext(anyRequiresGuidance)
   }, [orders, setDisabledNext])
 
@@ -70,12 +69,19 @@ export const AddNonMedicationOrders = ({ nonMedicationOrderData, setDisabledNext
 
   return (
     <div className="mt-8">
-      <H2 title={isMounted ? languageTexts(lang).addNonMedicationOrders : "Add Non-Medication Orders"} />
-      <Label title={isMounted ? languageTexts(lang).selectAppropriate : "Select appropriate additional orders for the patient."} />
+      <H2 title={isMounted ? languageTexts(lang).addNonMedicationOrders : 'Add Non-Medication Orders'} />
+      <Label
+        title={
+          isMounted ? languageTexts(lang).selectAppropriate : 'Select appropriate additional orders for the patient.'
+        }
+      />
 
       <ul>
         {orders?.map((order) => (
-          <li key={order.name} className="border-b border-gray-300 py-4">
+          <li
+            key={order.name}
+            className="border-b border-gray-300 py-4"
+          >
             <div className="flex justify-between items-center">
               <div className="flex flex-col">
                 <span className="text-textGray opacity-50 text-xs uppercase">{order.category}</span>
@@ -84,14 +90,23 @@ export const AddNonMedicationOrders = ({ nonMedicationOrderData, setDisabledNext
 
               <div className="flex items-center gap-4">
                 <Button
-                  variant="outline"
+                  variant={order.showGuidance ? 'outline' : 'primary'}
                   onClick={() => handleOrderButtonClick(order)}
+                  className="gap-1"
                 >
                   {isMounted && order.showGuidance ? languageTexts(lang).remove : languageTexts(lang).add}
+                  {isMounted && order.showGuidance ? (
+                    <MinusIcon className="h-4 w-4" />
+                  ) : (
+                    <PlusIcon className="h-4 w-4" />
+                  )}
                 </Button>
 
                 {order.showGuidance && (
-                  <div onClick={() => handleIconClick(order)} className="hover:cursor-pointer">
+                  <div
+                    onClick={() => handleIconClick(order)}
+                    className="hover:cursor-pointer"
+                  >
                     <GuidanceIcon guidance={order.guidance} />
                   </div>
                 )}
@@ -106,7 +121,8 @@ export const AddNonMedicationOrders = ({ nonMedicationOrderData, setDisabledNext
         onOpenChange={onToggle}
         title={<GuidanceTitle guidance={currentSelectedOrder?.guidance} />}
         icon={<GuidanceIcon guidance={currentSelectedOrder?.guidance} />}
-        content={<RenderHTML htmlString={currentSelectedOrder?.actionText[0]?.text.html} />} />
+        content={<RenderHTML htmlString={currentSelectedOrder?.actionText[0]?.text.html} />}
+      />
     </div>
   )
 }

@@ -91,7 +91,7 @@ export const PatientCaseCard: FC<Props> = ({ isOpen, setIsOpen }) => {
   }
   return (
     <>
-      <Card className="col-span-1 flex-col py-0 overflow-y-visible relative hidden lg:flex border-none">
+      <Card className="col-span-1 flex-col py-0 overflow-y-visible relative hidden lg:flex border-none bg-transparent">
         <TopProfile patientCase={patientCase!} />
         <div className="p-4">
           {hasImportantInformation() && (
@@ -113,7 +113,6 @@ export const PatientCaseCard: FC<Props> = ({ isOpen, setIsOpen }) => {
           <CaseDescription
             ref={caseDescriptionRef}
             medicalCase={medicalCase!}
-           
           />
           <PastVisits
             ref={pastVisitsRef}

@@ -68,6 +68,8 @@ export const de = {
   remove: "Entfernen",
   add: "Hinzufügen",
   view: "Ansehen",
+  ordered: "Bestellt",
+  viewResults: "Ergebnisse anzeigen",
   close: "Schließen",
   back: "Zurück",
   diagnoses: "Diagnosen",

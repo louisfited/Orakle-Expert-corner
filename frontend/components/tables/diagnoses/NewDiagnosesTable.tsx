@@ -8,6 +8,7 @@ import { GuidanceIcon, GuidanceTitle } from '@/components/GuidanceTitle'
 import { useCaseContext } from '@/lib/context/caseContext'
 import Cookies from 'js-cookie'
 import languageTexts from '@/lib/utils/language'
+import { MinusIcon, PlusIcon } from 'lucide-react'
 
 type NewDiagnoseTableProps = {
   newDiagnoses: {
@@ -31,16 +32,13 @@ export const NewDiagnosesTable = ({ newDiagnoses, setDisabledNext }: NewDiagnose
   const { isOpen, onToggle } = useDisclose()
   const { updateItemToReview, removeItemFromReview } = useCaseContext()
 
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-  const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-  
-  
-  
-    useEffect(()=>{
-      setIsMounted(true)
-        },[])
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Function to check whether to disable the "Next" button
   useEffect(() => {
@@ -92,7 +90,7 @@ export const NewDiagnosesTable = ({ newDiagnoses, setDisabledNext }: NewDiagnose
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">{isMounted && languageTexts(lang).name}</TableHead>
-            <TableHead className='capitalize'>{isMounted && languageTexts(lang).action }</TableHead>
+            <TableHead className="capitalize">{isMounted && languageTexts(lang).action}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -100,13 +98,14 @@ export const NewDiagnosesTable = ({ newDiagnoses, setDisabledNext }: NewDiagnose
             return (
               <TableRow key={index}>
                 <TableCell className="font-medium w-2/3">{nD.name}</TableCell>
-                <TableCell className="flex flex-row gap-6 items-center">
+                <TableCell className="flex flex-row gap-6 items-center justify-end">
                   {nD.showGuidance || (nD.guidance && nD.isExisting) ? (
                     <Button
-                      variant="outline"
+                      variant="primary"
                       onClick={() => handleRemoveDiagnoseClick(nD)}
                     >
-                     {languageTexts(lang).remove}
+                      {languageTexts(lang).remove}
+                      <MinusIcon className="h-4 w-4" />
                     </Button>
                   ) : (
                     <Button
@@ -114,6 +113,7 @@ export const NewDiagnosesTable = ({ newDiagnoses, setDisabledNext }: NewDiagnose
                       onClick={() => handleAddDiagnoseClick(nD)}
                     >
                       {isMounted && languageTexts(lang).add}
+                      <PlusIcon className="h-4 w-4" />
                     </Button>
                   )}
 
