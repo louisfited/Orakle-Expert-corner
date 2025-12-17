@@ -4,6 +4,7 @@ import { Bookmark } from 'lucide-react'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
 import ProfilePicPlaceholder from '../../public/profile-placeholder.png'
 import ThumbnailPlaceholder from '../../public/thumbnail-background.png'
+import { useRouter } from 'next/navigation'
 
 interface StartTestModalProps {
   medicalCase: MergedMedicalCase
@@ -12,6 +13,14 @@ interface StartTestModalProps {
 }
 
 export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestModalProps) => {
+  const router = useRouter()
+  const handleStartTest = (id: string, version: string) => {
+    if (version === '5 min') {
+      router.push(`/cases-v2/${id}`)
+    } else {
+      router.push(`/cases/${id}`)
+    }
+  }
   return (
     <DialogV2
       open={open}
@@ -72,7 +81,10 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                 </div>
               </div>
               <div className="flex flex-row justify-between">
-                <button className="w-[118px] bg-textPrimary text-white shadow hover:bg-textPrimary/90 dark:bg-gray-900 dark:text-gray-50 dark:hover:bg-gray-900/90 p-3 rounded-md">
+                <button
+                  className="w-[118px] bg-textPrimary text-white shadow hover:bg-textPrimary/90 dark:bg-gray-900 dark:text-gray-50 dark:hover:bg-gray-900/90 p-3 rounded-md"
+                  onClick={() => handleStartTest(medicalCase.id, medicalCase.version)}
+                >
                   <span className="text-white text-lg text-center">Start Test</span>
                 </button>
                 <button className="w-[46px] h-[46px] bg-white rounded-full flex justify-center items-center border-2 border-borderBottom">
