@@ -31,7 +31,8 @@ h4 {
   @apply text-black;
 }
 
-p, span {
+p,
+span {
   @apply text-black;
 }
 
@@ -52,11 +53,10 @@ strong {
   @apply text-textDark;
   p {
     @apply mb-4 text-textDark;
-
   }
 
-  &.no-margin{
-    p{
+  &.no-margin {
+    p {
       @apply mb-0;
       @apply text-md;
     }
@@ -65,7 +65,7 @@ strong {
 
 .card .richtext {
   font-size: 14px;
-  
+
   p {
     font-size: 14px;
   }
@@ -158,28 +158,28 @@ ol {
   }
 
   .emoji-list.check li::before {
-    content: "✅"; /* Hier können Sie das gewünschte Emoji setzen */
+    content: '✅'; /* Hier können Sie das gewünschte Emoji setzen */
     position: absolute;
     left: -30px; /* Die Einrückung negieren, um das Emoji zu positionieren */
     margin-right: 5px; /* Fügen Sie einen Abstand zwischen dem Emoji und dem Listenpunkt hinzu */
   }
 
   .emoji-list.bulb li::before {
-    content: "💡"; /* Hier können Sie das gewünschte Emoji setzen */
+    content: '💡'; /* Hier können Sie das gewünschte Emoji setzen */
     position: absolute;
     left: -30px; /* Die Einrückung negieren, um das Emoji zu positionieren */
     margin-right: 5px; /* Fügen Sie einen Abstand zwischen dem Emoji und dem Listenpunkt hinzu */
   }
 
   .emoji-list.hand li::before {
-    content: "👉🏻"; /* Hier können Sie das gewünschte Emoji setzen */
+    content: '👉🏻'; /* Hier können Sie das gewünschte Emoji setzen */
     position: absolute;
     left: -30px; /* Die Einrückung negieren, um das Emoji zu positionieren */
     margin-right: 5px; /* Fügen Sie einen Abstand zwischen dem Emoji und dem Listenpunkt hinzu */
   }
 
   .standard-link {
-    @apply text-blue-500
+    @apply text-blue-500;
   }
 }
 
@@ -198,10 +198,10 @@ ol {
   height: 100%;
   width: 100%;
   background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.3) 50%,
-      rgba(255, 255, 255, 0) 100%
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
   );
   animation: shimmer 1.5s infinite;
 }
@@ -221,13 +221,12 @@ ol {
   border-spacing: 0;
   text-align: left;
   font-size: 0.875rem;
-  color: #4B5563;
-
+  color: #4b5563;
 
   thead {
-    background-color: #F9FAFB;
-    color: #6B7280;
-    border-top: 2px solid #E5E7EB;
+    background-color: #f9fafb;
+    color: #6b7280;
+    border-top: 2px solid #e5e7eb;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
 
@@ -241,16 +240,16 @@ ol {
   tbody {
     tr {
       &:nth-child(odd) {
-        background-color: #F3F4F6;
+        background-color: #f3f4f6;
       }
 
       &:nth-child(even) {
-        background-color: #E5E7EB;
+        background-color: #e5e7eb;
       }
 
       td {
         padding: 0.75rem 1.5rem;
-        border-top: 1px solid #E5E7EB;
+        border-top: 1px solid #e5e7eb;
       }
     }
 
@@ -266,17 +265,28 @@ ol {
   }
 }
 
-#professional-information, #personal-information, #account-settings {
-   scroll-margin-top: 250px
- }
+#professional-information,
+#personal-information,
+#account-settings {
+  scroll-margin-top: 250px;
+}
 
- .references ul,
- .references ol{
+.references ul,
+.references ol {
   padding: 1rem !important;
   margin-left: 0 !important;
- }
+}
 
- .references ul li,
- .references ol li{
+.references ul li,
+.references ol li {
   line-break: anywhere;
- }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

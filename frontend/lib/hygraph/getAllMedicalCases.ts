@@ -1,7 +1,7 @@
 import { HYGRAPH_URL } from '@/lib/hygraph/hygraph'
 import { cookies } from 'next/headers'
 
-type MergedMedicalCase = {
+export type MergedMedicalCase = {
   version: '15m' | '5m'
   id: string
   title: string
@@ -10,7 +10,7 @@ type MergedMedicalCase = {
   faculty: string
   countries?: string[]
   categories?: string[]
-  likes?: number
+  likes: number
   caseDescription?: { html: string }
   preCaseInformation?: { html: string }
   closingRemarks?: { html: string }
@@ -26,11 +26,12 @@ type MergedMedicalCase = {
     id?: string
     profileImage?: { url: string }
   }
+  shortDescription?: string
+  thumbnailBackground: { url: string }
 }
 
 export const getAllMedicalCases = async (): Promise<MergedMedicalCase[]> => {
-  const languageValue: string | undefined = cookies().get("language")?.value
-
+  const languageValue: string | undefined = cookies().get('language')?.value
 
   const response = await fetch(HYGRAPH_URL, {
     method: 'POST',
@@ -61,7 +62,7 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
   
   }
 
-  medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC) {
+  medicalCases(locales:[${languageValue ? languageValue : 'en'}], first: 150, orderBy: createdAt_DESC) {
   id
   title
   supporter
@@ -89,7 +90,7 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
 }
 
 
-medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, orderBy: createdAt_DESC) {
+medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 150, orderBy: createdAt_DESC) {
   id
   title
   supporter
@@ -110,16 +111,16 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
 
   const res = await response.json()
 
-  console.log(res?.data?.webinarVideos);
+  console.log(res?.data?.webinarVideos)
 
   const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: '20m', ...v }))
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
   const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
 
-  const data = [...video, ...v2, ...v1,]
+  const data = [...video, ...v2, ...v1]
   const sorted = data.sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  });
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  })
 
   return sorted
 }
@@ -148,9 +149,7 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
 //   profileImage { url }
 //   }
 
-
 // }
-
 
 // medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, orderBy: createdAt_DESC) {
 //   id
@@ -163,9 +162,6 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
 //     profileImage { url }
 //   }
 // }
-
-
-
 
 // Testings{
 //   id
@@ -207,12 +203,10 @@ medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, ord
 //   profileImage { url }
 //   }
 
-
 // }
 
 export const getAllMedicalCasesForStaging = async (): Promise<MergedMedicalCase[]> => {
-  const languageValue: string | undefined = cookies().get("language")?.value
-
+  const languageValue: string | undefined = cookies().get('language')?.value
 
   const response = await fetch(HYGRAPH_URL, {
     method: 'POST',
@@ -223,7 +217,7 @@ export const getAllMedicalCasesForStaging = async (): Promise<MergedMedicalCase[
     cache: 'no-store',
     body: JSON.stringify({
       query: `{
-        medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC, where: { countries_contains_some: [STAGING] }) {
+        medicalCases(locales:[${languageValue ? languageValue : 'en'}], first: 150, orderBy: createdAt_DESC) {
           id
           title
           supporter
@@ -246,23 +240,27 @@ export const getAllMedicalCasesForStaging = async (): Promise<MergedMedicalCase[
             profileImage { url }
           }
         }
-        medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, orderBy: createdAt_DESC, where: { countries_contains_some: [STAGING] }) {
+        medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 150, orderBy: createdAt_DESC) {
           id
           title
           supporter
           faculty
+          categories
           caseDescription { html }
+          shortDescription
+          likes
           patient {
             id
             profileImage { url }
           }
+            thumbnailBackground { url }
         }
       }`,
     }),
   })
 
   const res = await response.json()
-  const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
-  const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
+  const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15 min', ...c }))
+  const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5 min', ...c }))
   return [...v1, ...v2]
 }
