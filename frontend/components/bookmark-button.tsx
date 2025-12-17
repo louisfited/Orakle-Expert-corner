@@ -23,7 +23,6 @@ export const BookmarkButton = ({
   const router = useRouter()
   async function handleBookmark() {
     const { userSignedIn } = await checkUserAuth()
-    console.log('check user SignediN', userSignedIn)
 
     if (!userSignedIn) {
       router.push('/login')

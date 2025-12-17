@@ -73,7 +73,6 @@ export const FormStepsAndProgress = ({
   const handleNextStep = async () => {
     // check if user is signedIn
     const { userSignedIn } = await checkUserAuth()
-    // console.log("check user SignediN", userSignedIn);
 
     if (!userSignedIn) {
       document.cookie = `redirect=${window.location.pathname}; path=/;`

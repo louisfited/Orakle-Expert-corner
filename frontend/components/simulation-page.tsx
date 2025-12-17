@@ -227,7 +227,6 @@ export const SimulationPage: FC<Props> = ({ medicalCase, patientCase, medicalCas
     onConfirmationToggle()
     setCurrentStep(currentStep + 1)
   }
-  console.log(allSteps)
   const progress = (currentStep / allSteps.length) * 100
 
   if (!medicalCase || !patientCase) {

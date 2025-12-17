@@ -26,7 +26,6 @@ export const LikesButton = ({
   const onClick = async () => {
     // check if user is signedIn
     const { userSignedIn } = await checkUserAuth()
-    console.log('check user SignediN', userSignedIn)
 
     if (!userSignedIn) {
       router.push('/login')
