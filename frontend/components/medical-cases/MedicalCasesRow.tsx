@@ -13,10 +13,6 @@ interface MedicalCaseRowProps {
 
 export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) => {
   const scrollRef = useRef<HTMLDivElement>(null)
-  const [hovered, setHovered] = useState<{
-    index: number
-    rect: DOMRect
-  } | null>(null)
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return
@@ -30,13 +26,6 @@ export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) =
   }
 
   const [filteredCases, setFilteredCases] = useState<MergedMedicalCase[]>(medicalCases)
-  const uniqueCategories = new Set(medicalCases?.flatMap((c) => c.categories) || [])
-  const categoryOptions = [
-    { value: '', label: 'All Categories' },
-    ...Object.entries(categoriesJson.categories)
-      .filter(([key]) => uniqueCategories.has(key))
-      .map(([key, label]) => ({ value: key, label })),
-  ]
 
   return (
     <div className=" scroll-smooth no-scrollbar h-[400px]">
