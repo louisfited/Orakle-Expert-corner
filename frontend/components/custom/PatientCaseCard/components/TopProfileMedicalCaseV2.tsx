@@ -42,7 +42,7 @@ export const TopProfileMedicalCaseV2 = ({
           alt="patient image"
           width={100}
           height={100}
-          className="rounded-full border-2 border-textGray object-cover"
+          className="rounded-full border-2 border-textGray object-cover w-[100px] h-[100px]"
         />
         <div className="flex flex-col justify-center text-left">
           <h2 className="text-lg font-semibold">{fullName}</h2>

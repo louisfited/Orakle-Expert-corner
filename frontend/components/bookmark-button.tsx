@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { createBookmarkAction } from '@/lib/data/repository/bookmarks'
 import { checkUserAuth } from '@/lib/data/repository/likes'
 import { useRouter } from 'next/navigation'
+import { BookmarkFilledIcon } from '@radix-ui/react-icons'
 
 export const BookmarkButton = ({
   caseId,
@@ -19,16 +20,15 @@ export const BookmarkButton = ({
 }) => {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
-const router = useRouter()
+  const router = useRouter()
   async function handleBookmark() {
-    const {userSignedIn} = await checkUserAuth()
-    console.log("check user SignediN", userSignedIn);
-    
+    const { userSignedIn } = await checkUserAuth()
+
     if (!userSignedIn) {
-      router.push("/login")
+      router.push('/login')
       return
     }
-    
+
     if (!caseId) {
       return {
         status: 'error',
@@ -58,15 +58,17 @@ const router = useRouter()
     <Button
       variant="link"
       onClick={handleBookmark}
-      className="m-0 p-0"
+      className="px-1"
     >
-      {isLoading ? (
-        <Loader2 className="animate-spin" />
-      ) : bookmarked ? (
-        <BookmarkCheck color="#454A6C" />
-      ) : (
-        <Bookmark color="#454A6C" />
-      )}
+      <div className="flex items-center gap-1 mr-2 text-textGray bg-grayBg01 p-2 rounded-full">
+        {isLoading ? (
+          <Loader2 className="animate-spin" />
+        ) : bookmarked ? (
+          <BookmarkCheck color="#454A6C" />
+        ) : (
+          <BookmarkFilledIcon className="text-fadedIcon  h-6 w-6" />
+        )}
+      </div>
     </Button>
   )
 }
