@@ -1,5 +1,6 @@
 'use server'
 import { MedicalCaseCard } from '@/components/medical-cases/MedicalCaseCard'
+import { MedicalCasePortraitCard } from '@/components/medical-cases/MedicalCasePortraitCard'
 import { getAllMedicalCasesForStaging } from '@/lib/hygraph/getAllMedicalCases'
 import { MedicalCasesRow } from '@/components/medical-cases/MedicalCasesRow'
 import { FeaturedSlideshow } from '@/components/medical-cases/FeaturedSlideshow'
@@ -30,8 +31,15 @@ const NewHomePage = async () => {
         {topCases && topCases.length > 0 && (
           <>
             <div>
-              <div className="text-[28px] font-medium overflow-visible">Popular Tests</div>
-              <MedicalCasesRow medicalCases={topCases.slice(0, 8)} />
+              <div className="text-[28px] font-medium overflow-visible mb-5">Popular Tests</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
+                {topCases.slice(0, 8).map((medicalCase) => (
+                  <MedicalCasePortraitCard
+                    key={medicalCase.id}
+                    medicalCase={medicalCase}
+                  />
+                ))}
+              </div>
             </div>
           </>
         )}

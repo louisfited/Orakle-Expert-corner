@@ -14,6 +14,8 @@ interface FeaturedSlideshowProps {
 export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState<'left' | 'right'>('right')
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
   const { isOpen: isConfirmationOpen, onToggle: onConfirmationToggle } = useDisclose()
   const currentCase = medicalCases[currentIndex]
 
@@ -32,15 +34,38 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
     setCurrentIndex(index)
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      // Swipe left - go to next
+      goToNext()
+    }
+
+    if (touchStart - touchEnd < -75) {
+      // Swipe right - go to previous
+      goToPrevious()
+    }
+  }
+
   if (!currentCase) return null
 
   return (
     <>
       <div
-        className="w-full h-[412px] px-8 py-8 bg-cover bg-center rounded-3xl"
+        className="w-full px-4 py-6 lg:px-8 lg:py-8 bg-cover bg-center rounded-3xl overflow-hidden"
         style={{ backgroundImage: `url(${SlideshowBackground.src})` }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
-        <div className="max-w-[1400px] mx-auto h-full flex items-center gap-6">
+        <div className="mx-auto h-full flex flex-col lg:flex-row gap-6 items-center">
           {/* Left side - Featured Card */}
           <div className="flex flex-col items-center gap-4 flex-shrink-0">
             <div
@@ -50,9 +75,18 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
               <MedicalCaseThumbnail
                 medicalCase={currentCase}
                 avatarSize="w-40 h-40"
+                showVersion={false}
                 showHoverButtons={true}
                 onStartTest={onConfirmationToggle}
               />
+            </div>
+
+            {/* Mobile description - shown below card on mobile */}
+            <div className="flex lg:hidden flex-col gap-4 text-center">
+              <p className="text-xl text-white font-medium">{currentCase.shortDescription}</p>
+              <div className="flex items-center gap-4 text-textPrimaryFaded justify-center">
+                <span className="text-sm font-medium text-white">{currentCase.version}</span>
+              </div>
             </div>
 
             {/* Dot indicators */}
@@ -70,16 +104,16 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
             </div>
           </div>
 
-          {/* Middle - Description and Navigation */}
-          <div className="flex flex-col justify-center gap-6 py-8 flex-shrink-0 w-[300px]">
-            <div className="flex flex-col gap-4">
+          {/* Middle - Description and Navigation - Desktop only */}
+          <div className="hidden lg:flex flex-col justify-center gap-6 py-8 flex-shrink-0 w-[300px]">
+            <div className="flex flex-col gap-4 mb-auto">
               <p className="text-xl text-white font-medium">{currentCase.shortDescription}</p>
               <div className="flex items-center gap-4 text-textPrimaryFaded">
                 <span className="text-sm font-medium text-white">{currentCase.version}</span>
               </div>
             </div>
 
-            {/* Navigation Arrows and Start Button */}
+            {/* Navigation Arrows */}
             <div className="flex items-center gap-4">
               <div className="flex gap-2">
                 <button
@@ -107,7 +141,7 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
           </div>
 
           {/* Right side - Preview Cards */}
-          <div className="flex flex-col gap-4 justify-center flex-shrink-0">
+          <div className="hidden lg:flex flex-col gap-4 justify-center flex-shrink-0">
             {medicalCases.slice(1, 4).map((previewCase, index) => {
               const previewIndex = (currentIndex + index + 1) % medicalCases.length
               const displayCase = medicalCases[previewIndex]
