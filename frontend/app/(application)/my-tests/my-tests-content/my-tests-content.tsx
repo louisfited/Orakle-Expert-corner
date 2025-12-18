@@ -5,6 +5,7 @@ import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
 import { getAllMedicalCasesForStaging } from '@/lib/hygraph/getAllMedicalCases'
 import { MedicalCaseCard } from '@/components/medical-cases/MedicalCaseCard'
 import { StatusEnum } from '@/lib/types/types'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const PAGE_SECTIONS = [
   { label: 'All', value: 'ALL' },
@@ -12,11 +13,6 @@ const PAGE_SECTIONS = [
   { label: 'Completed', value: StatusEnum.completed },
   { label: 'Bookmarked', value: 'BOOKMARK' },
 ]
-
-interface MedicalCaseStatus {
-  case_id: string
-  status: string
-}
 
 interface MyTestsContentProps {
   medicalCases?: MergedMedicalCase[]
@@ -36,6 +32,8 @@ export const MyTestsContent = ({ medicalCases = [] }: MyTestsContentProps) => {
       let sectionCases
       switch (selectedSection) {
         case PAGE_SECTIONS[0].value:
+          const biggerArray = Array.from({ length: 10 }, () => medicalCases).flat()
+
           setFilteredCases(medicalCases)
           break
         case PAGE_SECTIONS[1].value:
@@ -62,8 +60,8 @@ export const MyTestsContent = ({ medicalCases = [] }: MyTestsContentProps) => {
 
   return (
     <div className="flex flex-col">
-      <span className="font-medium text-[28px] text-textDark mb-4">My Tests</span>
-      <div className="flex flex-row gap-2">
+      <span className="font-medium text-[28px] text-textDark mb-4 mt-6 md:mt-12">My Tests</span>
+      <div className="hidden md:flex flex-row gap-2 items-center lg:items-start">
         {PAGE_SECTIONS.map((section) => (
           <div key={section.value}>
             <TagChip
@@ -74,8 +72,24 @@ export const MyTestsContent = ({ medicalCases = [] }: MyTestsContentProps) => {
           </div>
         ))}
       </div>
+      <div className="block sm:hidden">
+        <Tabs defaultValue={PAGE_SECTIONS[0].value}>
+          <TabsList variant="mobile">
+            {PAGE_SECTIONS.map((section) => (
+              <TabsTrigger
+                key={section.value}
+                value={section.value}
+                onClick={() => handleSectionChange(section.value)}
+                variant="mobile"
+              >
+                {section.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+      </div>
       {filteredCases && filteredCases.length > 0 && (
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row flex-wrap gap-2 mt-8 items-center md:items-start">
           {filteredCases.map((medicalCase) => (
             <MedicalCaseCard
               medicalCase={medicalCase}

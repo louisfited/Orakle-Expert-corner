@@ -26,7 +26,7 @@ const MyTests = async () => {
   }
 
   return (
-    <div className="px-[60px]">
+    <div className="px-4 md:px-8 lg:px-[60px]">
       <MyTestsContent medicalCases={updatedCases} />
     </div>
   )
