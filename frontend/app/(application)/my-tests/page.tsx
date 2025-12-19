@@ -17,7 +17,6 @@ const MyTests = async () => {
     const statusMap = new Map(myCases?.map((item) => [item.case_id, item.status]) ?? [])
 
     updatedCases = medicalCases.map((medicalCase) => {
-      console.log(medicalCase)
       const status = statusMap.get(medicalCase.id)
       return status !== undefined
         ? { ...medicalCase, status, ...(bookmarkIds.includes(medicalCase.id) && { isBookmarked: true }) }
