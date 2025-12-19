@@ -59,83 +59,104 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
   return (
     <>
       <div
-        className="w-full px-4 py-6 lg:px-8 lg:py-8 bg-cover bg-center rounded-3xl overflow-hidden"
+        className="w-full px-4 py-6 lg:pl-[72px] lg:pt-[66px] lg:pb-[44px] bg-cover bg-center rounded-3xl overflow-hidden"
         style={{ backgroundImage: `url(${SlideshowBackground.src})` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
         <div className="mx-auto h-full flex flex-col lg:flex-row gap-6 items-center">
-          {/* Left side - Featured Card */}
-          <div className="flex flex-col items-center gap-4 flex-shrink-0">
-            <div
-              className={direction === 'right' ? 'animate-slideInRight' : 'animate-slideInLeft'}
-              key={currentIndex}
-            >
-              <MedicalCaseThumbnail
-                medicalCase={currentCase}
-                avatarSize="w-40 h-40"
-                showVersion={false}
-                showHoverButtons={true}
-                onStartTest={onConfirmationToggle}
-              />
-            </div>
-
-            {/* Mobile description - shown below card on mobile */}
-            <div className="flex lg:hidden flex-col gap-4 text-center">
-              <p className="text-xl text-white font-medium">{currentCase.shortDescription}</p>
-              <div className="flex items-center gap-4 text-textPrimaryFaded justify-center">
-                <span className="text-sm font-medium text-white">{currentCase.version}</span>
-              </div>
-            </div>
-
-            {/* Dot indicators */}
-            <div className="flex gap-2">
-              {medicalCases.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === currentIndex ? 'bg-white w-8' : 'bg-gray-400'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
+          {/* Wrapper for Featured Card + Middle Description (first two divs) */}
+          <div className="flex flex-col lg:flex-row gap-6 items-center w-full lg:w-auto flex-shrink-0">
+            {/* Left side - Featured Card */}
+            <div className="flex flex-col items-center gap-4 lg:gap-[22px] flex-shrink-0">
+              <div
+                className={direction === 'right' ? 'animate-slideInRight' : 'animate-slideInLeft'}
+                key={currentIndex}
+              >
+                <MedicalCaseThumbnail
+                  medicalCase={currentCase}
+                  width="w-full lg:w-[454px]"
+                  height="h-[280px] lg:h-[272px]"
+                  avatarSize="w-40 h-40"
+                  showVersion={false}
+                  showHoverButtons={true}
+                  onStartTest={onConfirmationToggle}
                 />
-              ))}
-            </div>
-          </div>
+              </div>
 
-          {/* Middle - Description and Navigation - Desktop only */}
-          <div className="hidden lg:flex flex-col justify-center gap-6 py-8 flex-shrink-0 w-[300px]">
-            <div className="flex flex-col gap-4 mb-auto">
-              <p className="text-xl text-white font-medium">{currentCase.shortDescription}</p>
-              <div className="flex items-center gap-4 text-textPrimaryFaded">
-                <span className="text-sm font-medium text-white">{currentCase.version}</span>
+              {/* Mobile description - shown below card on mobile */}
+              <div className="flex lg:hidden flex-col gap-2 text-center">
+                {/* Categories */}
+                {currentCase.categories && currentCase.categories.length > 0 && (
+                  <p className="text-sm text-white/80">{currentCase.categories.join(' • ')}</p>
+                )}
+
+                {/* Title */}
+                <p className="text-xl text-white font-medium">{currentCase.title}</p>
+
+                {/* Version */}
+                <div className="flex items-center gap-4 text-textPrimaryFaded justify-center">
+                  <span className="text-sm font-medium text-white">{currentCase.version}</span>
+                </div>
+              </div>
+
+              {/* Dot indicators */}
+              <div className="flex gap-2">
+                {medicalCases.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentIndex ? 'bg-white w-8' : 'bg-gray-400'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
               </div>
             </div>
 
-            {/* Navigation Arrows */}
-            <div className="flex items-center gap-4">
-              <div className="flex gap-2">
-                <button
-                  onClick={goToPrevious}
-                  className="w-12 h-12 bg-transparent border-2 border-white hover:bg-white/10 rounded-full flex items-center justify-center transition-all"
-                  aria-label="Previous slide"
-                >
-                  <ChevronLeft
-                    size={24}
-                    className="text-white"
-                  />
-                </button>
-                <button
-                  onClick={goToNext}
-                  className="w-12 h-12 bg-transparent border-2 border-white hover:bg-white/10 rounded-full flex items-center justify-center transition-all"
-                  aria-label="Next slide"
-                >
-                  <ChevronRight
-                    size={24}
-                    className="text-white"
-                  />
-                </button>
+            {/* Middle - Description and Navigation - Desktop only */}
+            <div className="hidden lg:flex flex-col justify-center gap-6 py-8 flex-shrink-0 w-[300px]">
+              <div className="flex flex-col gap-4 mb-auto">
+                {/* Categories */}
+                {currentCase.categories && currentCase.categories.length > 0 && (
+                  <p className="text-sm text-white/80">{currentCase.categories.join(' • ')}</p>
+                )}
+
+                {/* Title */}
+                <p className="text-xl text-white font-medium">{currentCase.title}</p>
+
+                {/* Version */}
+                <div className="flex items-center gap-4 text-textPrimaryFaded">
+                  <span className="text-sm font-medium text-white">{currentCase.version}</span>
+                </div>
+              </div>
+
+              {/* Navigation Arrows */}
+              <div className="flex items-center gap-4">
+                <div className="flex gap-2">
+                  <button
+                    onClick={goToPrevious}
+                    className="w-12 h-12 bg-transparent border-2 border-white hover:bg-white/10 rounded-full flex items-center justify-center transition-all"
+                    aria-label="Previous slide"
+                  >
+                    <ChevronLeft
+                      size={24}
+                      className="text-white"
+                    />
+                  </button>
+                  <button
+                    onClick={goToNext}
+                    className="w-12 h-12 bg-transparent border-2 border-white hover:bg-white/10 rounded-full flex items-center justify-center transition-all"
+                    aria-label="Next slide"
+                  >
+                    <ChevronRight
+                      size={24}
+                      className="text-white"
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

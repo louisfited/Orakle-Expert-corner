@@ -14,11 +14,15 @@ export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCard
 
   return (
     <>
-      <div className="flex flex-col items-center w-[280px]">
+      <div
+        className="flex flex-col items-center gap-2"
+        style={{ width: '395px' }}
+      >
         {/* Card */}
         <div
-          className="w-full h-[380px] rounded-xl bg-cover bg-center px-5 py-5 shadow-xl relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 flex flex-col"
+          className="w-full rounded-xl bg-cover bg-center px-5 shadow-xl relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 flex flex-col pt-[82px]"
           style={{
+            height: '551px',
             backgroundImage: `url(${
               medicalCase.thumbnailBackground ? medicalCase.thumbnailBackground.url : ThumbnailPlaceholder.src
             })`,
@@ -26,28 +30,42 @@ export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCard
           onClick={onConfirmationToggle}
         >
           {/* Title at top */}
-          <div className="text-white text-[24px] leading-tight font-medium text-center mb-auto">
+          <div className="text-white text-[36px] leading-tight font-normal text-center mb-[60px]">
             {medicalCase.title}
           </div>
 
-          {/* Avatar and version at bottom */}
-          <div className="flex flex-col items-center gap-3 mt-auto">
+          {/* Avatar */}
+          <div className="flex justify-center">
             <img
-              src={
-                medicalCase.patient.profileImage ? medicalCase.patient.profileImage.url : ProfilePicPlaceholder.src
-              }
+              src={medicalCase.patient.profileImage ? medicalCase.patient.profileImage.url : ProfilePicPlaceholder.src}
               alt="Patient profile pic"
-              className="w-40 h-40 rounded-full object-cover border-white/70 border-4"
+              className="rounded-full object-cover border-white/70 border-4"
+              style={{ width: '174px', height: '174px' }}
             />
-            <span className="text-white text-sm font-medium px-3 py-2 rounded-2xl bg-black bg-opacity-25">
-              {medicalCase.version}
-            </span>
           </div>
+
+          {/* Version badge - absolute positioned 18px from bottom */}
+          <span
+            className="absolute left-1/2 -translate-x-1/2 text-white text-sm font-medium px-3 py-2 rounded-2xl bg-black bg-opacity-25"
+            style={{ bottom: '18px' }}
+          >
+            {medicalCase.version}
+          </span>
         </div>
 
         {/* Description outside card */}
-        <div className="mt-4 text-center">
-          <p className="text-lg text-darkBlue font-semibold line-clamp-2">{medicalCase.shortDescription}</p>
+        <div className="text-center w-full">
+          <p
+            className="text-[17px] font-medium line-clamp-2"
+            style={{ color: '#18276D' }}
+          >
+            {medicalCase.shortDescription}
+          </p>
+
+          {/* Categories */}
+          {medicalCase.categories && medicalCase.categories.length > 0 && (
+            <p className="text-sm text-gray-600 mt-1">{medicalCase.categories.join(' • ')}</p>
+          )}
         </div>
       </div>
 

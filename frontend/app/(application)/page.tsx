@@ -4,6 +4,7 @@ import { MedicalCasePortraitCard } from '@/components/medical-cases/MedicalCaseP
 import { getAllMedicalCasesForStaging } from '@/lib/hygraph/getAllMedicalCases'
 import { MedicalCasesRow } from '@/components/medical-cases/MedicalCasesRow'
 import { FeaturedSlideshow } from '@/components/medical-cases/FeaturedSlideshow'
+import { MedicalCasesPortraitRow } from '@/components/medical-cases/MedicalCasesPortraitRow'
 
 const NewHomePage = async () => {
   const medicalCases = await getAllMedicalCasesForStaging()
@@ -15,31 +16,24 @@ const NewHomePage = async () => {
     <div className="flex flex-col overflow-visible">
       {/* Featured Slideshow */}
       {newTests && newTests.length > 0 && (
-        <div className="mb-8 px-[60px]">
+        <div className="mb-8 px-5 lg:px-[60px]">
           <div className="text-[28px] font-medium mb-5">New Tests</div>
           <FeaturedSlideshow medicalCases={newTests} />
         </div>
       )}
 
-      <div className="px-[60px]">
+      <div className="px-5 lg:px-[60px]">
         {recommendedCases && recommendedCases.length > 0 && (
           <div>
-            <div className="text-[28px] font-medium ">Recommended For You</div>
+            <div className="text-[28px] font-medium">Recommended For You</div>
             <MedicalCasesRow medicalCases={recommendedCases} />
           </div>
         )}
         {topCases && topCases.length > 0 && (
           <>
             <div>
-              <div className="text-[28px] font-medium overflow-visible mb-5">Popular Tests</div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
-                {topCases.slice(0, 8).map((medicalCase) => (
-                  <MedicalCasePortraitCard
-                    key={medicalCase.id}
-                    medicalCase={medicalCase}
-                  />
-                ))}
-              </div>
+              <div className="text-[28px] font-medium mb-5">Popular Tests</div>
+              <MedicalCasesPortraitRow medicalCases={topCases} />
             </div>
           </>
         )}

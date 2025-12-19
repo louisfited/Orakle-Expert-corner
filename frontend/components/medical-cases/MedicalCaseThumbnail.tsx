@@ -32,7 +32,7 @@ export const MedicalCaseThumbnail = ({
 }: MedicalCaseThumbnailProps) => {
   return (
     <div
-      className={`${width} ${height} rounded-xl bg-cover bg-center px-5 flex flex-col justify-between py-5 shadow-xl relative overflow-hidden ${opacity} group ${
+      className={`${width} ${height} rounded-2xl bg-cover bg-center px-5 flex flex-col justify-between py-5 shadow-xl relative overflow-hidden ${opacity} group ${
         interactive
           ? 'transform transition-transform duration-300 hover:scale-105 cursor-pointer'
           : 'pointer-events-none'
