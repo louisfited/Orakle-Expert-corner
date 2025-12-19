@@ -13,6 +13,18 @@ export const MedicalCasesPortraitRow = ({ medicalCases }: MedicalCasesPortraitRo
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(false)
 
+  useEffect(() => {
+    const checkScroll = () => {
+      if (!scrollRef.current) return
+      const { scrollWidth, clientWidth } = scrollRef.current
+      setShowRightArrow(scrollWidth > clientWidth)
+    }
+
+    checkScroll()
+    window.addEventListener('resize', checkScroll)
+    return () => window.removeEventListener('resize', checkScroll)
+  }, [medicalCases])
+
   if (!medicalCases || medicalCases.length === 0) {
     return <div className="text-red-500">No medical cases to display</div>
   }
@@ -37,18 +49,6 @@ export const MedicalCasesPortraitRow = ({ medicalCases }: MedicalCasesPortraitRo
     setShowLeftArrow(scrollLeft > 0)
     setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10)
   }
-
-  useEffect(() => {
-    const checkScroll = () => {
-      if (!scrollRef.current) return
-      const { scrollWidth, clientWidth } = scrollRef.current
-      setShowRightArrow(scrollWidth > clientWidth)
-    }
-
-    checkScroll()
-    window.addEventListener('resize', checkScroll)
-    return () => window.removeEventListener('resize', checkScroll)
-  }, [medicalCases])
 
   return (
     <div className="relative group/row">
