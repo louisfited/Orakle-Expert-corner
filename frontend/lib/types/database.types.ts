@@ -139,8 +139,8 @@ export type Database = {
           id?: number
         }
         Update: {
-          case_id: string
-          user_id: string
+          case_id?: string
+          user_id?: string
           status: string
         }
         Relationships: [
@@ -167,7 +167,7 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      case_status: 'STARTED' | 'COMPLETED'
     }
     CompositeTypes: {
       [_ in never]: never
