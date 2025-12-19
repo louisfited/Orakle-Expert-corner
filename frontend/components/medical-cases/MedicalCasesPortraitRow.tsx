@@ -1,20 +1,35 @@
 'use client'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
-import { MedicalCaseCard } from './MedicalCaseCard'
+import { MedicalCasePortraitCard } from './MedicalCasePortraitCard'
 import { useState, useRef, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import Select from 'react-dropdown-select'
-import categoriesJson from '@/lib/categories.json'
 
-interface MedicalCaseRowProps {
+interface MedicalCasesPortraitRowProps {
   medicalCases: MergedMedicalCase[]
-  filter?: string
 }
 
-export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) => {
+export const MedicalCasesPortraitRow = ({ medicalCases }: MedicalCasesPortraitRowProps) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(false)
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (!scrollRef.current) return
+      const { scrollWidth, clientWidth } = scrollRef.current
+      setShowRightArrow(scrollWidth > clientWidth)
+    }
+
+    checkScroll()
+    window.addEventListener('resize', checkScroll)
+    return () => window.removeEventListener('resize', checkScroll)
+  }, [medicalCases])
+
+  if (!medicalCases || medicalCases.length === 0) {
+    return <div className="text-red-500">No medical cases to display</div>
+  }
+
+  console.log('MedicalCasesPortraitRow - medicalCases count:', medicalCases?.length)
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return
@@ -34,20 +49,6 @@ export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) =
     setShowLeftArrow(scrollLeft > 0)
     setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10)
   }
-
-  const [filteredCases, setFilteredCases] = useState<MergedMedicalCase[]>(medicalCases)
-
-  useEffect(() => {
-    const checkScroll = () => {
-      if (!scrollRef.current) return
-      const { scrollWidth, clientWidth } = scrollRef.current
-      setShowRightArrow(scrollWidth > clientWidth)
-    }
-
-    checkScroll()
-    window.addEventListener('resize', checkScroll)
-    return () => window.removeEventListener('resize', checkScroll)
-  }, [filteredCases])
 
   return (
     <div className="relative group/row">
@@ -84,18 +85,16 @@ export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) =
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="scroll-smooth no-scrollbar overflow-x-auto h-[350px]"
+        className="scroll-smooth no-scrollbar overflow-x-auto overflow-y-clip"
+        style={{ height: '650px' }}
       >
-        <div className="flex flex-row gap-3 py-8">
-          {filteredCases.map((medicalCase) => (
+        <div className="flex flex-row flex-nowrap gap-6 py-8">
+          {medicalCases.map((medicalCase) => (
             <div
               key={medicalCase.id}
-              className="first:pl-8 cursor-default"
+              className="first:pl-8 cursor-default flex-shrink-0"
             >
-              <MedicalCaseCard
-                medicalCase={medicalCase}
-                hasDescription={true}
-              />
+              <MedicalCasePortraitCard medicalCase={medicalCase} />
             </div>
           ))}
         </div>
