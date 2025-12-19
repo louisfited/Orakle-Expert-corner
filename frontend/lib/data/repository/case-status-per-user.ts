@@ -6,7 +6,8 @@ import { getSafeUser } from '@/lib/auth/safe-user'
 import { StatusEnum } from '@/lib/types/types'
 
 export const getCasesStartedForUser = async (
-  caseId?: string
+  caseId?: string | null,
+  status?: string
 ): Promise<{
   status: 'success' | 'error'
   message: string
@@ -29,6 +30,9 @@ export const getCasesStartedForUser = async (
 
     if (caseId) {
       getCasesQuery = getCasesQuery.eq('case_id', caseId ? caseId : '')
+    }
+    if (status) {
+      getCasesQuery = getCasesQuery.eq('status', status ? status : '')
     }
 
     const { data: medicalCasesStarted, error } = await getCasesQuery
