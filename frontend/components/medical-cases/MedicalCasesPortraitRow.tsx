@@ -29,8 +29,6 @@ export const MedicalCasesPortraitRow = ({ medicalCases }: MedicalCasesPortraitRo
     return <div className="text-red-500">No medical cases to display</div>
   }
 
-  console.log('MedicalCasesPortraitRow - medicalCases count:', medicalCases?.length)
-
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return
 

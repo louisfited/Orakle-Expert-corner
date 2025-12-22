@@ -17,12 +17,6 @@ export default function CategoriesPageContent({ medicalCases }: CategoriesPageCo
   const [debouncedCategorySearch, setDebouncedCategorySearch] = useState('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
-  // Debug: Log medical cases
-  useEffect(() => {
-    console.log('Categories Page - Medical Cases:', medicalCases)
-    console.log('Categories Page - Medical Cases Count:', medicalCases?.length || 0)
-  }, [medicalCases])
-
   // Debounce category search
   useEffect(() => {
     const timer = setTimeout(() => {

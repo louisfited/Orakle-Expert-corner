@@ -25,13 +25,7 @@ export default async function Home() {
   const lang = cookies().get('language')?.value as 'en' | 'fr' | 'de' | undefined
 
   // if (userProfile?.country_of_practice === staging_invite_only) {
-  //   medicalCases = await getAllMedicalCasesForStaging()
-  // } else {
-  // }
   medicalCases = await getAllMedicalCases()
-  // console.log(medicalCases);
-
-  //
 
   // Ensure caseDescription is always defined
   medicalCases = medicalCases?.map((mc: any) => ({
