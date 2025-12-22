@@ -17,6 +17,7 @@ import * as XLSX from 'xlsx'
 import getSimulationsLog from '@/lib/hygraph/getSimulationsLog'
 import { useRouter, usePathname } from 'next/navigation'
 import { useCaseContext } from '@/lib/context/caseContext'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface UserProfile {
   country_of_practice: string
@@ -48,6 +49,7 @@ export const UserDropdown = () => {
   const router = useRouter()
   const pathname = usePathname()
   const { isFormDirty } = useCaseContext()
+
   const handleNavigation = (targetPath: string, isFormDirty: boolean) => {
     const isCases = pathname?.split('/').filter(Boolean).slice(-2, -1)[0] === 'cases'
     if (isCases && isFormDirty) {
@@ -164,9 +166,9 @@ export const UserDropdown = () => {
     }
   }
 
-  // If no user, don't render
-  if (!user) {
-    return null
+  // If loading or no user, show skeleton
+  if (isLoading || !user) {
+    return <UserDropdownSkeleton />
   }
 
   return (
@@ -270,6 +272,27 @@ const MenuTrigger = ({ user, email }: UserFields) => {
           size={18}
           className="text-textPrimary"
         />
+      </div>
+    </>
+  )
+}
+
+const UserDropdownSkeleton = () => {
+  return (
+    <>
+      {/* Mobile Skeleton: Avatar circle and chevron */}
+      <div className="flex lg:hidden items-center gap-1">
+        <Skeleton className="w-8 h-8 rounded-full" />
+        <Skeleton className="w-3 h-3" />
+      </div>
+
+      {/* Desktop Skeleton: Full info */}
+      <div className="hidden lg:flex gap-3 items-center w-fit px-3 py-2">
+        <div className="flex flex-col items-end gap-1.5">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-3 w-40" />
+        </div>
+        <Skeleton className="w-12 h-12 rounded-full" />
       </div>
     </>
   )

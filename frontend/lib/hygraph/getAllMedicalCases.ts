@@ -106,10 +106,6 @@ medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 1000, or
     console.error('getAllMedicalCases - GraphQL Errors:', res.errors)
   }
 
-  console.log('getAllMedicalCases - webinarVideos:', res?.data?.webinarVideos?.length || 0)
-  console.log('getAllMedicalCases - medicalCases:', res?.data?.medicalCases?.length || 0)
-  console.log('getAllMedicalCases - medicalCasesV2:', res?.data?.medicalCasesV2?.length || 0)
-
   const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: '20m', ...v }))
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
   const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
@@ -118,8 +114,6 @@ medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 1000, or
   const sorted = data.sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   })
-
-  console.log('getAllMedicalCases - Total sorted:', sorted.length)
 
   return sorted
 }
@@ -265,7 +259,7 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
   })
 
   const res = await response.json()
-  const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15 min', ...c }))
-  const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5 min', ...c }))
+  const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
+  const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
   return [...v1, ...v2]
 }
