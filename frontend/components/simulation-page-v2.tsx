@@ -14,6 +14,7 @@ import { DiagnoseList } from './tables/diagnoses/DiagnoseList'
 import { TopProfileMedicalCaseV2 } from './custom/PatientCaseCard/components/TopProfileMedicalCaseV2'
 import { AudioStories } from './Audio'
 import { Button } from './ui/button'
+import { startTestAction, finishTestAction, getCasesStartedForUser } from '@/lib/data/repository/case-status-per-user'
 
 interface Props {
   medicalCaseV2: MedicalCaseV2 | null
@@ -53,6 +54,18 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
     setLikes,
     setNavbarTitle,
   ])
+
+  useEffect(() => {
+    const startTest = async () => {
+      if (currentCardIndex === 1) {
+        const startedTests = await getCasesStartedForUser(medicalCaseV2?.id)
+        if (medicalCaseV2 && startedTests.data && startedTests.data.length < 1) {
+          startTestAction(medicalCaseV2.id)
+        }
+      }
+    }
+    startTest()
+  }, [currentCardIndex, medicalCaseV2])
 
   if (!medicalCaseV2 || !patientCase) return <div>Medical case not found</div>
 
@@ -130,6 +143,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
   ]
 
   const handleFinish = () => {
+    finishTestAction(medicalCaseV2Id)
     router.push(medicalCaseV2.finishUrl || '/')
   }
 

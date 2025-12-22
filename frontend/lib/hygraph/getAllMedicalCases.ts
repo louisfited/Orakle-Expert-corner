@@ -28,6 +28,8 @@ export type MergedMedicalCase = {
   }
   shortDescription?: string
   thumbnailBackground: { url: string }
+  status?: string
+  isBookmarked?: boolean
 }
 
 export const getAllMedicalCases = async (): Promise<MergedMedicalCase[]> => {
@@ -205,8 +207,10 @@ medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 150, ord
 
 // }
 
-export const getAllMedicalCasesForStaging = async (): Promise<MergedMedicalCase[]> => {
+export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<MergedMedicalCase[]> => {
   const languageValue: string | undefined = cookies().get('language')?.value
+
+  const whereClause = ids && ids.length ? `, where: { id_in: [${ids.map((id) => `"${id}"`).join(',')}] }` : ''
 
   const response = await fetch(HYGRAPH_URL, {
     method: 'POST',
@@ -217,7 +221,9 @@ export const getAllMedicalCasesForStaging = async (): Promise<MergedMedicalCase[
     cache: 'no-store',
     body: JSON.stringify({
       query: `{
-        medicalCases(locales:[${languageValue ? languageValue : 'en'}], first: 150, orderBy: createdAt_DESC) {
+        medicalCases(locales:[${
+          languageValue ? languageValue : 'en'
+        }], first: 150, orderBy: createdAt_DESC${whereClause}) {
           id
           title
           supporter
@@ -240,7 +246,9 @@ export const getAllMedicalCasesForStaging = async (): Promise<MergedMedicalCase[
             profileImage { url }
           }
         }
-        medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 150, orderBy: createdAt_DESC) {
+        medicalCasesV2(locales:[${
+          languageValue ? languageValue : 'en'
+        }],first: 150, orderBy: createdAt_DESC${whereClause}) {
           id
           title
           supporter

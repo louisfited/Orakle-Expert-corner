@@ -12,6 +12,7 @@ import updateExport from '@/lib/hygraph/updateExport'
 import { checkEmptyRichText } from '@/lib/utils'
 import { checkUserAuth } from '@/lib/data/repository/likes'
 import languageTexts from '@/lib/utils/language'
+import { getCasesStartedForUser, startTestAction, finishTestAction } from '@/lib/data/repository/case-status-per-user'
 import Cookies from 'js-cookie'
 export const FormStepsAndProgress = ({
   progress,
@@ -43,6 +44,7 @@ export const FormStepsAndProgress = ({
 
   const currentActiveStep = stepTitles[currentStep]
   const isLastStep = currentStep === stepTitles.length - 1
+  const isFirstStep = currentStep === 0
 
   const saveLog = async () => {
     const newLog = {
@@ -63,7 +65,9 @@ export const FormStepsAndProgress = ({
     return (
       <p
         key={index}
-        className={`flex-1 hidden lg:flex text-[px] xl:text-md mt-2 text-center ${isActive ? 'text-gray-900 font-medium mb-0.5' : 'text-gray-300'}`}
+        className={`flex-1 hidden lg:flex text-[px] xl:text-md mt-2 text-center ${
+          isActive ? 'text-gray-900 font-medium mb-0.5' : 'text-gray-300'
+        }`}
       >
         {step}
       </p>
@@ -80,12 +84,22 @@ export const FormStepsAndProgress = ({
       return
     }
 
+    if (isFirstStep) {
+      const startedTests = await getCasesStartedForUser(medicalCase?.id)
+      if (medicalCase && startedTests.data && startedTests.data.length < 1) {
+        startTestAction(medicalCase.id)
+      }
+    }
+
     if (isLastStep) {
       const urlParams = new URLSearchParams(window?.location?.search)
       if (urlParams.has('email') && urlParams.has('password')) {
         window?.location?.reload()
       }
-      // TODO: What do we want to happen here?
+
+      if (medicalCase) {
+        finishTestAction(medicalCase.id)
+      }
       saveLog()
       router.push(medicalCase?.finishUrl || '/')
     }

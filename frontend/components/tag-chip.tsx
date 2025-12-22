@@ -1,10 +1,19 @@
 'use client'
 
-export const TagChip= ({ title }: { title: string | null},
-) => {
+interface TagChipProps {
+  title: string | null
+  pressed: boolean
+  onClick?: () => void
+}
+
+export const TagChip = ({ title, pressed, onClick }: TagChipProps) => {
+  const fill = pressed ? 'bg-textDark text-white' : 'bg-textPrimary bg-opacity-5 text-textDark'
 
   return (
-    <div className='p-1 bg-[#1026C40A] rounded-lg w-fit border-2'>
+    <div
+      className={`py-3 px-5 rounded-full w-fit border-2 text-lg font-medium cursor-pointer ${fill}`}
+      onClick={onClick}
+    >
       {title}
     </div>
   )

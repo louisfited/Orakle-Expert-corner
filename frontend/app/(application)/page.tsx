@@ -5,12 +5,18 @@ import { getAllMedicalCasesForStaging } from '@/lib/hygraph/getAllMedicalCases'
 import { MedicalCasesRow } from '@/components/medical-cases/MedicalCasesRow'
 import { FeaturedSlideshow } from '@/components/medical-cases/FeaturedSlideshow'
 import { MedicalCasesPortraitRow } from '@/components/medical-cases/MedicalCasesPortraitRow'
+import { getCasesStartedForUser } from '@/lib/data/repository/case-status-per-user'
+import { StatusEnum } from '@/lib/types/types'
 
 const NewHomePage = async () => {
   const medicalCases = await getAllMedicalCasesForStaging()
   const recommendedCases = medicalCases.slice(0, 4) // will be changed after implementation of completed tests
   const topCases = [...medicalCases].sort((a, b) => b.likes - a.likes)
   const newTests = medicalCases.slice(0, 5) // Get first 5 cases for the slideshow
+  const caseStatus = await getCasesStartedForUser(null, StatusEnum.started)
+  const myCases = caseStatus.data && caseStatus.data.length > 0 && caseStatus.data.map((mycase) => mycase.case_id)
+  const continueTestsRow =
+    myCases && myCases.length > 0 && medicalCases.filter((medicalCase) => myCases?.includes(medicalCase.id))
 
   return (
     <div className="flex flex-col overflow-visible">
@@ -27,6 +33,12 @@ const NewHomePage = async () => {
           <div>
             <div className="text-[28px] font-medium">Recommended For You</div>
             <MedicalCasesRow medicalCases={recommendedCases} />
+          </div>
+        )}
+        {continueTestsRow && continueTestsRow.length > 0 && (
+          <div>
+            <div className="text-[28px] font-medium">Continue Tests</div>
+            <MedicalCasesRow medicalCases={continueTestsRow} />
           </div>
         )}
         {topCases && topCases.length > 0 && (
