@@ -154,7 +154,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
   }
 
   return (
-    <div className="h-[calc(100vh-76px)] lg:h-[calc(100vh-96px)] flex flex-col overflow-hidden lg:max-w-4xl xl:max-w-7xl mx-auto">
+    <div className="h-[calc(100vh-76px)] lg:h-[calc(100vh-96px)] flex flex-col overflow-hidden ">
       <div className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden  pt-6 gap-4 md:gap-6">
         <div className="w-full md:w-1/3 flex flex-col md:h-full md:min-h-0 order-2 md:order-1">
           <div className="py-6 px-4 flex-shrink-0">

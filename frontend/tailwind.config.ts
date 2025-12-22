@@ -48,6 +48,7 @@ const config = {
         'black': '#2D2E31',
         'textDark': '#18276D',
         'lightBlue': '#EBF8FF',
+        'lightBlueFaded': '#EBF8FF99',
         'textPrimary': '#1026C4',
         'textPrimaryFaded': 'rgba(16, 38, 196, 0.35)',
         'grayBg': '#F5F7FF',
