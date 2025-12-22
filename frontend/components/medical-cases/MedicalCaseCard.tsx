@@ -52,12 +52,13 @@ export const MedicalCaseCard = ({ medicalCase, hasDescription }: MedicalCaseCard
     <>
       <div
         ref={cardRef}
-        className="flex flex-col w-[395px] transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:z-50 group overflow-visible hover:rounded-2xl relative"
+        className="flex flex-col w-full max-w-[395px] transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:z-50 group overflow-visible hover:rounded-2xl relative"
         style={{ transformOrigin }}
       >
         <div className="relative mb-2">
           <MedicalCaseThumbnail
             medicalCase={medicalCase}
+            width="w-full"
             height="h-[236px]"
             avatarSize="w-40 h-40"
             showHoverButtons={true}

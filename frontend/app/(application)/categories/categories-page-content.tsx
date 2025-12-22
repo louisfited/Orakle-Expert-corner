@@ -1,5 +1,4 @@
 'use client'
-import { useSearchParams } from 'next/navigation'
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { MedicalCaseCard } from '@/components/medical-cases/MedicalCaseCard'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
@@ -7,18 +6,22 @@ import categories from '@/lib/categories.json'
 import { Search, X, Filter } from 'lucide-react'
 import { CategoryPillList } from '@/components/CategoryPill'
 
-interface SearchPageContentProps {
+interface CategoriesPageContentProps {
   medicalCases: MergedMedicalCase[]
 }
 
-export default function SearchPageContent({ medicalCases }: SearchPageContentProps) {
-  const searchParams = useSearchParams()
-  const query = searchParams.get('q') || ''
+export default function CategoriesPageContent({ medicalCases }: CategoriesPageContentProps) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [tempSelectedCategories, setTempSelectedCategories] = useState<string[]>([])
   const [categorySearch, setCategorySearch] = useState('')
   const [debouncedCategorySearch, setDebouncedCategorySearch] = useState('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
+  // Debug: Log medical cases
+  useEffect(() => {
+    console.log('Categories Page - Medical Cases:', medicalCases)
+    console.log('Categories Page - Medical Cases Count:', medicalCases?.length || 0)
+  }, [medicalCases])
 
   // Debounce category search
   useEffect(() => {
@@ -73,25 +76,13 @@ export default function SearchPageContent({ medicalCases }: SearchPageContentPro
   const filteredResults = useMemo(() => {
     let results = medicalCases
 
-    // Filter by search query
-    if (query) {
-      const lowerQuery = query.toLowerCase()
-      results = results.filter(
-        (medicalCase) =>
-          medicalCase.title?.toLowerCase().includes(lowerQuery) ||
-          medicalCase.shortDescription?.toLowerCase().includes(lowerQuery) ||
-          medicalCase.supporter?.toLowerCase().includes(lowerQuery) ||
-          medicalCase.faculty?.toLowerCase().includes(lowerQuery)
-      )
-    }
-
     // Filter by categories
     if (selectedCategories.length > 0) {
       results = results.filter((medicalCase) => selectedCategories.some((cat) => medicalCase.categories?.includes(cat)))
     }
 
     return results
-  }, [medicalCases, query, selectedCategories])
+  }, [medicalCases, selectedCategories])
 
   // Filter categories based on search
   const filteredCategories = useMemo(() => {
@@ -244,11 +235,8 @@ export default function SearchPageContent({ medicalCases }: SearchPageContentPro
 
   return (
     <div className="px-4 py-8">
-      {/* Mobile Filter Button & Results Count */}
-      <div className="lg:hidden mb-4 flex items-center justify-between">
-        <div className="text-textDark text-lg font-normal">
-          {filteredResults.length} test{filteredResults.length !== 1 ? 's' : ''}
-        </div>
+      {/* Mobile Filter Button */}
+      <div className="lg:hidden mb-4 flex items-center justify-end">
         <button
           onClick={() => setIsDrawerOpen(!isDrawerOpen)}
           className="flex items-center gap-2 px-4 py-2 text-textDark rounded-full hover:opacity-90 transition-opacity"
@@ -299,30 +287,20 @@ export default function SearchPageContent({ medicalCases }: SearchPageContentPro
 
         {/* Results Grid */}
         <div className="flex-1 min-w-0">
-          {/* Counter and Categories Pills - Same row on desktop */}
-          <div className="flex flex-col lg:flex-row lg:items-center gap-4 mb-4">
-            {/* Results Count - Hidden on mobile, shown on desktop */}
-            <div className="hidden lg:block text-textDark text-lg font-normal whitespace-nowrap flex-shrink-0">
-              {filteredResults.length} test{filteredResults.length !== 1 ? 's' : ''}
+          {/* Selected Categories Pills - No Counter */}
+          {selectedCategories.length > 0 && (
+            <div className="mb-4">
+              <CategoryPillList
+                categories={selectedCategoryPills}
+                onRemove={handleRemoveCategory}
+              />
             </div>
-
-            {/* Selected Categories Pills - Scrollable */}
-            {selectedCategories.length > 0 && (
-              <div className="flex-1 min-w-0">
-                <CategoryPillList
-                  categories={selectedCategoryPills}
-                  onRemove={handleRemoveCategory}
-                />
-              </div>
-            )}
-          </div>
+          )}
 
           {filteredResults.length === 0 ? (
             <div className="rounded-lg shadow-sm p-12 text-center bg-gray-50">
               <p className="text-gray-600 text-lg">No medical cases found matching your criteria.</p>
-              {(query || selectedCategories.length > 0) && (
-                <p className="text-gray-500 mt-2">Try adjusting your search or filters.</p>
-              )}
+              {selectedCategories.length > 0 && <p className="text-gray-500 mt-2">Try adjusting your filters.</p>}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-6 justify-items-center lg:justify-items-start">

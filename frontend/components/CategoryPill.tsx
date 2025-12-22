@@ -7,11 +7,11 @@ interface CategoryPillProps {
 
 export function CategoryPill({ label, onRemove }: CategoryPillProps) {
   return (
-    <div className="inline-flex items-center gap-2 bg-textDark text-white rounded-full px-3 py-1.5 whitespace-nowrap">
+    <div className="inline-flex items-center gap-2 bg-textDark text-white rounded-full pl-3 pr-1 py-1 whitespace-nowrap">
       <span className="text-[15px] font-normal text-white whitespace-nowrap">{label}</span>
       <button
         onClick={onRemove}
-        className="hover:bg-white/20 rounded-full p-0.5 transition-colors"
+        className="bg-white/20 rounded-full p-2 transition-colors"
         aria-label={`Remove ${label} filter`}
       >
         <X className="w-3.5 h-3.5" />

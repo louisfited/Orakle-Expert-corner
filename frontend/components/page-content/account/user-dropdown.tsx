@@ -247,27 +247,27 @@ const MenuTrigger = ({ user, email }: UserFields) => {
 
   return (
     <>
-      {/* Mobile: Avatar with chevron */}
-      <div className="flex sm:hidden items-center gap-1">
-        <div className="w-8 h-8 rounded-full bg-textPrimary text-white flex items-center justify-center text-sm font-semibold">
+      {/* Mobile: Avatar with initials and chevron */}
+      <div className="flex lg:hidden items-center gap-1">
+        <div className="w-8 h-8 rounded-full bg-textDark text-white flex items-center justify-center text-xs font-semibold">
           {initials}
         </div>
         <ChevronDown
-          size={16}
-          className="text-textPrimary"
+          size={14}
+          className="text-textDark"
         />
       </div>
 
       {/* Desktop: Full info */}
-      <div className="hidden sm:flex gap-4 items-center w-fit px-2 py-1 lg:px-4 lg:py-3 rounded-lg">
-        <div className="flex flex-col items-end gap-1">
-          <p className="font-medium text-sm md:text-base text-textPrimary">
+      <div className="hidden lg:flex gap-3 items-center w-fit px-3 py-2 rounded-lg">
+        <div className="flex flex-col items-end gap-0.5">
+          <p className="font-medium text-sm text-textPrimary">
             {firstName} {lastName}
           </p>
-          <p className="text-xs md:text-base text-textPrimary">{email}</p>
+          <p className="text-xs text-textPrimary">{email}</p>
         </div>
         <ChevronDown
-          size={20}
+          size={18}
           className="text-textPrimary"
         />
       </div>
