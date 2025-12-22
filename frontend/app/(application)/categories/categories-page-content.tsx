@@ -91,16 +91,16 @@ export default function CategoriesPageContent({ medicalCases }: CategoriesPageCo
     return categoryEntries.filter(([, label]) => label.toLowerCase().includes(searchLower))
   }, [categoryEntries, debouncedCategorySearch])
 
-  // Count results per category
+  // Count results per category (based on all medical cases, not filtered results)
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {}
-    filteredResults.forEach((medicalCase) => {
+    medicalCases.forEach((medicalCase) => {
       medicalCase.categories?.forEach((cat) => {
         counts[cat] = (counts[cat] || 0) + 1
       })
     })
     return counts
-  }, [filteredResults])
+  }, [medicalCases])
 
   // Category sidebar content for desktop
   const categorySidebarContent = useMemo(

@@ -1,17 +1,14 @@
 'use client'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
-import { MedicalCaseCard } from './MedicalCaseCard'
+import { MedicalCaseLandscapeCard } from './MedicalCaseLandscapeCard'
 import { useState, useRef, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import Select from 'react-dropdown-select'
-import categoriesJson from '@/lib/categories.json'
 
-interface MedicalCaseRowProps {
+interface MedicalCasesLandscapeRowProps {
   medicalCases: MergedMedicalCase[]
-  filter?: string
 }
 
-export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) => {
+export const MedicalCasesLandscapeRow = ({ medicalCases }: MedicalCasesLandscapeRowProps) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(false)
@@ -35,8 +32,6 @@ export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) =
     setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10)
   }
 
-  const [filteredCases, setFilteredCases] = useState<MergedMedicalCase[]>(medicalCases)
-
   useEffect(() => {
     const checkScroll = () => {
       if (!scrollRef.current) return
@@ -47,7 +42,7 @@ export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) =
     checkScroll()
     window.addEventListener('resize', checkScroll)
     return () => window.removeEventListener('resize', checkScroll)
-  }, [filteredCases])
+  }, [medicalCases])
 
   return (
     <div className="relative group/row">
@@ -87,12 +82,12 @@ export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) =
         className="scroll-smooth no-scrollbar overflow-x-auto h-[350px]"
       >
         <div className="flex flex-row gap-3 py-8">
-          {filteredCases.map((medicalCase) => (
+          {medicalCases.map((medicalCase) => (
             <div
               key={medicalCase.id}
-              className="first:pl-8 cursor-default"
+              className="first:pl-8 cursor-default flex-shrink-0"
             >
-              <MedicalCaseCard
+              <MedicalCaseLandscapeCard
                 medicalCase={medicalCase}
                 hasDescription={true}
               />

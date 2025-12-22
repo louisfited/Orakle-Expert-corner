@@ -15,7 +15,7 @@ interface StartTestModalProps {
 export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestModalProps) => {
   const router = useRouter()
   const handleStartTest = (id: string, version: string) => {
-    if (version === '5 min') {
+    if (version === '5m') {
       router.push(`/cases-v2/${id}`)
     } else {
       router.push(`/cases/${id}`)

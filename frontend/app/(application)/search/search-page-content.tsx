@@ -100,16 +100,30 @@ export default function SearchPageContent({ medicalCases }: SearchPageContentPro
     return categoryEntries.filter(([, label]) => label.toLowerCase().includes(searchLower))
   }, [categoryEntries, debouncedCategorySearch])
 
-  // Count results per category
+  // Count results per category (based on search results, not category-filtered results)
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {}
-    filteredResults.forEach((medicalCase) => {
+    let resultsForCounting = medicalCases
+
+    // Apply only search query filter, not category filters
+    if (query) {
+      const lowerQuery = query.toLowerCase()
+      resultsForCounting = resultsForCounting.filter(
+        (medicalCase) =>
+          medicalCase.title?.toLowerCase().includes(lowerQuery) ||
+          medicalCase.shortDescription?.toLowerCase().includes(lowerQuery) ||
+          medicalCase.supporter?.toLowerCase().includes(lowerQuery) ||
+          medicalCase.faculty?.toLowerCase().includes(lowerQuery)
+      )
+    }
+
+    resultsForCounting.forEach((medicalCase) => {
       medicalCase.categories?.forEach((cat) => {
         counts[cat] = (counts[cat] || 0) + 1
       })
     })
     return counts
-  }, [filteredResults])
+  }, [medicalCases, query])
 
   // Category sidebar content for desktop
   const categorySidebarContent = useMemo(

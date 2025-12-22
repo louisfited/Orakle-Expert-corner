@@ -54,12 +54,12 @@ export const MedicalCasesPortraitRow = ({ medicalCases }: MedicalCasesPortraitRo
     <div className="relative group/row">
       {/* Left Fade */}
       {showLeftArrow && (
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-lightBlue to-transparent z-40 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-40 pointer-events-none" />
       )}
 
       {/* Right Fade */}
       {showRightArrow && (
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-lightBlue to-transparent z-40 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-40 pointer-events-none" />
       )}
 
       {/* Left Arrow */}
