@@ -283,7 +283,6 @@ const UserDropdownSkeleton = () => {
       {/* Mobile Skeleton: Avatar circle and chevron */}
       <div className="flex lg:hidden items-center gap-1">
         <Skeleton className="w-8 h-8 rounded-full" />
-        <Skeleton className="w-3 h-3" />
       </div>
 
       {/* Desktop Skeleton: Full info */}
