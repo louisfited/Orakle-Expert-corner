@@ -22,41 +22,43 @@ export const BookmarksTable = async () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((bookmark) => {
-          const medicalCase = medicalCases?.find((medicalCase) => medicalCase.id === bookmark.case_id)
-          return (
-            <TableRow key={bookmark.id}>
-              <TableCell>{medicalCase?.title || ''}</TableCell>
-              <TableCell>
-                <RenderHTML
-                  className="no-margin"
-                  htmlString={shortenString(medicalCase?.caseDescription?.html || '')}
-                />
-              </TableCell>
-              <TableCell>
-                <BookmarkButton
-                  caseId={bookmark.case_id}
-                  bookmarked={true}
-                  caseTitle={bookmark.case_title!}
-                />
-              </TableCell>
-              <TableCell>
-                <Link
-                  href={
-                    ['5m', '5 min'].includes(medicalCase?.version ?? '')
-                      ? `/cases-v2/${bookmark.case_id}`
-                      : `/cases/${bookmark.case_id}`
-                  }
-                >
-                  <HStack className="gap-0">
-                    <p>Go to case</p>
-                    <ChevronRight />
-                  </HStack>
-                </Link>
-              </TableCell>
-            </TableRow>
-          )
-        })}
+        {data
+          ?.filter((bookmark) => medicalCases?.some((medicalCase) => medicalCase.id === bookmark.case_id))
+          .map((bookmark) => {
+            const medicalCase = medicalCases?.find((medicalCase) => medicalCase.id === bookmark.case_id)
+            return (
+              <TableRow key={bookmark.id}>
+                <TableCell>{medicalCase?.title || ''}</TableCell>
+                <TableCell>
+                  <RenderHTML
+                    className="no-margin"
+                    htmlString={shortenString(medicalCase?.caseDescription?.html || '')}
+                  />
+                </TableCell>
+                <TableCell>
+                  <BookmarkButton
+                    caseId={bookmark.case_id}
+                    bookmarked={true}
+                    caseTitle={bookmark.case_title!}
+                  />
+                </TableCell>
+                <TableCell>
+                  <Link
+                    href={
+                      ['5m', '5 min'].includes(medicalCase?.version ?? '')
+                        ? `/cases-v2/${bookmark.case_id}`
+                        : `/cases/${bookmark.case_id}`
+                    }
+                  >
+                    <HStack className="gap-0">
+                      <p>Go to case</p>
+                      <ChevronRight />
+                    </HStack>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            )
+          })}
       </TableBody>
     </Table>
   )
