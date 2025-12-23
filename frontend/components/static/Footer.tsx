@@ -35,7 +35,9 @@ export default function Footer() {
           {/* Contact */}
           <div className="lg:flex-1 lg:text-right">
             <Link
-              href="/contact"
+              href="https://www.orakle.digital/#contact"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline"
             >
               Contact
