@@ -122,7 +122,9 @@ export const MedicalCasesLandscapeRow = ({ medicalCases }: MedicalCasesLandscape
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleMouseUpOrLeave}
-        className={`scroll-smooth no-scrollbar overflow-x-auto h-[350px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`scroll-smooth no-scrollbar overflow-x-auto h-[350px] ${
+          isDragging ? 'cursor-grabbing' : 'cursor-grab'
+        }`}
       >
         <div className="flex flex-row gap-3 py-8">
           {medicalCases.map((medicalCase) => (

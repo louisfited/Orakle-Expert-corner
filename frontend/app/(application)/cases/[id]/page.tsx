@@ -1,6 +1,5 @@
 import getMedicalCaseById from '@/lib/hygraph/getMedicalCaseById'
-import React, { FC } from 'react'
-import getPatientById from '@/lib/hygraph/getPatientById'
+import React from 'react'
 import { SimulationPageWrapper } from '@/components/simulation-page-wrapper'
 import { getBookmarkByCaseIdAction } from '@/lib/data/repository/bookmarks'
 import { getLikesByMedicalCaseId } from '@/lib/data/repository/likes'
@@ -9,19 +8,23 @@ import languageTexts from '@/lib/utils/language'
 
 interface Props {
   params: {
-    id: string;
+    id: string
   }
 }
-async function Page({searchParams, params}: {  searchParams: Promise<{password: string, email: string }>, params: Promise<{ id: string}>})
-{  
+async function Page({
+  searchParams,
+  params,
+}: {
+  searchParams: Promise<{ password: string; email: string }>
+  params: Promise<{ id: string }>
+}) {
   const { id } = await params
-  const { email, password } = await searchParams; 
+  const { email, password } = await searchParams
 
-const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
+  const lang = cookies().get('language')?.value as 'en' | 'fr' | 'de' | undefined
 
-  const medicalCase = await getMedicalCaseById(id, {email, password})
- 
-  
+  const medicalCase = await getMedicalCaseById(id, { email, password })
+
   if (!medicalCase) {
     return <div>{languageTexts(lang).medicalCaseNotFound}</div>
   }
@@ -35,7 +38,7 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
     )
   }
 
-  const patientCase = medicalCase?.patient || null;
+  const patientCase = medicalCase?.patient || null
   if (!patientCase) {
     return <div className="min-h-screen">{languageTexts(lang).patientCaseNotFound}</div>
   }
@@ -48,13 +51,15 @@ const lang = cookies().get("language")?.value as "en" | "fr" | "de"| undefined
 
   const { data: likes } = await getLikesByMedicalCaseId(id)
 
-  return <SimulationPageWrapper
-    medicalCase={medicalCase}
-    patientCase={patientCase}
-    medicalCaseId={id}
-    bookmark={bookmark as any}
-    likes={likes as any}
-  />
+  return (
+    <SimulationPageWrapper
+      medicalCase={medicalCase}
+      patientCase={patientCase}
+      medicalCaseId={id}
+      bookmark={bookmark as any}
+      likes={likes as any}
+    />
+  )
 }
 
 export default Page

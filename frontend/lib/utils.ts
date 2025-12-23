@@ -43,9 +43,7 @@ export const checkEmptyRichText = (field: string | undefined = '') => {
   return CHECK_PARAGRAPH_TAG_REGEX.test(field)
 }
 
-
-export const languageValue =(value:string)=>{
-
-  const lanValue = value? value : "en"
+export const languageValue = (value: string) => {
+  const lanValue = value ? value : 'en'
   return lanValue
 }

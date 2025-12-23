@@ -20,11 +20,11 @@ export const ChangeEmailForm = () => {
   const { toast } = useToast()
   const { user } = useUser()
 
-  const defaultValues ={
-    email: user?.email
+  const defaultValues = {
+    email: user?.email,
   }
   const form = useForm<z.infer<typeof emailSchema>>({
-    defaultValues
+    defaultValues,
   })
 
   async function onSubmit(data: z.infer<typeof emailSchema>) {
@@ -44,10 +44,12 @@ export const ChangeEmailForm = () => {
     })
   }
 
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full items-center justify-between space-y-4">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex w-full items-center justify-between space-y-4"
+      >
         <FormField
           control={form.control}
           name="email"
@@ -62,7 +64,11 @@ export const ChangeEmailForm = () => {
                     onCancel={() => setIsEditing(false)}
                   />
                 ) : (
-                  <TriggerEditInput field={field} onClick={() => setIsEditing(true)} />)}
+                  <TriggerEditInput
+                    field={field}
+                    onClick={() => setIsEditing(true)}
+                  />
+                )}
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -72,4 +78,3 @@ export const ChangeEmailForm = () => {
     </Form>
   )
 }
-

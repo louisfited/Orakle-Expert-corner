@@ -3,7 +3,6 @@ import { LikesButton } from '@/components/likes-button'
 import { BookmarkButton } from '@/components/bookmark-button'
 import Image from 'next/image'
 import React from 'react'
-import { Button } from '@/components/ui/button'
 import { useCaseContext } from '@/lib/context/caseContext'
 
 export const TopProfileMedicalCaseV2 = ({
@@ -15,9 +14,6 @@ export const TopProfileMedicalCaseV2 = ({
   const fullName = `${patientCase?.firstName} ${patientCase?.lastName}`
   const { bookmark, likes, medicalCaseV2Id, medicalCaseV2 } = useCaseContext()
 
-  const handleRestart = () => {
-    window.location.reload()
-  }
   return (
     <div>
       <div className="flex justify-between">

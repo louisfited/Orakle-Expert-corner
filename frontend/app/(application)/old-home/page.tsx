@@ -1,7 +1,7 @@
 'use server'
 
 import Container from '@/components/general/Container'
-import { getAllMedicalCases, getAllMedicalCasesForStaging } from '@/lib/hygraph/getAllMedicalCases'
+import { getAllMedicalCases } from '@/lib/hygraph/getAllMedicalCases'
 import MedicalCasesTable from '@/components/MedicalCasesTable'
 import { getBookmarks } from '@/lib/data/repository/bookmarks'
 import { getUserProfile } from '@/lib/data/repository/user-profile'
@@ -11,8 +11,6 @@ import CookiesBanner from '@/components/CookiesBanner'
 import LanguageDropDown from '@/components/LanguageDropDown'
 import languageTexts from '@/lib/utils/language'
 import { cookies } from 'next/headers'
-
-const staging_invite_only = 'Staging - Invite Only'
 
 export default async function Home() {
   const { data: bookmarks } = await getBookmarks()

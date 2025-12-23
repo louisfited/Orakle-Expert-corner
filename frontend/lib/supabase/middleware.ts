@@ -5,7 +5,6 @@ export async function updateSession(request: NextRequest) {
   // Check if request URL starts with /cases and has a `key` query parameter
   const url = new URL(request.url)
 
-  
   const hasKeyParam = url.searchParams.has('password')
   const password = url.searchParams.get('password') || ''
   const isCasesPath = request.nextUrl.pathname.startsWith('/cases')
@@ -13,16 +12,16 @@ export async function updateSession(request: NextRequest) {
 
   // if (request.nextUrl.pathname == "/") {
   //   NextResponse.next()
-   
+
   // }
 
   // Skip auth check for API routes and static files to avoid conflicts
   const isApiRoute = request.nextUrl.pathname.startsWith('/api')
   const isStaticFile = request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|gif|svg|css|js|woff|woff2|ttf|eot)$/)
   // authcheck for landing page
-  const isLandingPage = request.nextUrl.pathname == "/" 
-  const isCasesPage = request.nextUrl.pathname.startsWith("/cases") 
-  const isWebinarVideoPage = request.nextUrl.pathname.startsWith("/webinar-video") 
+  const isLandingPage = request.nextUrl.pathname == '/'
+  const isCasesPage = request.nextUrl.pathname.startsWith('/cases')
+  const isWebinarVideoPage = request.nextUrl.pathname.startsWith('/webinar-video')
 
   let supabaseResponse = NextResponse.next({
     request,
@@ -64,7 +63,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   // Skip auth check for landing page, static files and API routes to prevent conflicts
-  if  (isWebinarVideoPage|| isCasesPage ||isLandingPage || isApiRoute || isStaticFile ) {
+  if (isWebinarVideoPage || isCasesPage || isLandingPage || isApiRoute || isStaticFile) {
     return supabaseResponse
   }
 
@@ -73,22 +72,18 @@ export async function updateSession(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser()
 
-
     if (
-  
       !user &&
       !request.nextUrl.pathname.startsWith('/create-account') &&
       !request.nextUrl.pathname.startsWith('/login') &&
       !request.nextUrl.pathname.startsWith('/auth') &&
-
       !request.nextUrl.pathname.startsWith('/forgot-password') &&
       !request.nextUrl.pathname.startsWith('/change-password') &&
       !request.nextUrl.pathname.startsWith('/reset-password')
     ) {
       // no user, potentially respond by redirecting the user to the create-account page
       const url = request.nextUrl.clone()
-   
-      
+
       url.pathname = '/login'
       url.searchParams.set('redirect', request.nextUrl.pathname)
       return NextResponse.redirect(url)

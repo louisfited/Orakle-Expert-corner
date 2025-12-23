@@ -8,10 +8,8 @@ import { HStack } from '@/components/h-stack'
 import Link from 'next/link'
 import { Separator } from '@radix-ui/react-separator'
 
-
 export const ChangePasswordDisplay = () => {
   const form = useForm()
-
 
   return (
     <>
@@ -26,10 +24,12 @@ export const ChangePasswordDisplay = () => {
                 <FormControl>
                   <HStack className="items-center w-full justify-between">
                     <p className="security">••••••••</p>
-                    <Button variant="link" className="text-textPrimary" asChild>
-                      <Link href="/change-password">
-                        Edit
-                      </Link>
+                    <Button
+                      variant="link"
+                      className="text-textPrimary"
+                      asChild
+                    >
+                      <Link href="/change-password">Edit</Link>
                     </Button>
                   </HStack>
                 </FormControl>
@@ -43,4 +43,3 @@ export const ChangePasswordDisplay = () => {
     </>
   )
 }
-

@@ -9,11 +9,11 @@ import { useCaseContext } from '@/lib/context/caseContext'
 import { useUser } from '@/lib/context/userContext'
 import getSimulationsLog from '@/lib/hygraph/getSimulationsLog'
 import updateExport from '@/lib/hygraph/updateExport'
-import { checkEmptyRichText } from '@/lib/utils'
 import { checkUserAuth } from '@/lib/data/repository/likes'
 import languageTexts from '@/lib/utils/language'
 import { getCasesStartedForUser, startTestAction, finishTestAction } from '@/lib/data/repository/case-status-per-user'
 import Cookies from 'js-cookie'
+
 export const FormStepsAndProgress = ({
   progress,
   nextStep,

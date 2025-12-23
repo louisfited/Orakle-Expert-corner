@@ -1,4 +1,3 @@
-
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Cookies from 'js-cookie'
 import languageTexts from '@/lib/utils/language'
@@ -14,17 +13,19 @@ const useDebounce = (callback, delay) => {
     }
   }, [])
 
-  return useCallback((...args) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-    }
+  return useCallback(
+    (...args) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
 
-    timeoutRef.current = setTimeout(() => {
-      callback(...args)
-    }, delay)
-  }, [callback, delay])
+      timeoutRef.current = setTimeout(() => {
+        callback(...args)
+      }, delay)
+    },
+    [callback, delay]
+  )
 }
-
 
 const useIntersectionObserver = (sectionRefs) => {
   const [activeTab, setActiveTab] = useState(null)
@@ -43,20 +44,15 @@ const useIntersectionObserver = (sectionRefs) => {
 
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
-        const sectionId = Object.keys(sectionRefs).find(
-          (key) => sectionRefs[key].current === entry.target,
-        )
+        const sectionId = Object.keys(sectionRefs).find((key) => sectionRefs[key].current === entry.target)
         if (sectionId) {
           intersectionRatios.current[sectionId] = entry.intersectionRatio
         }
       })
 
-      const maxVisibleSection = Object.entries(intersectionRatios.current).reduce(
-        (max, [sectionId, ratio]) => {
-          return ratio > (max?.ratio || 0) ? { id: sectionId, ratio } : max
-        },
-        null,
-      )
+      const maxVisibleSection = Object.entries(intersectionRatios.current).reduce((max, [sectionId, ratio]) => {
+        return ratio > (max?.ratio || 0) ? { id: sectionId, ratio } : max
+      }, null)
 
       if (maxVisibleSection && maxVisibleSection.ratio > 0.5) {
         debouncedSetActiveTab(maxVisibleSection.id)
@@ -79,35 +75,24 @@ const useIntersectionObserver = (sectionRefs) => {
   return activeTab
 }
 
-export const TabNavigation = ({
-                                caseDescriptionRef,
-                                pastVisitsRef,
-                                labsImagingRef,
-                                diagnosesRef,
-                                pastOrdersRef,
-                              }) => {
+export const TabNavigation = ({ caseDescriptionRef, pastVisitsRef, labsImagingRef, diagnosesRef, pastOrdersRef }) => {
+  const tabs = ['Demographics', 'Visits', 'Tests', 'Diagnoses', 'Orders']
+  const lang = Cookies.get('language')
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
-                                const tabs = ['Demographics', 'Visits', 'Tests', 'Diagnoses', 'Orders']
-                      const lang = Cookies.get("language") 
-                      const [isMounted,setIsMounted] = useState(false)
-                      useEffect(()=>{
-                          setIsMounted(true)
-                            },[])
-                              
-
-  const sectionRefs = useMemo(() => ({
-    Demographics: caseDescriptionRef,
-    Visits: pastVisitsRef,
-    Tests: labsImagingRef,
-    Diagnoses: diagnosesRef,
-    Orders: pastOrdersRef,
-  }), [
-    caseDescriptionRef,
-    pastVisitsRef,
-    labsImagingRef,
-    diagnosesRef,
-    pastOrdersRef,
-  ])
+  const sectionRefs = useMemo(
+    () => ({
+      Demographics: caseDescriptionRef,
+      Visits: pastVisitsRef,
+      Tests: labsImagingRef,
+      Diagnoses: diagnosesRef,
+      Orders: pastOrdersRef,
+    }),
+    [caseDescriptionRef, pastVisitsRef, labsImagingRef, diagnosesRef, pastOrdersRef]
+  )
 
   const activeTab = useIntersectionObserver(sectionRefs)
 
@@ -117,10 +102,13 @@ export const TabNavigation = ({
     }
   }, 100)
 
-  const handleScrollToSection = useCallback((tab) => {
-    const section = sectionRefs[tab]?.current
-    debouncedScrollToSection(section)
-  }, [sectionRefs, debouncedScrollToSection])
+  const handleScrollToSection = useCallback(
+    (tab) => {
+      const section = sectionRefs[tab]?.current
+      debouncedScrollToSection(section)
+    },
+    [sectionRefs, debouncedScrollToSection]
+  )
 
   return (
     <div className="flex justify-center mt-4 w-full">
@@ -131,13 +119,10 @@ export const TabNavigation = ({
               key={tab}
               onClick={() => handleScrollToSection(tab)}
               className={`capitalize flex-grow text-center px-1 lg:px-4 py-2 rounded-full transition-colors duration-300 tiny ${
-                activeTab === tab
-                  ? 'bg-textPrimary text-white'
-                  : 'text-gray-600 hover:bg-gray-100'
+                activeTab === tab ? 'bg-textPrimary text-white' : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
               {isMounted && languageTexts(lang)[tab.toLocaleLowerCase()]}
-
             </button>
           )
         })}

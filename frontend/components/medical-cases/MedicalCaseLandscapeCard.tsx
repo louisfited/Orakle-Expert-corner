@@ -1,5 +1,4 @@
 'use client'
-import { Bookmark } from 'lucide-react'
 import { useDisclose } from '@/lib/hooks/useDisclose'
 import { StartTestModal } from './StartTestModal'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'

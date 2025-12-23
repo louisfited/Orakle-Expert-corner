@@ -143,7 +143,7 @@ const ADDITIONAL_QUERY = `
 }`
 
 async function getMedicalCaseById(id: string, { email, password }: any): Promise<MedicalCase | null> {
-  const languageValue:string | undefined = cookies().get("language")?.value
+  const languageValue: string | undefined = cookies().get('language')?.value
   let type = ''
   if (email && password) {
     type = ', stage: DRAFT'
@@ -158,7 +158,7 @@ async function getMedicalCaseById(id: string, { email, password }: any): Promise
     cache: 'no-store',
     body: JSON.stringify({
       query: `{
-                    medicalCase(locales:[${languageValue ? languageValue : "en"}],where: {id: "${id}"}${type}) {
+                    medicalCase(locales:[${languageValue ? languageValue : 'en'}],where: {id: "${id}"}${type}) {
                         id
                         title
                         finishUrl

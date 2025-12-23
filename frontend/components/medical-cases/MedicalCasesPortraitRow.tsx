@@ -126,7 +126,9 @@ export const MedicalCasesPortraitRow = ({ medicalCases }: MedicalCasesPortraitRo
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleMouseUpOrLeave}
-        className={`scroll-smooth no-scrollbar overflow-x-auto overflow-y-clip ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`scroll-smooth no-scrollbar overflow-x-auto overflow-y-clip ${
+          isDragging ? 'cursor-grabbing' : 'cursor-grab'
+        }`}
         style={{ height: '650px' }}
       >
         <div className="flex flex-row flex-nowrap gap-6 py-8">

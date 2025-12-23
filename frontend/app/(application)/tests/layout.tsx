@@ -7,9 +7,7 @@ export default async function TestsLayout({ children }: { children: ReactNode })
     <Container>
       <div className="grid grid-cols-1 lg:grid-cols-4 justify-center gap-8 min-h-screen">
         <TestsNavigation />
-        <div className="col-span-3">
-          {children}
-        </div>
+        <div className="col-span-3">{children}</div>
       </div>
     </Container>
   )

@@ -1,39 +1,20 @@
 'use client'
 
-import React, { FC, forwardRef, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FC, useRef } from 'react'
 import Card from '@/components/general/Card'
-import Image from 'next/image'
 import PersonalDataTable from '@/components/custom/PersonalDataTable'
-import PastVisitsTable from '@/components/tables/visits/PastVisitsTable'
-import PastTestsTable from '@/components/tables/tests/PastTestsTable'
 import { useCaseContext } from '@/lib/context/caseContext'
-import { RenderHTML } from '@/components/RenderHTML'
-import {
-  Diagnose,
-  MedicalCase,
-  Order,
-  PastTest,
-  PastVisit,
-  PatientCase,
-  NonMedicationOrder,
-  MedicationSelection,
-} from '@/interface'
-import PastDiagnosesList from '@/components/tables/diagnoses/PastDiagnosesTable'
-import { Heart } from 'lucide-react'
-import { BookmarkButton } from '@/components/bookmark-button'
+import { Diagnose, Order, NonMedicationOrder, MedicationSelection } from '@/interface'
 import TabNavigation from '@/components/custom/PatientCaseCard/utils.jsx'
-import { LikesButton } from '@/components/likes-button'
 import { TopProfile } from '@/components/custom/PatientCaseCard/components/TopProfile'
 import { PastVisits } from '@/components/custom/PatientCaseCard/components/PastVisits'
 import { CaseDescription } from '@/components/custom/PatientCaseCard/components/CaseDescription'
 import { LabsImaging } from '@/components/custom/PatientCaseCard/components/LabsImaging'
-import { Accordion } from '@/components/Accordion'
 import { Diagnoses } from '@/components/custom/PatientCaseCard/components/Diagnoses'
 import { PastOrders } from '@/components/custom/PatientCaseCard/components/PastOrders'
 import { NewOrders } from '@/components/custom/PatientCaseCard/components/NewOrders'
-import { CaseTitle } from './components/CaseTitle'
 import { ImportantInformation } from './components/ImportantInformation'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { checkEmptyRichText } from '@/lib/utils'
 
 interface Props {

@@ -1,6 +1,5 @@
 'use client'
 
-
 import { createAccountSchemaTwo } from '@/lib/schemas/auth-schemas'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -15,7 +14,6 @@ import {
   OccupationSelector,
   SpecializationSelector,
 } from '@/components/auth/create-account/custom-selectors'
-
 
 type IsEditing = {
   licenseNumber: boolean
@@ -70,23 +68,31 @@ export const ProfessionalInformationForm = ({ defaultValues }: GeneralInformatio
     })
   }
 
-  function handleResetField(fieldName: 'licenseNumber' | 'qualifications' | 'occupation' | 'primarySpecialization' | 'secondarySpecialization') {
+  function handleResetField(
+    fieldName: 'licenseNumber' | 'qualifications' | 'occupation' | 'primarySpecialization' | 'secondarySpecialization'
+  ) {
     form.setValue(fieldName, defaultValues[fieldName])
-    setIsEditing(prev => {
+    setIsEditing((prev) => {
       return { ...prev, [fieldName]: false }
     })
   }
 
   const primarySpecialization = form.watch('primarySpecialization')
   const hasSecondarySpecialization = useMemo(
-    () => hasSecondarySpecializations(primarySpecialization), 
+    () => hasSecondarySpecializations(primarySpecialization),
     [primarySpecialization]
   )
 
   return (
-    <div className="space-y-4 w-full" id="professional-information">
+    <div
+      className="space-y-4 w-full"
+      id="professional-information"
+    >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8"
+        >
           <FormField
             control={form.control}
             name="licenseNumber"
@@ -103,9 +109,12 @@ export const ProfessionalInformationForm = ({ defaultValues }: GeneralInformatio
                   ) : (
                     <TriggerEditInput
                       field={field}
-                      onClick={() => setIsEditing(prev => {
-                        return { ...prev, licenseNumber: true }
-                      })} />
+                      onClick={() =>
+                        setIsEditing((prev) => {
+                          return { ...prev, licenseNumber: true }
+                        })
+                      }
+                    />
                   )}
                 </FormControl>
                 <FormMessage />
@@ -129,9 +138,12 @@ export const ProfessionalInformationForm = ({ defaultValues }: GeneralInformatio
                   ) : (
                     <TriggerEditInput
                       field={field}
-                      onClick={() => setIsEditing(prev => {
-                        return { ...prev, qualifications: true }
-                      })} />
+                      onClick={() =>
+                        setIsEditing((prev) => {
+                          return { ...prev, qualifications: true }
+                        })
+                      }
+                    />
                   )}
                 </FormControl>
                 <FormMessage />
@@ -150,15 +162,17 @@ export const ProfessionalInformationForm = ({ defaultValues }: GeneralInformatio
                     {...field}
                     onCancel={() => handleResetField('occupation')}
                     isSubmitting={form.formState.isSubmitting}
-                    customRender={<OccupationSelector field={field} />
-                    }
+                    customRender={<OccupationSelector field={field} />}
                   />
                 ) : (
                   <TriggerEditInput
                     field={field}
-                    onClick={() => setIsEditing(prev => {
-                      return { ...prev, occupation: true }
-                    })} />
+                    onClick={() =>
+                      setIsEditing((prev) => {
+                        return { ...prev, occupation: true }
+                      })
+                    }
+                  />
                 )}
                 <FormMessage />
               </FormItem>
@@ -172,15 +186,12 @@ export const ProfessionalInformationForm = ({ defaultValues }: GeneralInformatio
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Other occupation</FormLabel>
-                  <FormControl>
-
-                  </FormControl>
+                  <FormControl></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           )}
-
 
           <FormField
             control={form.control}
@@ -193,21 +204,29 @@ export const ProfessionalInformationForm = ({ defaultValues }: GeneralInformatio
                     {...field}
                     onCancel={() => handleResetField('primarySpecialization')}
                     isSubmitting={form.formState.isSubmitting}
-                    customRender={<SpecializationSelector field={field} isSecondary={false} />}
+                    customRender={
+                      <SpecializationSelector
+                        field={field}
+                        isSecondary={false}
+                      />
+                    }
                   />
                 ) : (
                   <TriggerEditInput
                     field={field}
-                    onClick={() => setIsEditing(prev => {
-                      return { ...prev, primarySpecialization: true, secondarySpecialization: true }
-                    })} />
+                    onClick={() =>
+                      setIsEditing((prev) => {
+                        return { ...prev, primarySpecialization: true, secondarySpecialization: true }
+                      })
+                    }
+                  />
                 )}
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          {(primarySpecialization && hasSecondarySpecialization) && (
+          {primarySpecialization && hasSecondarySpecialization && (
             <FormField
               control={form.control}
               name="secondarySpecialization"
@@ -219,17 +238,23 @@ export const ProfessionalInformationForm = ({ defaultValues }: GeneralInformatio
                       {...field}
                       onCancel={() => handleResetField('secondarySpecialization')}
                       isSubmitting={form.formState.isSubmitting}
-                      customRender={<SpecializationSelector
-                        field={field}
-                        isSecondary
-                        selectedPrimarySpecialization={primarySpecialization} />}
+                      customRender={
+                        <SpecializationSelector
+                          field={field}
+                          isSecondary
+                          selectedPrimarySpecialization={primarySpecialization}
+                        />
+                      }
                     />
                   ) : (
                     <TriggerEditInput
                       field={field}
-                      onClick={() => setIsEditing(prev => {
-                        return { ...prev, secondarySpecialization: true }
-                      })} />
+                      onClick={() =>
+                        setIsEditing((prev) => {
+                          return { ...prev, secondarySpecialization: true }
+                        })
+                      }
+                    />
                   )}
                   <FormMessage />
                 </FormItem>

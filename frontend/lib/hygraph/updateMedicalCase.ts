@@ -2,16 +2,16 @@ import { HYGRAPH_URL } from '@/lib/hygraph/hygraph'
 import { MedicalCase } from '@/interface'
 
 interface UpdateMedicalCaseInput {
-  id: string;
-  table?: string;
-  data?: any;
+  id: string
+  table?: string
+  data?: any
 }
 
 async function updateMedicalCase(input: UpdateMedicalCaseInput): Promise<MedicalCase | null> {
-  const { id, table, data} = input
-  let mutationQuery:string;
+  const { id, table, data } = input
+  let mutationQuery: string
 
-  if(table === 'diagnose'){
+  if (table === 'diagnose') {
     mutationQuery = `
     mutation {
       updateMedicalCase(
@@ -33,7 +33,7 @@ async function updateMedicalCase(input: UpdateMedicalCaseInput): Promise<Medical
         }
     }
   `
-  } else if(table === 'nonMedicationOrder'){
+  } else if (table === 'nonMedicationOrder') {
     mutationQuery = `
     mutation {
       updateMedicalCase(
@@ -54,7 +54,7 @@ async function updateMedicalCase(input: UpdateMedicalCaseInput): Promise<Medical
         }
     }
   `
-  }else if(table === 'order'){
+  } else if (table === 'order') {
     mutationQuery = `
     mutation {
       updateMedicalCase(
@@ -75,11 +75,10 @@ async function updateMedicalCase(input: UpdateMedicalCaseInput): Promise<Medical
         }
     }
   `
-  return null
-  } else{
+    return null
+  } else {
     return null
   }
-  
 
   const response = await fetch(HYGRAPH_URL, {
     method: 'POST',

@@ -2,7 +2,7 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { User } from '@supabase/supabase-js'
 
 // Simple in-memory cache for user data to prevent race conditions
-let userCache: { user: User | null ; timestamp: number; requestId: string } | null = null
+let userCache: { user: User | null; timestamp: number; requestId: string } | null = null
 const CACHE_DURATION = 5000 // 5 seconds cache
 let activeRequest: Promise<{ data: User | null; error: any }> | null = null
 
@@ -28,7 +28,7 @@ export async function getSafeUser(): Promise<{ data: User | null; error: any }> 
     activeRequest = (async () => {
       try {
         const supabase = createSupabaseServerClient()
-       
+
         const { data, error } = await supabase.auth.getUser()
         // if (error?.message?.includes("Auth session missing")) {
         //   // No session → safe to ignore
@@ -38,7 +38,6 @@ export async function getSafeUser(): Promise<{ data: User | null; error: any }> 
         //     error,
         //   }
         // }
-
 
         if (error) {
           // Don't cache errors

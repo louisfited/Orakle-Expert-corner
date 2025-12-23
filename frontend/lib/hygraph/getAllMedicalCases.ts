@@ -123,7 +123,7 @@ export const getAllMedicalCasesWithBookmarks = async (): Promise<MergedMedicalCa
   const medicalCases = await getAllMedicalCases()
   const bookmarksResult = await getBookmarks()
   const bookmarkIds = bookmarksResult?.data?.map((bookmark) => bookmark.case_id) ?? []
-  
+
   return medicalCases.map((medicalCase) => ({
     ...medicalCase,
     isBookmarked: bookmarkIds.includes(medicalCase.id),
@@ -280,7 +280,7 @@ export const getAllMedicalCasesForStagingWithBookmarks = async (ids?: string[]):
   const medicalCases = await getAllMedicalCasesForStaging(ids)
   const bookmarksResult = await getBookmarks()
   const bookmarkIds = bookmarksResult?.data?.map((bookmark) => bookmark.case_id) ?? []
-  
+
   return medicalCases.map((medicalCase) => ({
     ...medicalCase,
     isBookmarked: bookmarkIds.includes(medicalCase.id),

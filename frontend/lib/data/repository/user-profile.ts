@@ -11,12 +11,9 @@ export async function getUserProfile(): Promise<ServerActionReturn<Tables<'profi
   try {
     const supabase = createSupabaseServerClient()
 
-
     const { data: userId, error: userIdError } = await getCurrentUserId()
 
-    
     if (userIdError || !userId) {
-     
       return {
         error: { message: 'Failed to get user id' },
         data: null,

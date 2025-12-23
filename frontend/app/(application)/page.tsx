@@ -1,8 +1,6 @@
 'use server'
-import { MedicalCaseCard } from '@/components/medical-cases/MedicalCaseCard'
-import { MedicalCasePortraitCard } from '@/components/medical-cases/MedicalCasePortraitCard'
+
 import { getAllMedicalCasesForStagingWithBookmarks } from '@/lib/hygraph/getAllMedicalCases'
-import { MedicalCasesRow } from '@/components/medical-cases/MedicalCasesRow'
 import { MedicalCasesLandscapeRow } from '@/components/medical-cases/MedicalCasesLandscapeRow'
 import { FeaturedSlideshow } from '@/components/medical-cases/FeaturedSlideshow'
 import { MedicalCasesPortraitRow } from '@/components/medical-cases/MedicalCasesPortraitRow'

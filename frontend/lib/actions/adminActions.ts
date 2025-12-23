@@ -7,7 +7,7 @@ import { resend } from '@/lib/resend'
 import { RequestEvidenceEmailTemplate } from '@/components/email-templates/request-evidence-email-template'
 
 export const getApplicationsAction = async (): Promise<{
-  status: 'success' | 'error',
+  status: 'success' | 'error'
   data: ApplicationsWithEmail[] | null
 }> => {
   try {
@@ -26,14 +26,15 @@ export const getApplicationsAction = async (): Promise<{
   }
 }
 
-
-export const acceptApplicationAction = async (userId: string): Promise<{
-  status: 'success' | 'error',
+export const acceptApplicationAction = async (
+  userId: string
+): Promise<{
+  status: 'success' | 'error'
   message: string
 }> => {
   try {
     await acceptApplication(userId)
-    revalidatePath("/admin")
+    revalidatePath('/admin')
     return {
       status: 'success',
       message: 'Application accepted',
@@ -50,7 +51,7 @@ export const acceptApplicationAction = async (userId: string): Promise<{
 export const rejectApplicationAction = async (userId: string) => {
   try {
     await rejectApplication(userId)
-    revalidatePath("/admin")
+    revalidatePath('/admin')
     return {
       status: 'success',
       message: 'Application rejected',
@@ -68,9 +69,9 @@ export const requestEvidenceAction = async (email: string, firstName: string) =>
   const { error: sendEmailError } = await resend.emails.send({
     from: 'Experts Corner <support@orakleinc.com>',
     to: [email],
-    subject: 'Access to Expert\'s Corner',
+    subject: "Access to Expert's Corner",
     react: RequestEvidenceEmailTemplate({ firstName: firstName }),
-  });
+  })
 
   if (sendEmailError) {
     console.error('error', sendEmailError)

@@ -69,9 +69,9 @@ export async function loginAction(formData: FormData, originalUrl: string | null
 
   revalidatePath('/', 'layout')
 
-  const prevAddress:string | null = cookies().get("redirect")?.value as string | null
+  const prevAddress: string | null = cookies().get('redirect')?.value as string | null
 
-  if (prevAddress ) {
+  if (prevAddress) {
     redirect(prevAddress)
   }
 
@@ -79,11 +79,6 @@ export async function loginAction(formData: FormData, originalUrl: string | null
     redirect(originalUrl)
   } else {
     redirect('/')
-  }
-
-  return {
-    status: 'success',
-    message: 'Logged in',
   }
 }
 

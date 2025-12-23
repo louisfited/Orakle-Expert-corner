@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-
 export const ResetPasswordForm = () => {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -66,7 +65,10 @@ export const ResetPasswordForm = () => {
       <h1 className="text-2xl font-bold">Reset password</h1>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
           <FormField
             control={form.control}
             name="password"
@@ -74,8 +76,11 @@ export const ResetPasswordForm = () => {
               <FormItem className="w-full">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password"
-                         placeholder="Enter your new password, min 8 characters" />
+                  <Input
+                    {...field}
+                    type="password"
+                    placeholder="Enter your new password, min 8 characters"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,7 +94,11 @@ export const ResetPasswordForm = () => {
               <FormItem className="w-full">
                 <FormLabel>Repeat password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" placeholder="Re-enter your new password" />
+                  <Input
+                    {...field}
+                    type="password"
+                    placeholder="Re-enter your new password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -97,17 +106,23 @@ export const ResetPasswordForm = () => {
           />
 
           <HStack className="self-end mt-4">
-            <Button className="text-textPrimary" variant="link" onClick={() => router.back()}>
+            <Button
+              className="text-textPrimary"
+              variant="link"
+              onClick={() => router.back()}
+            >
               Cancel
             </Button>
-            <Button type="submit" disabled={loading} variant="primary">
+            <Button
+              type="submit"
+              disabled={loading}
+              variant="primary"
+            >
               {loading ? 'Resetting...' : 'Reset password'}
             </Button>
           </HStack>
         </form>
       </Form>
-
     </div>
   )
 }
-

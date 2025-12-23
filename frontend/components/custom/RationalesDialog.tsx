@@ -20,41 +20,37 @@ type RationalesDialogProps = {
 
 const formatText = (key: string): string => {
   return key
-    .replace(/([A-Z])/g, " $1") // Add space before uppercase letters
-    .replace(/^./, (str) => str.toUpperCase()); // Capitalize the first letter
-};
+    .replace(/([A-Z])/g, ' $1') // Add space before uppercase letters
+    .replace(/^./, (str) => str.toUpperCase()) // Capitalize the first letter
+}
 
 export const RationalesDialog = (props: RationalesDialogProps) => {
   const [step, setStep] = useState(1) // Track which step is being displayed
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-  const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-  
-  
-  
-    useEffect(()=>{
-      setIsMounted(true)
-        },[])
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
 
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Reset step to 1 when the dialog/drawer is closed
   useEffect(() => {
     if (!props.open) {
-      setStep(1);
-    } else if ((!props.rationales || props.rationales.length === 0)) {
-      setStep(2);
+      setStep(1)
+    } else if (!props.rationales || props.rationales.length === 0) {
+      setStep(2)
     }
   }, [props.open, props.rationales, props.isRationale])
 
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const handleOptionChange = (rationale: string) => {
     setSelectedOptions((prevSelected) =>
       prevSelected.includes(rationale)
         ? prevSelected.filter((item) => item !== rationale)
         : [...prevSelected, rationale]
-    );
-  };
+    )
+  }
   const handleNextStep = () => setStep(2)
   const handleBack = () => setStep(1)
   const handleClose = () => {
@@ -63,23 +59,34 @@ export const RationalesDialog = (props: RationalesDialogProps) => {
     props.onOpenChange(false) // Notify parent to close the dialog
   }
 
-
   if (props.asDrawer) {
     return (
-      <Drawer open={props.open} onOpenChange={handleClose}>
+      <Drawer
+        open={props.open}
+        onOpenChange={handleClose}
+      >
         <DrawerContent>
-          <div className="cursor-pointer px-4 " onClick={handleClose}>
-            <ChevronsRight className="text-textPrimary" size={48} />
+          <div
+            className="cursor-pointer px-4 "
+            onClick={handleClose}
+          >
+            <ChevronsRight
+              className="text-textPrimary"
+              size={48}
+            />
           </div>
           {props.isRationale && step === 1 ? (
             <DrawerHeader>
               <DrawerTitle className="flex items-center gap-2 mb-4">
-                {isMounted &&languageTexts(lang).selectAnOption}
+                {isMounted && languageTexts(lang).selectAnOption}
               </DrawerTitle>
               {/* Radio Button List */}
               <div className="flex flex-col gap-4">
                 {props.rationales?.map((rationale, index) => (
-                  <label key={index} className="flex items-center gap-2">
+                  <label
+                    key={index}
+                    className="flex items-center gap-2"
+                  >
                     <input
                       type="checkbox"
                       value={rationale}
@@ -92,7 +99,11 @@ export const RationalesDialog = (props: RationalesDialogProps) => {
                 ))}
               </div>
               <DrawerFooter>
-                <Button variant="primary" className="py-6" onClick={handleNextStep}>
+                <Button
+                  variant="primary"
+                  className="py-6"
+                  onClick={handleNextStep}
+                >
                   {isMounted && languageTexts(lang).next}
                 </Button>
               </DrawerFooter>
@@ -108,13 +119,20 @@ export const RationalesDialog = (props: RationalesDialogProps) => {
               </DrawerHeader>
               <DrawerFooter>
                 {props.isRationale && (
-                  <Button variant="outline" className="py-6 mr-4 capitalize" onClick={handleBack}>
-                   {isMounted && languageTexts(lang).back}
+                  <Button
+                    variant="outline"
+                    className="py-6 mr-4 capitalize"
+                    onClick={handleBack}
+                  >
+                    {isMounted && languageTexts(lang).back}
                   </Button>
                 )}
-                <Button variant="primary" className="py-6 capitalize" onClick={handleClose}>
-                {isMounted && languageTexts(lang).close}
-                  
+                <Button
+                  variant="primary"
+                  className="py-6 capitalize"
+                  onClick={handleClose}
+                >
+                  {isMounted && languageTexts(lang).close}
                 </Button>
               </DrawerFooter>
             </>
@@ -125,7 +143,10 @@ export const RationalesDialog = (props: RationalesDialogProps) => {
   }
 
   return (
-    <Dialog open={props.open} onOpenChange={handleClose}>
+    <Dialog
+      open={props.open}
+      onOpenChange={handleClose}
+    >
       <DialogContent className="p-10">
         {step === 1 ? (
           <>
@@ -135,7 +156,10 @@ export const RationalesDialog = (props: RationalesDialogProps) => {
             {/* Radio Button List */}
             <div className="flex flex-col gap-4">
               {props.rationales?.map((rationale, index) => (
-                <label key={index} className="flex items-center gap-2">
+                <label
+                  key={index}
+                  className="flex items-center gap-2"
+                >
                   <input
                     type="checkbox"
                     value={rationale}
@@ -147,8 +171,12 @@ export const RationalesDialog = (props: RationalesDialogProps) => {
                 </label>
               ))}
             </div>
-            <Button variant="primary" className="py-6 mt-6" onClick={handleNextStep}>
-           {isMounted && languageTexts(lang).next}
+            <Button
+              variant="primary"
+              className="py-6 mt-6"
+              onClick={handleNextStep}
+            >
+              {isMounted && languageTexts(lang).next}
             </Button>
           </>
         ) : (
@@ -159,12 +187,14 @@ export const RationalesDialog = (props: RationalesDialogProps) => {
                 {props.title}
               </DialogTitle>
             </DialogHeader>
-            <div className="max-h-[50vh] gap-8 flex flex-col overflow-y-auto">
-              {props.content}
-            </div>
+            <div className="max-h-[50vh] gap-8 flex flex-col overflow-y-auto">{props.content}</div>
             {props.showButton && (
-              <Button variant="primary" className="py-6 mt-6" onClick={handleClose}>
-               {isMounted && languageTexts(lang).gotIt}
+              <Button
+                variant="primary"
+                className="py-6 mt-6"
+                onClick={handleClose}
+              >
+                {isMounted && languageTexts(lang).gotIt}
               </Button>
             )}
           </>

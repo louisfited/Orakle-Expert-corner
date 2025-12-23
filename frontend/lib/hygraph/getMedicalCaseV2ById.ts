@@ -162,8 +162,6 @@ export async function getCombinedMedicalCaseV2ById(id: string): Promise<MedicalC
 
 export default getMedicalCaseV2ById
 
-
-
 // {
 //   medicalCaseV2(where: {id: "${id}"}${type}) {
 //     id,
@@ -190,7 +188,7 @@ export default getMedicalCaseV2ById
 //       guidance
 //       isExisting
 //       guidanceText {
-//         html  
+//         html
 //       }
 //     },
 //     cidpTreatment(first: 150) {
