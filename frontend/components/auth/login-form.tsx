@@ -10,21 +10,18 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
-import { useEffect, useState } from 'react';
-
+import { useEffect, useState } from 'react'
 
 export const LoginForm = () => {
-  const [originalUrl, setOriginalUrl] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [originalUrl, setOriginalUrl] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      setOriginalUrl(params.get('redirect'));
-      console.log(params.get('redirect'))
-      
+      const params = new URLSearchParams(window.location.search)
+      setOriginalUrl(params.get('redirect'))
     }
-  }, []);
+  }, [])
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -35,7 +32,7 @@ export const LoginForm = () => {
   })
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    setIsLoading(true);
+    setIsLoading(true)
     const formData = new FormData()
     formData.append('email', values.email)
     formData.append('password', values.password)
@@ -47,18 +44,21 @@ export const LoginForm = () => {
         type: 'manual',
         message: response.message,
       })
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
   return (
     <div className="space-y-4 w-full">
       <h1 className="text-textPrimary mb-8 font-medium">Log in</h1>
-      <Form {...form} >
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          form.handleSubmit(onSubmit)();
-        }} className="space-y-8">
+      <Form {...form}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            form.handleSubmit(onSubmit)()
+          }}
+          className="space-y-8"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -66,7 +66,10 @@ export const LoginForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="example@email.com" {...field} />
+                  <Input
+                    placeholder="example@email.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -80,10 +83,16 @@ export const LoginForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
+                  <Input
+                    type="password"
+                    {...field}
+                  />
                 </FormControl>
                 <div>
-                  <Link href="/forgot-password" className="mt-2 underline">
+                  <Link
+                    href="/forgot-password"
+                    className="mt-2 underline"
+                  >
                     Forgot password?
                   </Link>
                 </div>
@@ -93,16 +102,22 @@ export const LoginForm = () => {
             )}
           />
 
-          <Button variant="primary" type="submit" className="w-full py-8"
-              disabled={form.formState.isSubmitting || isLoading}>
+          <Button
+            variant="primary"
+            type="submit"
+            className="w-full py-8"
+            disabled={form.formState.isSubmitting || isLoading}
+          >
             {(form.formState.isSubmitting || isLoading) && <Loader2 className="animate-spin mr-2" />}
-            {(form.formState.isSubmitting || isLoading) ? 'Logging in...' : 'Log in'}
-            
+            {form.formState.isSubmitting || isLoading ? 'Logging in...' : 'Log in'}
           </Button>
         </form>
       </Form>
       <div className="text-center">
-        <Link href={'/create-account'} className="underline text-textPrimary">
+        <Link
+          href={'/create-account'}
+          className="underline text-textPrimary"
+        >
           Create Account
         </Link>
       </div>

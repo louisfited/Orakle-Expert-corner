@@ -70,7 +70,6 @@ export async function loginAction(formData: FormData, originalUrl: string | null
   revalidatePath('/', 'layout')
 
   const prevAddress:string | null = cookies().get("redirect")?.value as string | null
-// console.log(originalUrl, "original url");
 
   if (prevAddress ) {
     redirect(prevAddress)

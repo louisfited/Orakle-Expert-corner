@@ -21,7 +21,7 @@ export const TopProfileMedicalCaseV2 = ({
   return (
     <div>
       <div className="flex justify-between">
-        <div className="flex flex-wrap text-textGray">
+        <div className="flex flex-wrap text-textGray ml-auto">
           <LikesButton
             medicalCaseId={medicalCaseV2Id!}
             likes={medicalCaseV2?.likes ?? 0}
@@ -34,7 +34,6 @@ export const TopProfileMedicalCaseV2 = ({
             caseTitle={'none'}
           />
         </div>
-        <Button onClick={() => handleRestart()}>Restart Medical Case</Button>
       </div>
       <div className="flex items-center justify-start gap-4 p-4">
         <Image

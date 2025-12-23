@@ -17,6 +17,7 @@ import * as XLSX from 'xlsx'
 import getSimulationsLog from '@/lib/hygraph/getSimulationsLog'
 import { useRouter, usePathname } from 'next/navigation'
 import { useCaseContext } from '@/lib/context/caseContext'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface UserProfile {
   country_of_practice: string
@@ -48,6 +49,7 @@ export const UserDropdown = () => {
   const router = useRouter()
   const pathname = usePathname()
   const { isFormDirty } = useCaseContext()
+
   const handleNavigation = (targetPath: string, isFormDirty: boolean) => {
     const isCases = pathname?.split('/').filter(Boolean).slice(-2, -1)[0] === 'cases'
     if (isCases && isFormDirty) {
@@ -164,9 +166,9 @@ export const UserDropdown = () => {
     }
   }
 
-  // If no user, don't render
+  // If loading or no user, show skeleton
   if (!user) {
-    return null
+    return <UserDropdownSkeleton />
   }
 
   return (
@@ -247,29 +249,49 @@ const MenuTrigger = ({ user, email }: UserFields) => {
 
   return (
     <>
-      {/* Mobile: Avatar with chevron */}
-      <div className="flex sm:hidden items-center gap-1">
-        <div className="w-8 h-8 rounded-full bg-textPrimary text-white flex items-center justify-center text-sm font-semibold">
+      {/* Mobile: Avatar with initials and chevron */}
+      <div className="flex lg:hidden items-center gap-1">
+        <div className="w-8 h-8 rounded-full bg-textDark text-white flex items-center justify-center text-xs font-semibold">
           {initials}
         </div>
         <ChevronDown
-          size={16}
-          className="text-textPrimary"
+          size={14}
+          className="text-textDark"
         />
       </div>
 
       {/* Desktop: Full info */}
-      <div className="hidden sm:flex gap-4 items-center w-fit px-2 py-1 lg:px-4 lg:py-3 rounded-lg">
-        <div className="flex flex-col items-end gap-1">
-          <p className="font-medium text-sm md:text-base text-textPrimary">
+      <div className="hidden lg:flex gap-3 items-center w-fit px-3 py-2 rounded-lg">
+        <div className="flex flex-col items-end gap-0.5">
+          <p className="font-medium text-sm text-textDark">
             {firstName} {lastName}
           </p>
-          <p className="text-xs md:text-base text-textPrimary">{email}</p>
+          <p className="text-xs text-textDark">{email}</p>
         </div>
         <ChevronDown
-          size={20}
-          className="text-textPrimary"
+          size={18}
+          className="text-textDark"
         />
+      </div>
+    </>
+  )
+}
+
+const UserDropdownSkeleton = () => {
+  return (
+    <>
+      {/* Mobile Skeleton: Avatar circle and chevron */}
+      <div className="flex lg:hidden items-center gap-1">
+        <Skeleton className="w-8 h-8 rounded-full" />
+      </div>
+
+      {/* Desktop Skeleton: Full info */}
+      <div className="hidden lg:flex gap-3 items-center w-fit px-3 py-2">
+        <div className="flex flex-col items-end gap-1.5">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-3 w-40" />
+        </div>
+        <Skeleton className="w-12 h-12 rounded-full" />
       </div>
     </>
   )

@@ -6,12 +6,12 @@ import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
 import { MedicalCaseThumbnail } from './MedicalCaseThumbnail'
 import { useRef, useEffect, useState } from 'react'
 
-interface MedicalCaseCardProps {
+interface MedicalCaseLandscapeCardProps {
   medicalCase: MergedMedicalCase
   hasDescription?: boolean
 }
 
-export const MedicalCaseCard = ({ medicalCase, hasDescription }: MedicalCaseCardProps) => {
+export const MedicalCaseLandscapeCard = ({ medicalCase, hasDescription }: MedicalCaseLandscapeCardProps) => {
   const { isOpen: isConfirmationOpen, onToggle: onConfirmationToggle } = useDisclose()
   const cardRef = useRef<HTMLDivElement>(null)
   const [transformOrigin, setTransformOrigin] = useState('center center')
@@ -52,7 +52,7 @@ export const MedicalCaseCard = ({ medicalCase, hasDescription }: MedicalCaseCard
     <>
       <div
         ref={cardRef}
-        className="flex flex-col w-full max-w-[395px] transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:z-50 group overflow-visible hover:rounded-2xl relative"
+        className="flex flex-col w-[395px] transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:z-50 group overflow-visible hover:rounded-2xl relative"
         style={{ transformOrigin }}
       >
         <div className="relative mb-2">

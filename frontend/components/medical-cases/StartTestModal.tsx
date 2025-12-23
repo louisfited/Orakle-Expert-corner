@@ -1,10 +1,11 @@
-import { DialogV2, DialogContentV2 } from '@/components/ui/dialogV2'
+import { DialogV2, DialogContentV2, DialogCloseV2 } from '@/components/ui/dialogV2'
 import { RenderHTML } from '@/components/RenderHTML'
-import { Bookmark } from 'lucide-react'
+import { X } from 'lucide-react'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
 import ProfilePicPlaceholder from '../../public/profile-placeholder.png'
 import ThumbnailPlaceholder from '../../public/thumbnail-background.png'
 import { useRouter } from 'next/navigation'
+import { BookmarkButton } from '@/components/bookmark-button'
 
 interface StartTestModalProps {
   medicalCase: MergedMedicalCase
@@ -15,7 +16,7 @@ interface StartTestModalProps {
 export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestModalProps) => {
   const router = useRouter()
   const handleStartTest = (id: string, version: string) => {
-    if (version === '5 min') {
+    if (version === '5m' || version === '5 min') {
       router.push(`/cases-v2/${id}`)
     } else {
       router.push(`/cases/${id}`)
@@ -26,12 +27,19 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
       open={open}
       onOpenChange={onOpenChange}
     >
-      <DialogContentV2>
+      <DialogContentV2 className="sm:[&>button:first-of-type]:hidden">
+        {/* Custom close button for sm and above - positioned outside to the right */}
+        <button
+          onClick={onOpenChange}
+          className="hidden sm:block absolute -right-14 top-0 opacity-70 hover:opacity-100 transition-opacity focus:outline-none"
+        >
+          <X className="h-8 w-8 text-white" />
+        </button>
         <div className="rounded-2xl">
-          <div className="flex flex-col md:flex-row">
-            <div className="flex flex-col w-1/2 ltr">
+          <div className="flex flex-col lg:flex-row">
+            <div className="flex flex-col lg:w-1/2 w-full ltr">
               <div
-                className="flex flex-col relative rounded-s-2xl h-[236px] bg-cover bg-center px-5 overflow-hidden"
+                className="flex flex-col relative sm:rounded-2xl h-[236px] bg-cover bg-center px-5 overflow-hidden"
                 style={{
                   backgroundImage: `url(${
                     medicalCase.thumbnailBackground ? medicalCase.thumbnailBackground.url : ThumbnailPlaceholder.src
@@ -51,7 +59,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                   />
                 </div>
               </div>
-              <div className="rounded-bl-2xl bg-grayBg flex flex-col h-[236px] p-10">
+              <div className="lg:rounded-bl-2xl bg-grayBg flex flex-col h-[236px] p-10">
                 <div className="flex flex-row justify-start items-start mb-8">
                   <div className="flex flex-col text-[15px] font-medium  mr-14">
                     <span className="text-textGray text-opacity-60">Supporter</span>
@@ -68,7 +76,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                 </div>
               </div>
             </div>
-            <div className="p-8 flex flex-col justify-between w-1/2">
+            <div className="p-8 flex flex-col justify-between lg:w-1/2 w-full">
               <div className="flex flex-col">
                 <span className="font-medium tex-black text-xl">{medicalCase.shortDescription}</span>
                 <div>
@@ -87,12 +95,13 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                 >
                   <span className="text-white text-lg text-center">Start Test</span>
                 </button>
-                <button className="w-[46px] h-[46px] bg-white rounded-full flex justify-center items-center border-2 border-borderBottom">
-                  <Bookmark
-                    size={16}
-                    color="#454A6C"
+                <div className="w-[46px] h-[46px] bg-white rounded-full flex justify-center items-center border-borderBottom">
+                  <BookmarkButton
+                    caseId={medicalCase.id}
+                    bookmarked={medicalCase.isBookmarked || false}
+                    caseTitle={medicalCase.title}
                   />
-                </button>
+                </div>
               </div>
             </div>
           </div>

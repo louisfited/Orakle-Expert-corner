@@ -1,5 +1,6 @@
 import { HYGRAPH_URL } from '@/lib/hygraph/hygraph'
 import { cookies } from 'next/headers'
+import { getBookmarks } from '@/lib/data/repository/bookmarks'
 
 export type MergedMedicalCase = {
   version: '15m' | '5m'
@@ -44,32 +45,17 @@ export const getAllMedicalCases = async (): Promise<MergedMedicalCase[]> => {
     cache: 'no-store',
     body: JSON.stringify({
       query: `{
-webinarVideos(first: 150,orderBy: createdAt_DESC){
+webinarVideos(first: 1000,orderBy: createdAt_DESC){
   id
   name
-  description
-  videoUrl
-  contentType
   createdAt
-  countries
-  categories
-  supporter
-  faculty
-  preCaseInformation { html }
-  title
-  caseDescription {html}
-  patient {
-  profileImage { url }
-  }
-  
-  }
+}
 
-  medicalCases(locales:[${languageValue ? languageValue : 'en'}], first: 150, orderBy: createdAt_DESC) {
+  medicalCases(locales:[${languageValue ? languageValue : 'en'}], first: 1000, orderBy: createdAt_DESC) {
   id
   title
   supporter
   faculty
-  contentType
   countries
   categories
   createdAt
@@ -85,6 +71,7 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
   references { html }
   bannerTopBarImage { url }
   showBannerTopBarImage
+  thumbnailBackground { url }
   patient {
   profileImage { url }
   }
@@ -92,18 +79,21 @@ webinarVideos(first: 150,orderBy: createdAt_DESC){
 }
 
 
-medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 150, orderBy: createdAt_DESC) {
+medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 1000, orderBy: createdAt_DESC) {
   id
   title
   supporter
-  contentType
   faculty
   createdAt
+  categories
   caseDescription { html }
+  shortDescription
+  likes
   patient {
     id
     profileImage { url }
   }
+  thumbnailBackground { url }
 }
 
 
@@ -113,7 +103,9 @@ medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 150, ord
 
   const res = await response.json()
 
-  console.log(res?.data?.webinarVideos)
+  if (res?.errors) {
+    console.error('getAllMedicalCases - GraphQL Errors:', res.errors)
+  }
 
   const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: '20m', ...v }))
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
@@ -125,6 +117,17 @@ medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 150, ord
   })
 
   return sorted
+}
+
+export const getAllMedicalCasesWithBookmarks = async (): Promise<MergedMedicalCase[]> => {
+  const medicalCases = await getAllMedicalCases()
+  const bookmarksResult = await getBookmarks()
+  const bookmarkIds = bookmarksResult?.data?.map((bookmark) => bookmark.case_id) ?? []
+  
+  return medicalCases.map((medicalCase) => ({
+    ...medicalCase,
+    isBookmarked: bookmarkIds.includes(medicalCase.id),
+  }))
 }
 
 // medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC) {
@@ -268,7 +271,18 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
   })
 
   const res = await response.json()
-  const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15 min', ...c }))
-  const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5 min', ...c }))
+  const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
+  const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
   return [...v1, ...v2]
+}
+
+export const getAllMedicalCasesForStagingWithBookmarks = async (ids?: string[]): Promise<MergedMedicalCase[]> => {
+  const medicalCases = await getAllMedicalCasesForStaging(ids)
+  const bookmarksResult = await getBookmarks()
+  const bookmarkIds = bookmarksResult?.data?.map((bookmark) => bookmark.case_id) ?? []
+  
+  return medicalCases.map((medicalCase) => ({
+    ...medicalCase,
+    isBookmarked: bookmarkIds.includes(medicalCase.id),
+  }))
 }

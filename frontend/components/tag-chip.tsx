@@ -11,7 +11,7 @@ export const TagChip = ({ title, pressed, onClick }: TagChipProps) => {
 
   return (
     <div
-      className={`py-3 px-5 rounded-full w-fit border-2 text-lg font-medium cursor-pointer ${fill}`}
+      className={`py-3 px-5 rounded-full w-fit border-2 text-lg font-medium cursor-pointer whitespace-nowrap ${fill}`}
       onClick={onClick}
     >
       {title}
