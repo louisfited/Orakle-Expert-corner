@@ -43,7 +43,7 @@ export const BookmarksTable = async () => {
               <TableCell>
                 <Link
                   href={
-                    medicalCase?.version === '5m' || medicalCase?.version === '5 min'
+                    ['5m', '5 min'].includes(medicalCase?.version ?? '')
                       ? `/cases-v2/${bookmark.case_id}`
                       : `/cases/${bookmark.case_id}`
                   }
