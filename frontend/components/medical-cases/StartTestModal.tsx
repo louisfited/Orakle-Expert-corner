@@ -1,10 +1,11 @@
 import { DialogV2, DialogContentV2, DialogCloseV2 } from '@/components/ui/dialogV2'
 import { RenderHTML } from '@/components/RenderHTML'
-import { Bookmark, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
 import ProfilePicPlaceholder from '../../public/profile-placeholder.png'
 import ThumbnailPlaceholder from '../../public/thumbnail-background.png'
 import { useRouter } from 'next/navigation'
+import { BookmarkButton } from '@/components/bookmark-button'
 
 interface StartTestModalProps {
   medicalCase: MergedMedicalCase
@@ -94,12 +95,13 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                 >
                   <span className="text-white text-lg text-center">Start Test</span>
                 </button>
-                <button className="w-[46px] h-[46px] bg-white rounded-full flex justify-center items-center border-2 border-borderBottom">
-                  <Bookmark
-                    size={16}
-                    color="#454A6C"
+                <div className="w-[46px] h-[46px] bg-white rounded-full flex justify-center items-center border-borderBottom">
+                  <BookmarkButton
+                    caseId={medicalCase.id}
+                    bookmarked={medicalCase.isBookmarked || false}
+                    caseTitle={medicalCase.title}
                   />
-                </button>
+                </div>
               </div>
             </div>
           </div>
