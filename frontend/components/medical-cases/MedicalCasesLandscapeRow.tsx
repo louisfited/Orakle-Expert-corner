@@ -12,6 +12,9 @@ export const MedicalCasesLandscapeRow = ({ medicalCases }: MedicalCasesLandscape
   const scrollRef = useRef<HTMLDivElement>(null)
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return
@@ -30,6 +33,39 @@ export const MedicalCasesLandscapeRow = ({ medicalCases }: MedicalCasesLandscape
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
     setShowLeftArrow(scrollLeft > 0)
     setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10)
+  }
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return
+    setIsDragging(true)
+    setStartX(e.pageX - scrollRef.current.offsetLeft)
+    setScrollLeft(scrollRef.current.scrollLeft)
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return
+    e.preventDefault()
+    const x = e.pageX - scrollRef.current.offsetLeft
+    const walk = (x - startX) * 2 // Multiply for faster scrolling
+    scrollRef.current.scrollLeft = scrollLeft - walk
+  }
+
+  const handleMouseUpOrLeave = () => {
+    setIsDragging(false)
+  }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!scrollRef.current) return
+    setIsDragging(true)
+    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft)
+    setScrollLeft(scrollRef.current.scrollLeft)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !scrollRef.current) return
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft
+    const walk = (x - startX) * 2
+    scrollRef.current.scrollLeft = scrollLeft - walk
   }
 
   useEffect(() => {
@@ -79,7 +115,14 @@ export const MedicalCasesLandscapeRow = ({ medicalCases }: MedicalCasesLandscape
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="scroll-smooth no-scrollbar overflow-x-auto h-[350px]"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUpOrLeave}
+        onMouseLeave={handleMouseUpOrLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleMouseUpOrLeave}
+        className={`scroll-smooth no-scrollbar overflow-x-auto h-[350px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
       >
         <div className="flex flex-row gap-3 py-8">
           {medicalCases.map((medicalCase) => (

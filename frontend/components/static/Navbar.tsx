@@ -128,8 +128,8 @@ const Navbar: FC<Props> = () => {
             />
           </div>
         ) : navbarTitle ? (
-          <div className="flex-1 justify-center">
-            <h1 className="text-xl font-semibold text-textPrimary">{navbarTitle}</h1>
+          <div className="hidden lg:flex flex-1 justify-center">
+            <h1 className="text-xl font-semibold text-textDark text-center">{navbarTitle}</h1>
           </div>
         ) : (
           <div className="flex flex-1 justify-end items-center gap-4 min-w-[76px]">
