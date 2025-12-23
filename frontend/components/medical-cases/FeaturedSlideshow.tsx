@@ -6,6 +6,7 @@ import SlideshowBackground from '../../public/slideshow-bg.png'
 import { useDisclose } from '@/lib/hooks/useDisclose'
 import { StartTestModal } from './StartTestModal'
 import { MedicalCaseThumbnail } from './MedicalCaseThumbnail'
+import categoriesData from '@/lib/categories.json'
 
 interface FeaturedSlideshowProps {
   medicalCases: MergedMedicalCase[]
@@ -90,7 +91,11 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
               <div className="flex lg:hidden flex-col gap-2 text-center">
                 {/* Categories */}
                 {currentCase.categories && currentCase.categories.length > 0 && (
-                  <p className="text-sm text-white/80">{currentCase.categories.join(' • ')}</p>
+                  <p className="text-sm text-white/80">
+                    {currentCase.categories
+                      .map((cat) => categoriesData.categories[cat as keyof typeof categoriesData.categories] || cat)
+                      .join(' • ')}
+                  </p>
                 )}
 
                 {/* Title */}
@@ -122,7 +127,11 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
               <div className="flex flex-col gap-4 mb-auto">
                 {/* Categories */}
                 {currentCase.categories && currentCase.categories.length > 0 && (
-                  <p className="text-sm text-white/80">{currentCase.categories.join(' • ')}</p>
+                  <p className="text-sm text-white/80">
+                    {currentCase.categories
+                      .map((cat) => categoriesData.categories[cat as keyof typeof categoriesData.categories] || cat)
+                      .join(' • ')}
+                  </p>
                 )}
 
                 {/* Title */}

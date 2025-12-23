@@ -4,6 +4,7 @@ import ProfilePicPlaceholder from '../../public/profile-placeholder.png'
 import ThumbnailPlaceholder from '../../public/thumbnail-background.png'
 import { useDisclose } from '@/lib/hooks/useDisclose'
 import { StartTestModal } from './StartTestModal'
+import categoriesData from '@/lib/categories.json'
 
 interface MedicalCasePortraitCardProps {
   medicalCase: MergedMedicalCase
@@ -64,7 +65,11 @@ export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCard
 
           {/* Categories */}
           {medicalCase.categories && medicalCase.categories.length > 0 && (
-            <p className="text-sm text-gray-600 mt-1">{medicalCase.categories.join(' • ')}</p>
+            <p className="text-sm text-gray-600 mt-1">
+              {medicalCase.categories
+                .map((cat) => categoriesData.categories[cat as keyof typeof categoriesData.categories] || cat)
+                .join(' • ')}
+            </p>
           )}
         </div>
       </div>
