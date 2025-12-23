@@ -167,7 +167,7 @@ export const UserDropdown = () => {
   }
 
   // If loading or no user, show skeleton
-  if (isLoading || !user) {
+  if (!user) {
     return <UserDropdownSkeleton />
   }
 
