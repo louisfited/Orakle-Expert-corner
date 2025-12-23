@@ -1,5 +1,6 @@
 import { HYGRAPH_URL } from '@/lib/hygraph/hygraph'
 import { cookies } from 'next/headers'
+import { getBookmarks } from '@/lib/data/repository/bookmarks'
 
 export type MergedMedicalCase = {
   version: '15m' | '5m'
@@ -116,6 +117,17 @@ medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 1000, or
   })
 
   return sorted
+}
+
+export const getAllMedicalCasesWithBookmarks = async (): Promise<MergedMedicalCase[]> => {
+  const medicalCases = await getAllMedicalCases()
+  const bookmarksResult = await getBookmarks()
+  const bookmarkIds = bookmarksResult?.data?.map((bookmark) => bookmark.case_id) ?? []
+  
+  return medicalCases.map((medicalCase) => ({
+    ...medicalCase,
+    isBookmarked: bookmarkIds.includes(medicalCase.id),
+  }))
 }
 
 // medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC) {
@@ -262,4 +274,15 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
   const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
   return [...v1, ...v2]
+}
+
+export const getAllMedicalCasesForStagingWithBookmarks = async (ids?: string[]): Promise<MergedMedicalCase[]> => {
+  const medicalCases = await getAllMedicalCasesForStaging(ids)
+  const bookmarksResult = await getBookmarks()
+  const bookmarkIds = bookmarksResult?.data?.map((bookmark) => bookmark.case_id) ?? []
+  
+  return medicalCases.map((medicalCase) => ({
+    ...medicalCase,
+    isBookmarked: bookmarkIds.includes(medicalCase.id),
+  }))
 }

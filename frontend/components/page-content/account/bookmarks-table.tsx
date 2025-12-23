@@ -5,12 +5,12 @@ import { ChevronRight } from 'lucide-react'
 import { BookmarkButton } from '@/components/bookmark-button'
 import { HStack } from '@/components/h-stack'
 import { RenderHTML } from '@/components/RenderHTML'
-import { getAllMedicalCases } from '@/lib/hygraph/getAllMedicalCases'
+import { getAllMedicalCasesWithBookmarks } from '@/lib/hygraph/getAllMedicalCases'
 import { shortenString } from '@/lib/utils'
 
 export const BookmarksTable = async () => {
   const { data } = await getBookmarks()
-  const medicalCases = await getAllMedicalCases()
+  const medicalCases = await getAllMedicalCasesWithBookmarks()
 
   return (
     <Table id="bookmarks">
