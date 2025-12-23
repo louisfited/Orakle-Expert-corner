@@ -1,6 +1,6 @@
-import { DialogV2, DialogContentV2 } from '@/components/ui/dialogV2'
+import { DialogV2, DialogContentV2, DialogCloseV2 } from '@/components/ui/dialogV2'
 import { RenderHTML } from '@/components/RenderHTML'
-import { Bookmark } from 'lucide-react'
+import { Bookmark, X } from 'lucide-react'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
 import ProfilePicPlaceholder from '../../public/profile-placeholder.png'
 import ThumbnailPlaceholder from '../../public/thumbnail-background.png'
@@ -26,7 +26,14 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
       open={open}
       onOpenChange={onOpenChange}
     >
-      <DialogContentV2>
+      <DialogContentV2 className="sm:[&>button:first-of-type]:hidden">
+        {/* Custom close button for sm and above - positioned outside to the right */}
+        <button
+          onClick={onOpenChange}
+          className="hidden sm:block absolute -right-14 top-0 opacity-70 hover:opacity-100 transition-opacity focus:outline-none"
+        >
+          <X className="h-8 w-8 text-white" />
+        </button>
         <div className="rounded-2xl">
           <div className="flex flex-col lg:flex-row">
             <div className="flex flex-col lg:w-1/2 w-full ltr">
