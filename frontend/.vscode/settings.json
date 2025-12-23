@@ -35,13 +35,5 @@
   },
   "eslint.lintTask.enable": true,
   "svg.preview.background": "dark-transparent",
-  "files.autoSave": "off",
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  }
+  "files.autoSave": "off"
 }
