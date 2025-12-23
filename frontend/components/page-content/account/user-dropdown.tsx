@@ -263,14 +263,14 @@ const MenuTrigger = ({ user, email }: UserFields) => {
       {/* Desktop: Full info */}
       <div className="hidden lg:flex gap-3 items-center w-fit px-3 py-2 rounded-lg">
         <div className="flex flex-col items-end gap-0.5">
-          <p className="font-medium text-sm text-textPrimary">
+          <p className="font-medium text-sm text-textDark">
             {firstName} {lastName}
           </p>
-          <p className="text-xs text-textPrimary">{email}</p>
+          <p className="text-xs text-textDark">{email}</p>
         </div>
         <ChevronDown
           size={18}
-          className="text-textPrimary"
+          className="text-textDark"
         />
       </div>
     </>

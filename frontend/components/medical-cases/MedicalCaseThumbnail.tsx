@@ -1,7 +1,7 @@
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
 import ProfilePicPlaceholder from '../../public/profile-placeholder.png'
 import ThumbnailPlaceholder from '../../public/thumbnail-background.png'
-import { Bookmark } from 'lucide-react'
+import { BookmarkButton } from '@/components/bookmark-button'
 
 interface MedicalCaseThumbnailProps {
   medicalCase: MergedMedicalCase
@@ -56,14 +56,21 @@ export const MedicalCaseThumbnail = ({
               onStartTest?.()
             }}
           >
-            Start Test
+            View
           </button>
-          <button className="w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg flex justify-center items-center">
-            <Bookmark
-              size={16}
-              color="white"
+          <div
+            className="w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg flex justify-center items-center"
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
+          >
+            <BookmarkButton
+              caseId={medicalCase.id}
+              bookmarked={medicalCase.isBookmarked || false}
+              caseTitle={medicalCase.title}
+              variant="white"
             />
-          </button>
+          </div>
         </div>
       )}
 

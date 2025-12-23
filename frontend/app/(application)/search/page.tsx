@@ -1,8 +1,8 @@
 import SearchPageContent from './search-page-content'
-import { getAllMedicalCases } from '@/lib/hygraph/getAllMedicalCases'
+import { getAllMedicalCasesForStaging } from '@/lib/hygraph/getAllMedicalCases'
 
 export default async function SearchPage() {
-  const medicalCases = await getAllMedicalCases()
+  const medicalCases = await getAllMedicalCasesForStaging()
 
   return <SearchPageContent medicalCases={medicalCases} />
 }

@@ -82,6 +82,7 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
                   showVersion={false}
                   showHoverButtons={true}
                   onStartTest={onConfirmationToggle}
+                  onClick={onConfirmationToggle}
                 />
               </div>
 

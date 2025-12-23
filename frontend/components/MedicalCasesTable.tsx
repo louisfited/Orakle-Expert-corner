@@ -124,7 +124,7 @@ const MedicalCasesTable: React.FC<MedicalCasesTableProps> = ({ medicalCases, boo
   const handleRowClick = (id: string, version: string) => {
     const selectedCase = filteredMedicalCases?.find((medicalCase) => medicalCase.id === id)
 
-    const isV2 = version === '5m'
+    const isV2 = version === '5m' || version === '5 min'
     const isVideo = version === '20m'
 
     if (!selectedCase) return
@@ -144,12 +144,18 @@ const MedicalCasesTable: React.FC<MedicalCasesTableProps> = ({ medicalCases, boo
   const handlePreCaseDialogButton = () => {
     onConfirmationToggle()
     const isVideo = selectedMedicalCase?.version == '20m'
+    const isV2 = selectedMedicalCase?.version === '5m' || selectedMedicalCase?.version === '5 min'
 
     if (isVideo) {
       router.push(`/webinar-video/${selectedMedicalCase.id}`)
       return
     }
-    router.push(`/cases/${selectedMedicalCase?.id}`)
+
+    if (isV2) {
+      router.push(`/cases-v2/${selectedMedicalCase?.id}`)
+    } else {
+      router.push(`/cases/${selectedMedicalCase?.id}`)
+    }
   }
 
   const getCategoryLabel = (key: string): string | null => {

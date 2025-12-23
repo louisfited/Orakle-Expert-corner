@@ -42,7 +42,11 @@ export const BookmarksTable = async () => {
               </TableCell>
               <TableCell>
                 <Link
-                  href={medicalCase?.version === '5m' ? `/cases-v2/${bookmark.case_id}` : `/cases/${bookmark.case_id}`}
+                  href={
+                    medicalCase?.version === '5m' || medicalCase?.version === '5 min'
+                      ? `/cases-v2/${bookmark.case_id}`
+                      : `/cases/${bookmark.case_id}`
+                  }
                 >
                   <HStack className="gap-0">
                     <p>Go to case</p>

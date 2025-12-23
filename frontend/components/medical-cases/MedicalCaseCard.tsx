@@ -63,6 +63,7 @@ export const MedicalCaseCard = ({ medicalCase, hasDescription }: MedicalCaseCard
             avatarSize="w-40 h-40"
             showHoverButtons={true}
             onStartTest={onConfirmationToggle}
+            onClick={onConfirmationToggle}
           />
         </div>
         <div>
