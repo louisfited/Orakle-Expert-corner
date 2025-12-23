@@ -1,4 +1,5 @@
 'use client'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { MedicalCaseCard } from '@/components/medical-cases/MedicalCaseCard'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
@@ -11,11 +12,36 @@ interface CategoriesPageContentProps {
 }
 
 export default function CategoriesPageContent({ medicalCases }: CategoriesPageContentProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [tempSelectedCategories, setTempSelectedCategories] = useState<string[]>([])
   const [categorySearch, setCategorySearch] = useState('')
   const [debouncedCategorySearch, setDebouncedCategorySearch] = useState('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
+  // Initialize categories from URL on mount
+  useEffect(() => {
+    const categoriesParam = searchParams.get('categories')
+    if (categoriesParam) {
+      const categoriesFromUrl = categoriesParam.split(',').filter(Boolean)
+      setSelectedCategories(categoriesFromUrl)
+    }
+  }, [])
+
+  // Update URL when categories change
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (selectedCategories.length > 0) {
+      params.set('categories', selectedCategories.join(','))
+    } else {
+      params.delete('categories')
+    }
+
+    const newUrl = params.toString() ? `?${params.toString()}` : '/categories'
+    router.replace(newUrl, { scroll: false })
+  }, [selectedCategories, router, searchParams])
 
   // Debounce category search
   useEffect(() => {
