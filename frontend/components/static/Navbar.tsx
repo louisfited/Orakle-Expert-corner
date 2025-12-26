@@ -160,7 +160,7 @@ const Navbar: FC<Props> = () => {
                   pathname?.includes('/my-tests') ? 'text-textPrimary' : 'text-textDark hover:text-textPrimary'
                 )}
               >
-                My Tests
+                Bookmarked
               </Link>
             </div>
 
@@ -262,7 +262,7 @@ const Navbar: FC<Props> = () => {
                 pathname?.includes('/my-tests') ? 'text-textPrimary' : 'text-textDark hover:text-textPrimary'
               )}
             >
-              My Tests
+              Bookmarked
             </Link>
           </nav>
         </div>

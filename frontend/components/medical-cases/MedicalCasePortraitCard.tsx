@@ -67,6 +67,7 @@ export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCard
           {medicalCase.categories && medicalCase.categories.length > 0 && (
             <p className="text-sm text-gray-600 mt-1">
               {medicalCase.categories
+                .slice(0, 3)
                 .map((cat) => categoriesData.categories[cat as keyof typeof categoriesData.categories] || cat)
                 .join(' • ')}
             </p>

@@ -7,6 +7,8 @@ import { useDisclose } from '@/lib/hooks/useDisclose'
 import { StartTestModal } from './StartTestModal'
 import { MedicalCaseThumbnail } from './MedicalCaseThumbnail'
 import categoriesData from '@/lib/categories.json'
+import { RenderHTML } from '../RenderHTML'
+import { shortenString } from '@/lib/utils'
 
 interface FeaturedSlideshowProps {
   medicalCases: MergedMedicalCase[]
@@ -93,6 +95,7 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
                 {currentCase.categories && currentCase.categories.length > 0 && (
                   <p className="text-sm text-white/80">
                     {currentCase.categories
+                      .slice(0, 3)
                       .map((cat) => categoriesData.categories[cat as keyof typeof categoriesData.categories] || cat)
                       .join(' • ')}
                   </p>
@@ -129,13 +132,21 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
                 {currentCase.categories && currentCase.categories.length > 0 && (
                   <p className="text-sm text-white/80">
                     {currentCase.categories
+                      .slice(0, 3)
                       .map((cat) => categoriesData.categories[cat as keyof typeof categoriesData.categories] || cat)
                       .join(' • ')}
                   </p>
                 )}
 
-                {/* Title */}
-                <p className="text-xl text-white font-medium">{currentCase.title}</p>
+                {/* Description */}
+                {currentCase.caseDescription?.html || currentCase.shortDescription ? (
+                  <div
+                    className="text-xl !text-white font-medium [&>*]:!text-white"
+                    dangerouslySetInnerHTML={{
+                      __html: shortenString(currentCase.caseDescription?.html ?? currentCase.shortDescription ?? ''),
+                    }}
+                  />
+                ) : null}
 
                 {/* Version */}
                 <div className="flex items-center gap-4 text-textPrimaryFaded">

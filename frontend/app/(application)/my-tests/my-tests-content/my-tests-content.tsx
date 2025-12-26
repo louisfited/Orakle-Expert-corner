@@ -64,7 +64,7 @@ export const MyTestsContent = ({ medicalCases = [] }: MyTestsContentProps) => {
 
   return (
     <div className="flex flex-col">
-      <span className="font-medium text-[28px] text-textDark mb-4 mt-6 md:mt-12">My Tests</span>
+      <span className="font-medium text-[28px] text-textDark mb-4 mt-6 md:mt-12">Bookmarked</span>
       <div className="hidden md:flex flex-row gap-2 items-center lg:items-start">
         {PAGE_SECTIONS.map((section) => (
           <div key={section.value}>
