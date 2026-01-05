@@ -16,7 +16,9 @@ interface StartTestModalProps {
 export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestModalProps) => {
   const router = useRouter()
   const handleStartTest = (id: string, version: string) => {
-    if (version === '5m' || version === '5 min') {
+    if (version === 'webinar') {
+      router.push(`/webinar-video/${id}`)
+    } else if (version === '5m' || version === '5 min') {
       router.push(`/cases-v2/${id}`)
     } else {
       router.push(`/cases/${id}`)
@@ -47,7 +49,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                 }}
               >
                 <div className="flex flex-col mt-5">
-                  <span className="text-[36px] w-5/6 text-white">{medicalCase.title}</span>
+                  <span className="text-[36px] w-5/6 text-white">{(medicalCase as any).name || medicalCase.title}</span>
                   <img
                     src={
                       medicalCase.patient.profileImage

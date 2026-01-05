@@ -44,7 +44,9 @@ export const MedicalCaseThumbnail = ({
       }}
       onClick={onClick}
     >
-      <span className={`${titleSize} w-2/3 text-white leading-tight font-medium`}>{medicalCase.title}</span>
+      <span className={`${titleSize} w-2/3 text-white leading-tight font-medium`}>
+        {(medicalCase as any).name || medicalCase.title}
+      </span>
 
       {/* Hover buttons */}
       {showHoverButtons && (

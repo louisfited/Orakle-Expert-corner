@@ -125,7 +125,7 @@ const MedicalCasesTable: React.FC<MedicalCasesTableProps> = ({ medicalCases, boo
     const selectedCase = filteredMedicalCases?.find((medicalCase) => medicalCase.id === id)
 
     const isV2 = version === '5m' || version === '5 min'
-    const isVideo = version === '20m'
+    const isVideo = version === 'webinar'
 
     if (!selectedCase) return
 
@@ -143,7 +143,7 @@ const MedicalCasesTable: React.FC<MedicalCasesTableProps> = ({ medicalCases, boo
 
   const handlePreCaseDialogButton = () => {
     onConfirmationToggle()
-    const isVideo = selectedMedicalCase?.version == '20m'
+    const isVideo = selectedMedicalCase?.version == 'webinar'
     const isV2 = selectedMedicalCase?.version === '5m' || selectedMedicalCase?.version === '5 min'
 
     if (isVideo) {
