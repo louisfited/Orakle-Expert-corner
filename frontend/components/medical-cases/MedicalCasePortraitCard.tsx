@@ -12,18 +12,19 @@ interface MedicalCasePortraitCardProps {
 
 export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCardProps) => {
   const { isOpen: isConfirmationOpen, onToggle: onConfirmationToggle } = useDisclose()
+  console.log(medicalCase)
 
   return (
     <>
       <div
-        className="flex flex-col items-center gap-2"
+        className="flex flex-col items-center gap-2 "
         style={{ width: '395px' }}
       >
         {/* Card */}
         <div
           className="w-full rounded-xl bg-cover bg-center px-5 shadow-xl relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 flex flex-col pt-[82px]"
           style={{
-            height: '551px',
+            height: '472px',
             backgroundImage: `url(${
               medicalCase.thumbnailBackground ? medicalCase.thumbnailBackground.url : ThumbnailPlaceholder.src
             })`,
@@ -31,7 +32,7 @@ export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCard
           onClick={onConfirmationToggle}
         >
           {/* Title at top */}
-          <div className="text-white text-[36px] leading-tight font-normal text-center mb-[60px]">
+          <div className="text-white h-16 text-[36px] leading-tight font-normal text-center mb-[60px]">
             {medicalCase.title}
           </div>
 
@@ -55,7 +56,7 @@ export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCard
         </div>
 
         {/* Description outside card */}
-        <div className="text-center w-full">
+        <div className="w-full">
           <p
             className="text-[17px] font-medium line-clamp-2"
             style={{ color: '#18276D' }}

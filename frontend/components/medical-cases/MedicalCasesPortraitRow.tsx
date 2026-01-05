@@ -88,12 +88,12 @@ export const MedicalCasesPortraitRow = ({ medicalCases }: MedicalCasesPortraitRo
     <div className="relative group/row">
       {/* Left Fade */}
       {showLeftArrow && (
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-40 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r z-40 pointer-events-none" />
       )}
 
       {/* Right Fade */}
       {showRightArrow && (
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-40 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l z-40 pointer-events-none" />
       )}
 
       {/* Left Arrow */}
@@ -129,7 +129,7 @@ export const MedicalCasesPortraitRow = ({ medicalCases }: MedicalCasesPortraitRo
         className={`scroll-smooth no-scrollbar overflow-x-auto overflow-y-clip ${
           isDragging ? 'cursor-grabbing' : 'cursor-grab'
         }`}
-        style={{ height: '650px' }}
+        style={{ height: '700px' }}
       >
         <div className="flex flex-row flex-nowrap gap-6 py-8">
           {medicalCases.map((medicalCase) => (

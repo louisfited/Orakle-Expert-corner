@@ -33,30 +33,37 @@ export const MedicalCaseThumbnail = ({
   return (
     <div
       className={`${width} ${height} rounded-2xl bg-cover bg-center px-5 flex flex-col justify-between py-5 shadow-xl relative overflow-hidden ${opacity} group ${
-        interactive
-          ? 'transform transition-transform duration-300 hover:scale-105 cursor-pointer'
-          : 'pointer-events-none'
+        interactive ? 'transform transition-transform duration-300 hover:scale-105' : 'pointer-events-none'
       }`}
       style={{
         backgroundImage: `url(${
           medicalCase.thumbnailBackground ? medicalCase.thumbnailBackground.url : ThumbnailPlaceholder.src
         })`,
       }}
-      onClick={onClick}
     >
       <span className={`${titleSize} w-2/3 text-white leading-tight font-medium`}>{medicalCase.title}</span>
 
+      <div className={`flex items-end justify-between ${showHoverButtons ? 'group-hover:hidden' : ''}`}>
+        {showVersion && (
+          <span className="text-white text-sm font-medium p-2 rounded-2xl bg-opacity-25">{medicalCase.version}</span>
+        )}
+        <img
+          src={medicalCase.patient.profileImage ? medicalCase.patient.profileImage.url : ProfilePicPlaceholder.src}
+          alt="Patient profile pic"
+          className={`absolute h-[153px] w-[153px] xl:h-[118px] xl:w-[118px] 2xl:h-[153px] 2xl:w-[153px] -bottom-4 -right-4 ${avatarSize} rounded-full object-cover border-white/70 border-4`}
+        />
+      </div>
       {/* Hover buttons */}
       {showHoverButtons && (
-        <div className="hidden group-hover:flex flex-row gap-2 items-center z-10">
+        <div className="hidden group-hover:flex absolute bottom-0 left-0 right-0 py-4 px-2 gap-3 items-center justify-around bg-white rounded-b-2xl">
           <button
-            className="flex-1 bg-white text-textPrimary hover:bg-white/90 font-medium py-2 px-4 rounded-lg text-sm"
+            className="flex-1 bg-textPrimary text-white font-medium py-2 px-4 rounded-lg text-sm"
             onClick={(e) => {
               e.stopPropagation()
               onStartTest?.()
             }}
           >
-            View
+            Start Test
           </button>
           <div
             className="w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg flex justify-center items-center"
@@ -68,24 +75,10 @@ export const MedicalCaseThumbnail = ({
               caseId={medicalCase.id}
               bookmarked={medicalCase.isBookmarked || false}
               caseTitle={medicalCase.title}
-              variant="white"
             />
           </div>
         </div>
       )}
-
-      <div className={`flex items-end justify-between ${showHoverButtons ? 'group-hover:hidden' : ''}`}>
-        {showVersion && (
-          <span className="text-white text-sm font-medium p-2 rounded-2xl bg-black bg-opacity-25">
-            {medicalCase.version}
-          </span>
-        )}
-        <img
-          src={medicalCase.patient.profileImage ? medicalCase.patient.profileImage.url : ProfilePicPlaceholder.src}
-          alt="Patient profile pic"
-          className={`absolute -bottom-4 -right-4 ${avatarSize} rounded-full object-cover border-white/70 border-4`}
-        />
-      </div>
     </div>
   )
 }

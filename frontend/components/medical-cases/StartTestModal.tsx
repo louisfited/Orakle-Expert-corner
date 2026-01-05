@@ -39,7 +39,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
           <div className="flex flex-col lg:flex-row">
             <div className="flex flex-col lg:w-1/2 w-full ltr">
               <div
-                className="flex flex-col relative sm:rounded-2xl h-[236px] bg-cover bg-center px-5 overflow-hidden"
+                className="flex flex-col relative sm:rounded-tl-2xl h-[236px] bg-cover bg-center px-5 overflow-hidden"
                 style={{
                   backgroundImage: `url(${
                     medicalCase.thumbnailBackground ? medicalCase.thumbnailBackground.url : ThumbnailPlaceholder.src
@@ -93,7 +93,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                   className="w-[118px] bg-textPrimary text-white shadow hover:bg-textPrimary/90 dark:bg-gray-900 dark:text-gray-50 dark:hover:bg-gray-900/90 p-3 rounded-md"
                   onClick={() => handleStartTest(medicalCase.id, medicalCase.version)}
                 >
-                  <span className="text-white text-lg text-center">Begin</span>
+                  <span className="text-white text-lg text-center">Start Test</span>
                 </button>
                 <div className="w-[46px] h-[46px] bg-white rounded-full flex justify-center items-center border-borderBottom">
                   <BookmarkButton
