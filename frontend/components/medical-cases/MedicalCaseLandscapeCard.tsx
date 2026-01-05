@@ -5,6 +5,7 @@ import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
 import { MedicalCaseThumbnail } from './MedicalCaseThumbnail'
 import { useRef, useEffect, useState } from 'react'
 import categoriesData from '@/lib/categories.json'
+import { StatusEnum } from '@/lib/types/types'
 
 interface MedicalCaseLandscapeCardProps {
   medicalCase: MergedMedicalCase
@@ -62,6 +63,7 @@ export const MedicalCaseLandscapeCard = ({ medicalCase, hasDescription }: Medica
             height="h-[205px] md:h-[208px] xl:h-[160px] 2xl:h-[236px]"
             avatarSize="w-40 h-40"
             showHoverButtons={true}
+            isStarted={medicalCase.status === StatusEnum.started}
             onStartTest={onConfirmationToggle}
             onClick={onConfirmationToggle}
           />

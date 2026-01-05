@@ -12,7 +12,6 @@ interface MedicalCasePortraitCardProps {
 
 export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCardProps) => {
   const { isOpen: isConfirmationOpen, onToggle: onConfirmationToggle } = useDisclose()
-  console.log(medicalCase)
 
   return (
     <>

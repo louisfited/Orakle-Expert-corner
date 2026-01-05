@@ -13,6 +13,7 @@ interface MedicalCaseThumbnailProps {
   opacity?: string
   interactive?: boolean
   showHoverButtons?: boolean
+  isStarted?: boolean
   onStartTest?: () => void
   onClick?: () => void
 }
@@ -27,6 +28,7 @@ export const MedicalCaseThumbnail = ({
   opacity = 'opacity-100',
   interactive = true,
   showHoverButtons = false,
+  isStarted = false,
   onStartTest,
   onClick,
 }: MedicalCaseThumbnailProps) => {
@@ -79,6 +81,7 @@ export const MedicalCaseThumbnail = ({
           </div>
         </div>
       )}
+      {isStarted && <div className="absolute bottom-0 left-0 h-1 w-1/2 bg-textPrimary" />}
     </div>
   )
 }
