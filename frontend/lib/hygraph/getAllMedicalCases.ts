@@ -49,16 +49,7 @@ export const getAllMedicalCases = async (): Promise<MergedMedicalCase[]> => {
 webinarVideos(first: 1000,orderBy: createdAt_DESC){
   id
   name
-  title
   createdAt
-  categories
-  countries
-  caseDescription { html }
-  preCaseInformation { html }
-  patient {
-    profileImage { url }
-  }
-  finishUrl
 }
 
   medicalCases(locales:[${languageValue ? languageValue : 'en'}], first: 1000, orderBy: createdAt_DESC) {
