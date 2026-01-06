@@ -43,7 +43,9 @@ export const MedicalCaseThumbnail = ({
         })`,
       }}
     >
-      <span className={`${titleSize} w-2/3 text-white leading-tight font-medium`}>{medicalCase.title}</span>
+      <span className={`${titleSize} w-2/3 text-white leading-tight font-medium`}>
+        {(medicalCase as any).name || medicalCase.title}
+      </span>
 
       <div className={`flex items-end justify-between ${showHoverButtons ? 'group-hover:hidden' : ''}`}>
         {showVersion && (

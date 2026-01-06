@@ -108,7 +108,7 @@ medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 1000, or
     console.error('getAllMedicalCases - GraphQL Errors:', res.errors)
   }
 
-  const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: '20m', ...v }))
+  const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: 'webinar', ...v }))
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
   const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
 
@@ -225,6 +225,26 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
     cache: 'no-store',
     body: JSON.stringify({
       query: `{
+        webinarVideos(first: 1000,orderBy: createdAt_DESC){
+          id
+          name
+          title
+          description
+          videoUrl
+          contentType
+          supporter
+          faculty
+          createdAt
+          categories
+          countries
+          caseDescription { html }
+          preCaseInformation { html }
+          patient {
+            profileImage { url }
+          }
+          finishUrl
+          isRecommended
+        }
         medicalCases(locales:[${
           languageValue ? languageValue : 'en'
         }], first: 150, orderBy: createdAt_DESC${whereClause}) {
@@ -274,9 +294,10 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
   })
 
   const res = await response.json()
+  const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: 'webinar', ...v }))
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
   const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
-  return [...v1, ...v2]
+  return [...video, ...v1, ...v2]
 }
 
 export const getAllMedicalCasesForStagingWithBookmarks = async (ids?: string[]): Promise<MergedMedicalCase[]> => {

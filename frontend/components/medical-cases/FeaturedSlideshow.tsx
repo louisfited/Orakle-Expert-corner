@@ -102,7 +102,7 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
                 )}
 
                 {/* Title */}
-                <p className="text-xl text-white font-medium">{currentCase.title}</p>
+                <p className="text-xl text-white font-medium">{(currentCase as any).name || currentCase.title}</p>
 
                 {/* Version */}
                 <div className="flex items-center gap-4 text-textPrimaryFaded justify-center">
@@ -183,7 +183,7 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
           </div>
 
           {/* Right side - Preview Cards */}
-          <div className="hidden lg:flex flex-col gap-4 justify-center flex-shrink-0">
+          <div className="hidden lg:flex flex-row gap-4 justify-center flex-shrink-0">
             {medicalCases.slice(1, 4).map((previewCase, index) => {
               const previewIndex = (currentIndex + index + 1) % medicalCases.length
               const displayCase = medicalCases[previewIndex]

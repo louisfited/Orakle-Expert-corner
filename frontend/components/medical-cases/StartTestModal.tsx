@@ -16,7 +16,9 @@ interface StartTestModalProps {
 export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestModalProps) => {
   const router = useRouter()
   const handleStartTest = (id: string, version: string) => {
-    if (version === '5m' || version === '5 min') {
+    if (version === 'webinar') {
+      router.push(`/webinar-video/${id}`)
+    } else if (version === '5m' || version === '5 min') {
       router.push(`/cases-v2/${id}`)
     } else {
       router.push(`/cases/${id}`)
@@ -47,7 +49,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                 }}
               >
                 <div className="flex flex-col mt-5">
-                  <span className="text-[36px] w-5/6 text-white">{medicalCase.title}</span>
+                  <span className="text-[36px] w-5/6 text-white">{(medicalCase as any).name || medicalCase.title}</span>
                   <img
                     src={
                       medicalCase.patient.profileImage
@@ -76,19 +78,19 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                 </div>
               </div>
             </div>
-            <div className="p-8 flex flex-col justify-between lg:w-1/2 w-full">
-              <div className="flex flex-col">
+            <div className="p-8 flex flex-col justify-between lg:w-1/2 w-full max-h-[472px]">
+              <div className="flex flex-col overflow-y-auto flex-1 pr-2">
                 <span className="font-medium tex-black text-xl">{medicalCase.shortDescription}</span>
                 <div>
-                  {medicalCase.caseDescription && (
+                  {medicalCase.preCaseInformation && (
                     <RenderHTML
                       className="text-base"
-                      htmlString={medicalCase.caseDescription.html}
+                      htmlString={medicalCase.preCaseInformation.html}
                     />
                   )}
                 </div>
               </div>
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-row justify-between mt-4 flex-shrink-0">
                 <button
                   className="w-[118px] bg-textPrimary text-white shadow hover:bg-textPrimary/90 dark:bg-gray-900 dark:text-gray-50 dark:hover:bg-gray-900/90 p-3 rounded-md"
                   onClick={() => handleStartTest(medicalCase.id, medicalCase.version)}
