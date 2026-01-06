@@ -59,7 +59,6 @@ webinarVideos(first: 1000,orderBy: createdAt_DESC){
     profileImage { url }
   }
   finishUrl
-  isRecommended
 }
 
   medicalCases(locales:[${languageValue ? languageValue : 'en'}], first: 1000, orderBy: createdAt_DESC) {
