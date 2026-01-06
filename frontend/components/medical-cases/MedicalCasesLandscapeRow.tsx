@@ -122,7 +122,7 @@ export const MedicalCasesLandscapeRow = ({ medicalCases }: MedicalCasesLandscape
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleMouseUpOrLeave}
-        className={`scroll-smooth no-scrollbar overflow-x-auto h-[350px] ${
+        className={`scroll-smooth no-scrollbar overflow-x-auto h-[350px] min-h-fit ${
           isDragging ? 'cursor-grabbing' : 'cursor-grab'
         }`}
       >

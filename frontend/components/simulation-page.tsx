@@ -59,9 +59,7 @@ export const SimulationPage: FC<Props> = ({ medicalCase, patientCase, medicalCas
   }
 
   const hasOrders = () => {
-    return (
-      medicalCase?.medicationSelection?.length || medicalCase?.nonMedicationOrder?.length || medicalCase?.order?.length
-    )
+    return medicalCase?.medicationSelection?.length
   }
 
   const hasTests = () => {
