@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { PastVisit } from '@/interface';
-import React from 'react';
+import { PastVisit } from '@/interface'
+import React from 'react'
 import { RenderHTML } from '@/components/RenderHTML'
 import { useDisclose } from '@/lib/hooks/useDisclose'
 import dayjs from 'dayjs'
@@ -17,13 +17,15 @@ const PastVisitsTableRow = ({ item }: Props) => {
 
   return (
     <>
-      <tr onClick={onToggle} className="cursor-pointer hover:bg-gray-100">
+      <tr
+        onClick={onToggle}
+        className="cursor-pointer hover:bg-gray-100"
+      >
         <td className="py-3 text-sm">
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">{calculateDate(item.startDate)}</p>
             </div>
-
           </div>
         </td>
         <td className="py-3  text-sm">
@@ -43,20 +45,31 @@ const PastVisitsTableRow = ({ item }: Props) => {
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </td>
       </tr>
 
-      {isOpen && (
+      {isOpen ? (
         <tr>
-          <td colSpan={4} className="bg-white rounded-lg p-4">
-            <RenderHTML htmlString={htmlString} className="text-sm text-gray-600" />
+          <td
+            colSpan={4}
+            className="bg-white rounded-lg p-4"
+          >
+            <RenderHTML
+              htmlString={htmlString}
+              className="text-sm text-gray-600"
+            />
           </td>
         </tr>
-      )}
+      ) : null}
     </>
-  );
-};
+  )
+}
 
-export default PastVisitsTableRow;
+export default PastVisitsTableRow

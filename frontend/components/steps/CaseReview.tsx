@@ -3,30 +3,39 @@ import React, { useEffect, useState } from 'react'
 import { useCaseContext } from '@/lib/context/caseContext'
 import { RenderHTML } from '../RenderHTML'
 import { Title } from '@/components/Title'
-import { checkEmptyRichText } from '@/lib/utils';
-import Cookies from "js-cookie"
+import { checkEmptyRichText } from '@/lib/utils'
+import Cookies from 'js-cookie'
 import languageTexts from '@/lib/utils/language'
 
-export const CaseReview = ({setDiagnosisUrl}: {setDiagnosisUrl: React.Dispatch<React.SetStateAction<string>>}) => {
+export const CaseReview = ({ setDiagnosisUrl }: { setDiagnosisUrl: React.Dispatch<React.SetStateAction<string>> }) => {
   const { medicalCase } = useCaseContext()
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-  const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-  
- 
-  
-    useEffect(()=>{
-      setIsMounted(true)
-        },[])
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
 
-  
   useEffect(() => {
-    medicalCase?.diagnose.forEach((diagnosis) => {
-      if(diagnosis.reviewed){
-        setDiagnosisUrl(diagnosis.url)
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
+    // Check medication selection first (higher priority)
+    let urlFound = false
+    medicalCase?.medicationSelection?.forEach((medication) => {
+      console.log(medication)
+      if (medication.reviewed && medication.url) {
+        setDiagnosisUrl(medication.url)
+        urlFound = true
       }
     })
+
+    // Only check diagnoses if no medication selection URL was found
+    if (!urlFound) {
+      medicalCase?.diagnose.forEach((diagnosis) => {
+        if (diagnosis.reviewed) {
+          setDiagnosisUrl(diagnosis.url)
+        }
+      })
+    }
   }, [medicalCase, setDiagnosisUrl])
   return (
     <div>
@@ -35,19 +44,15 @@ export const CaseReview = ({setDiagnosisUrl}: {setDiagnosisUrl: React.Dispatch<R
   )
 }
 
-
 const CaseReviewTabs = () => {
   const { medicalCase } = useCaseContext()
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-  const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-  
- 
-  
-    useEffect(()=>{
-      setIsMounted(true)
-        },[])
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const hasClosingRemarks = () => {
     return medicalCase?.closingRemarks && !checkEmptyRichText(medicalCase?.closingRemarks.html)
@@ -63,9 +68,11 @@ const CaseReviewTabs = () => {
 
   return (
     <>
-      <Title title={isMounted ? languageTexts(lang).caseReview : "Case Review"} />
+      <Title title={isMounted ? languageTexts(lang).caseReview : 'Case Review'} />
       <Tabs
-        defaultValue={hasClosingRemarks() ? 'closing-remarks' : hasLiteratureReview() ? 'literature-review' : 'references'}
+        defaultValue={
+          hasClosingRemarks() ? 'closing-remarks' : hasLiteratureReview() ? 'literature-review' : 'references'
+        }
         className="mt-4"
       >
         <TabsList variant="default">
@@ -78,7 +85,6 @@ const CaseReviewTabs = () => {
           {hasReferences() && (
             <TabsTrigger value="references">{isMounted && languageTexts(lang).references}</TabsTrigger>
           )}
-
         </TabsList>
         {hasClosingRemarks() && (
           <TabsContent value="closing-remarks">
