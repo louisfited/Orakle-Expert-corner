@@ -323,7 +323,7 @@ export default function CategoriesPageContent({ medicalCases }: CategoriesPageCo
               {selectedCategories.length > 0 && <p className="text-gray-500 mt-2">Try adjusting your filters.</p>}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-6 justify-items-center lg:justify-items-start">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 min-[1650px]:grid-cols-3 3xl:grid-cols-4 gap-8 justify-items-center lg:justify-items-start">
               {filteredResults.map((medicalCase) => (
                 <MedicalCaseCard
                   key={medicalCase.id}
