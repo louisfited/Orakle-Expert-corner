@@ -70,10 +70,10 @@ export const GenericDialog = (props: GenericDialogProps) => {
       <DialogContent className={titleGap}>
         <DialogHeader>
           {props.title && (
-            <DialogTitle className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-4">
               {props.icon}
               {props.title}
-            </DialogTitle>
+            </div>
           )}
         </DialogHeader>
         <div className="max-h-[50vh] gap-8 flex flex-col overflow-y-auto">{props.content}</div>

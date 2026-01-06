@@ -109,6 +109,7 @@ const ADDITIONAL_QUERY = `
     medicationSelection {
       name
       guidanceType
+      url
       actionText {
         text {
           html
@@ -288,6 +289,7 @@ async function getMedicalCaseById(id: string, { email, password }: any): Promise
                           name
                           guidanceType
                           rationales
+                          url
                           actionText {
                             text {
                               html
