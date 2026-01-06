@@ -93,7 +93,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                   className="w-[118px] bg-textPrimary text-white shadow hover:bg-textPrimary/90 dark:bg-gray-900 dark:text-gray-50 dark:hover:bg-gray-900/90 p-3 rounded-md"
                   onClick={() => handleStartTest(medicalCase.id, medicalCase.version)}
                 >
-                  <span className="text-white text-lg text-center">Start Test</span>
+                  <span className="text-white text-lg text-center">Begin</span>
                 </button>
                 <div className="w-[46px] h-[46px] bg-white rounded-full flex justify-center items-center border-borderBottom">
                   <BookmarkButton
