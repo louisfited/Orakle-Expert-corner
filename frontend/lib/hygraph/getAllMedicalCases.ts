@@ -123,6 +123,8 @@ export const getAllMedicalCases = async (ids?: string[]): Promise<MergedMedicalC
           patient {
             profileImage { url }
           }
+          thumbnailBackground { url }
+          shortDescription
           isRecommended
         }
         medicalCasesV2(locales:[${
@@ -140,7 +142,7 @@ export const getAllMedicalCases = async (ids?: string[]): Promise<MergedMedicalC
             id
             profileImage { url }
           }
-            thumbnailBackground { url }
+          thumbnailBackground { url }
           isRecommended
           countries
         }
