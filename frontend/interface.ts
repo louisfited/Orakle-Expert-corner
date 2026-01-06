@@ -116,6 +116,7 @@ export type MedicationSelection = {
     }
   }[]
   rationales: string[]
+  url: string
 }
 
 export type MedicalCaseInformation = {

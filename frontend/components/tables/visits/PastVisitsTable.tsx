@@ -19,11 +19,11 @@ const PastVisitsTable = ({ pastVisits }: { pastVisits?: PastVisit[] }) => {
         <table className="min-w-full leading-normal">
           <thead>
             <tr>
-              <th className={thClassName}>{isMounted && languageTexts(lang).date}</th>
-              <th className={thClassName}>{isMounted && languageTexts(lang).rr}</th>
-              <th className={thClassName}>{isMounted && languageTexts(lang).kg}</th>
-              <th className={thClassName}>{isMounted && languageTexts(lang).bmi}</th>
-              <th className="py-2" /> {/* Empty for dropdown icon */}
+              <th className={thClassName}>{isMounted ? languageTexts(lang).date : ''}</th>
+              <th className={thClassName}>{isMounted ? languageTexts(lang).rr : ''}</th>
+              <th className={thClassName}>{isMounted ? languageTexts(lang).kg : ''}</th>
+              <th className={thClassName}>{isMounted ? languageTexts(lang).bmi : ''}</th>
+              <th className="py-2"></th>
             </tr>
           </thead>
           <tbody className="text-sm">
@@ -33,7 +33,7 @@ const PastVisitsTable = ({ pastVisits }: { pastVisits?: PastVisit[] }) => {
                   colSpan={5}
                   className="text-center py-4 text-textDark"
                 >
-                  {isMounted && languageTexts(lang).noData}
+                  {isMounted ? languageTexts(lang).noData : ''}
                 </td>
               </tr>
             )}
