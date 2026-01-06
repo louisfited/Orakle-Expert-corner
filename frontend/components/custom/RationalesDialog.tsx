@@ -182,10 +182,10 @@ export const RationalesDialog = (props: RationalesDialogProps) => {
         ) : (
           <>
             <DialogHeader>
-              <div className="flex items-center gap-2 mb-4">
+              <DialogTitle className="flex items-center gap-2 mb-4">
                 {props.icon}
                 {props.title}
-              </div>
+              </DialogTitle>
             </DialogHeader>
             <div className="max-h-[50vh] gap-8 flex flex-col overflow-y-auto">{props.content}</div>
             {props.showButton && (
