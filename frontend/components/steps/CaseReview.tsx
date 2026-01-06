@@ -21,7 +21,6 @@ export const CaseReview = ({ setDiagnosisUrl }: { setDiagnosisUrl: React.Dispatc
     // Check medication selection first (higher priority)
     let urlFound = false
     medicalCase?.medicationSelection?.forEach((medication) => {
-      console.log(medication)
       if (medication.reviewed && medication.url) {
         setDiagnosisUrl(medication.url)
         urlFound = true
