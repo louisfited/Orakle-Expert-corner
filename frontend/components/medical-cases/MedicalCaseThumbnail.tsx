@@ -52,7 +52,11 @@ export const MedicalCaseThumbnail = ({
           <span className="text-white text-sm font-medium p-2 rounded-2xl bg-opacity-25">{medicalCase.version}</span>
         )}
         <img
-          src={medicalCase.patient.profileImage ? medicalCase.patient.profileImage.url : ProfilePicPlaceholder.src}
+          src={
+            medicalCase.patient && medicalCase.patient.profileImage
+              ? medicalCase.patient.profileImage.url
+              : ProfilePicPlaceholder.src
+          }
           alt="Patient profile pic"
           className={`absolute h-[153px] w-[153px] xl:h-[118px] xl:w-[118px] 2xl:h-[153px] 2xl:w-[153px] -bottom-4 -right-4 ${avatarSize} rounded-full object-cover border-white/70 border-4`}
         />
