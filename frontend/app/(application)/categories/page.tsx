@@ -1,8 +1,8 @@
 import CategoriesPageContent from './categories-page-content'
-import { getAllMedicalCasesForStagingWithBookmarks } from '@/lib/hygraph/getAllMedicalCases'
+import { getAllMedicalCasesWithBookmarks } from '@/lib/hygraph/getAllMedicalCases'
 
 export default async function CategoriesPage() {
-  const medicalCases = await getAllMedicalCasesForStagingWithBookmarks()
+  const medicalCases = await getAllMedicalCasesWithBookmarks()
 
   return <CategoriesPageContent medicalCases={medicalCases} />
 }

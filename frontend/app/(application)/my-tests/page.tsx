@@ -1,4 +1,4 @@
-import { getAllMedicalCasesForStaging } from '@/lib/hygraph/getAllMedicalCases'
+import { getAllMedicalCases } from '@/lib/hygraph/getAllMedicalCases'
 import { getCasesStartedForUser } from '@/lib/data/repository/case-status-per-user'
 import { MyTestsContent } from './my-tests-content/my-tests-content'
 import { MergedMedicalCase } from '@/lib/hygraph/getAllMedicalCases'
@@ -13,7 +13,7 @@ const MyTests = async () => {
   const bookmarkIds = bookmarks?.data?.map((bookmark) => bookmark.case_id) ?? []
   const myCasesIds = [...(myCases.map((mycase) => mycase.case_id) ?? []), ...bookmarkIds]
   if (myCasesIds && myCasesIds.length > 0) {
-    const medicalCases = await getAllMedicalCasesForStaging(myCasesIds)
+    const medicalCases = await getAllMedicalCases(myCasesIds)
     const statusMap = new Map(myCases?.map((item) => [item.case_id, item.status]) ?? [])
 
     updatedCases = medicalCases.map((medicalCase) => {

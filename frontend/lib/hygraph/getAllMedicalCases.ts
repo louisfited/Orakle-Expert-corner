@@ -36,184 +36,7 @@ export type MergedMedicalCase = {
   isRecommended?: boolean
 }
 
-export const getAllMedicalCases = async (): Promise<MergedMedicalCase[]> => {
-  const languageValue: string | undefined = cookies().get('language')?.value
-
-  const response = await fetch(HYGRAPH_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    cache: 'no-store',
-    body: JSON.stringify({
-      query: `{
-webinarVideos(first: 1000,orderBy: createdAt_DESC){
-  id
-  name
-  createdAt
-}
-
-  medicalCases(locales:[${languageValue ? languageValue : 'en'}], first: 1000, orderBy: createdAt_DESC) {
-  id
-  title
-  supporter
-  faculty
-  countries
-  categories
-  createdAt
-  likes
-  caseDescription { html }
-  preCaseInformation { html }
-  historyOfPresentIllness { html }
-  familyAndSocialHistory { html }
-  importantInformation { html }
-  physicalExaminationNotes { html }
-  closingRemarks { html }
-  literatureReview { html }
-  references { html }
-  bannerTopBarImage { url }
-  showBannerTopBarImage
-  thumbnailBackground { url }
-  patient {
-  profileImage { url }
-  }
-
-}
-
-
-medicalCasesV2(locales:[${languageValue ? languageValue : 'en'}],first: 1000, orderBy: createdAt_DESC) {
-  id
-  title
-  supporter
-  faculty
-  createdAt
-  categories
-  caseDescription { html }
-  shortDescription
-  likes
-  patient {
-    id
-    profileImage { url }
-  }
-  thumbnailBackground { url }
-}
-
-
-      }`,
-    }),
-  })
-
-  const res = await response.json()
-
-  if (res?.errors) {
-    console.error('getAllMedicalCases - GraphQL Errors:', res.errors)
-  }
-
-  const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: 'webinar', ...v }))
-  const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
-  const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
-
-  const data = [...video, ...v2, ...v1]
-  const sorted = data.sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  })
-
-  return sorted
-}
-
-export const getAllMedicalCasesWithBookmarks = async (): Promise<MergedMedicalCase[]> => {
-  const medicalCases = await getAllMedicalCases()
-  const bookmarksResult = await getBookmarks()
-  const bookmarkIds = bookmarksResult?.data?.map((bookmark) => bookmark.case_id) ?? []
-
-  return medicalCases.map((medicalCase) => ({
-    ...medicalCase,
-    isBookmarked: bookmarkIds.includes(medicalCase.id),
-  }))
-}
-
-// medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC) {
-//   id
-//   title
-//   supporter
-//   faculty
-//   contentType
-//   countries
-//   categories
-//   likes
-//   caseDescription { html }
-//   preCaseInformation { html }
-//   historyOfPresentIllness { html }
-//   familyAndSocialHistory { html }
-//   importantInformation { html }
-//   physicalExaminationNotes { html }
-//   closingRemarks { html }
-//   literatureReview { html }
-//   references { html }
-//   bannerTopBarImage { url }
-//   showBannerTopBarImage
-//   patient {
-//   profileImage { url }
-//   }
-
-// }
-
-// medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, orderBy: createdAt_DESC) {
-//   id
-//   title
-//   supporter
-//   faculty
-//   caseDescription { html }
-//   patient {
-//     id
-//     profileImage { url }
-//   }
-// }
-
-// Testings{
-//   id
-//   name
-//   }
-// medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, orderBy: createdAt_DESC) {
-//   id
-//   title
-//   supporter
-//   faculty
-//   caseDescription { html }
-//   patient {
-//     id
-//     profileImage { url }
-//   }
-// }
-
-// medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC) {
-//   id
-//   title
-//   supporter
-//   faculty
-//   contentType
-//   countries
-//   categories
-//   likes
-//   caseDescription { html }
-//   preCaseInformation { html }
-//   historyOfPresentIllness { html }
-//   familyAndSocialHistory { html }
-//   importantInformation { html }
-//   physicalExaminationNotes { html }
-//   closingRemarks { html }
-//   literatureReview { html }
-//   references { html }
-//   bannerTopBarImage { url }
-//   showBannerTopBarImage
-//   patient {
-//   profileImage { url }
-//   }
-
-// }
-
-export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<MergedMedicalCase[]> => {
+export const getAllMedicalCases = async (ids?: string[]): Promise<MergedMedicalCase[]> => {
   const languageValue: string | undefined = cookies().get('language')?.value
   const { data: userProfile } = await getUserProfile()
   const userCountry = userProfile?.country_of_practice
@@ -329,11 +152,17 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
   const video = (res?.data?.webinarVideos || []).map((v: any) => ({ version: 'webinar', ...v }))
   const v1 = (res?.data?.medicalCases || []).map((c: any) => ({ version: '15m', ...c }))
   const v2 = (res?.data?.medicalCasesV2 || []).map((c: any) => ({ version: '5m', ...c }))
-  return [...video, ...v1, ...v2]
+  const data = [...video, ...v1, ...v2]
+
+  const sorted = data.sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  })
+
+  return sorted
 }
 
-export const getAllMedicalCasesForStagingWithBookmarks = async (ids?: string[]): Promise<MergedMedicalCase[]> => {
-  const medicalCases = await getAllMedicalCasesForStaging(ids)
+export const getAllMedicalCasesWithBookmarks = async (): Promise<MergedMedicalCase[]> => {
+  const medicalCases = await getAllMedicalCases()
   const bookmarksResult = await getBookmarks()
   const bookmarkIds = bookmarksResult?.data?.map((bookmark) => bookmark.case_id) ?? []
 
@@ -342,3 +171,83 @@ export const getAllMedicalCasesForStagingWithBookmarks = async (ids?: string[]):
     isBookmarked: bookmarkIds.includes(medicalCase.id),
   }))
 }
+
+// medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC) {
+//   id
+//   title
+//   supporter
+//   faculty
+//   contentType
+//   countries
+//   categories
+//   likes
+//   caseDescription { html }
+//   preCaseInformation { html }
+//   historyOfPresentIllness { html }
+//   familyAndSocialHistory { html }
+//   importantInformation { html }
+//   physicalExaminationNotes { html }
+//   closingRemarks { html }
+//   literatureReview { html }
+//   references { html }
+//   bannerTopBarImage { url }
+//   showBannerTopBarImage
+//   patient {
+//   profileImage { url }
+//   }
+
+// }
+
+// medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, orderBy: createdAt_DESC) {
+//   id
+//   title
+//   supporter
+//   faculty
+//   caseDescription { html }
+//   patient {
+//     id
+//     profileImage { url }
+//   }
+// }
+
+// Testings{
+//   id
+//   name
+//   }
+// medicalCasesV2(locales:[${languageValue ? languageValue : "en"}],first: 150, orderBy: createdAt_DESC) {
+//   id
+//   title
+//   supporter
+//   faculty
+//   caseDescription { html }
+//   patient {
+//     id
+//     profileImage { url }
+//   }
+// }
+
+// medicalCases(locales:[${languageValue ? languageValue : "en"}], first: 150, orderBy: createdAt_DESC) {
+//   id
+//   title
+//   supporter
+//   faculty
+//   contentType
+//   countries
+//   categories
+//   likes
+//   caseDescription { html }
+//   preCaseInformation { html }
+//   historyOfPresentIllness { html }
+//   familyAndSocialHistory { html }
+//   importantInformation { html }
+//   physicalExaminationNotes { html }
+//   closingRemarks { html }
+//   literatureReview { html }
+//   references { html }
+//   bannerTopBarImage { url }
+//   showBannerTopBarImage
+//   patient {
+//   profileImage { url }
+//   }
+
+// }

@@ -1,6 +1,6 @@
 'use server'
 
-import { getAllMedicalCasesForStagingWithBookmarks } from '@/lib/hygraph/getAllMedicalCases'
+import { getAllMedicalCasesWithBookmarks } from '@/lib/hygraph/getAllMedicalCases'
 import { MedicalCasesLandscapeRow } from '@/components/medical-cases/MedicalCasesLandscapeRow'
 import { FeaturedSlideshow } from '@/components/medical-cases/FeaturedSlideshow'
 import { MedicalCasesPortraitRow } from '@/components/medical-cases/MedicalCasesPortraitRow'
@@ -8,7 +8,7 @@ import { getCasesStartedForUser } from '@/lib/data/repository/case-status-per-us
 import { StatusEnum } from '@/lib/types/types'
 
 const NewHomePage = async () => {
-  const medicalCases = await getAllMedicalCasesForStagingWithBookmarks()
+  const medicalCases = await getAllMedicalCasesWithBookmarks()
   const recommendedCases = medicalCases.filter((medicalCase) => medicalCase.isRecommended)
   const topCases = [...medicalCases].sort((a, b) => b.likes - a.likes)
   const newActivities = medicalCases.slice(0, 5) // Get first 5 cases for the slideshow
