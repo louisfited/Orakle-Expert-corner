@@ -1,6 +1,8 @@
 import { HYGRAPH_URL } from '@/lib/hygraph/hygraph'
 import { cookies } from 'next/headers'
 import { getBookmarks } from '@/lib/data/repository/bookmarks'
+import { getUserProfile } from '@/lib/data/repository/user-profile'
+import countriesJson from '@/lib/countries.json'
 
 export type MergedMedicalCase = {
   version: '15m' | '5m'
@@ -213,8 +215,37 @@ export const getAllMedicalCasesWithBookmarks = async (): Promise<MergedMedicalCa
 
 export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<MergedMedicalCase[]> => {
   const languageValue: string | undefined = cookies().get('language')?.value
+  const { data: userProfile } = await getUserProfile()
+  const userCountry = userProfile?.country_of_practice
+    ? countriesJson.find((c) => c.name === userProfile.country_of_practice)?.code ?? null
+    : null
 
-  const whereClause = ids && ids.length ? `, where: { id_in: [${ids.map((id) => `"${id}"`).join(',')}] }` : ''
+  const whereFilters: string[] = []
+
+  if (ids?.length) {
+    whereFilters.push(`{ id_in: [${ids.map((id) => `"${id}"`).join(', ')}] }`)
+  }
+
+  if (userCountry) {
+    if (userCountry === 'STAGING') {
+      whereFilters.push(`{
+       countries_contains_all: ${userCountry} 
+
+  }`)
+    } else {
+      whereFilters.push(`{
+    OR: [
+      { countries: [] }
+      { countries_contains_all: ${userCountry} }
+    ]
+  }`)
+    }
+  }
+
+  const whereClause =
+    whereFilters.length === 0
+      ? ''
+      : `where: ${whereFilters.length === 1 ? whereFilters[0] : `{ AND: [${whereFilters.join(', ')}] }`}`
 
   const response = await fetch(HYGRAPH_URL, {
     method: 'POST',
@@ -225,7 +256,7 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
     cache: 'no-store',
     body: JSON.stringify({
       query: `{
-        webinarVideos(first: 1000,orderBy: createdAt_DESC){
+        webinarVideos(first: 1000,orderBy: createdAt_DESC ${whereClause}){
           id
           name
           title
@@ -247,7 +278,7 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
         }
         medicalCases(locales:[${
           languageValue ? languageValue : 'en'
-        }], first: 150, orderBy: createdAt_DESC${whereClause}) {
+        }], first: 150, orderBy: createdAt_DESC ${whereClause}) {
           id
           title
           supporter
@@ -273,7 +304,7 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
         }
         medicalCasesV2(locales:[${
           languageValue ? languageValue : 'en'
-        }],first: 150, orderBy: createdAt_DESC${whereClause}) {
+        }],first: 150, orderBy: createdAt_DESC ${whereClause}) {
           id
           title
           supporter
@@ -288,6 +319,7 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
           }
             thumbnailBackground { url }
           isRecommended
+          countries
         }
       }`,
     }),
