@@ -84,7 +84,7 @@ export const MedicalCasesRow = ({ medicalCases, filter }: MedicalCaseRowProps) =
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="scroll-smooth no-scrollbar overflow-x-auto h-[350px]"
+        className="scroll-smooth no-scrollbar overflow-x-auto h-[350px] min-h-fit"
       >
         <div className="flex flex-row gap-3 py-8">
           {filteredCases.map((medicalCase) => (
