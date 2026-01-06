@@ -3,20 +3,20 @@ import { Inter, Ubuntu } from 'next/font/google'
 import './globals.scss'
 import { UserContextProvider } from '@/lib/context/userContext'
 import { Toaster } from '@/components/ui/toaster'
-import Script from 'next/script';
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 const ubuntu = Ubuntu({ weight: ['300', '400', '500', '700'], subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Orakle Expert\'s Corner',
+  title: "Orakle Expert's Corner",
   description: 'Patient Case Simulation',
 }
 
 export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
-  children: React.ReactNode;
+  children,
+}: Readonly<{
+  children: React.ReactNode
 }>) {
   return (
     <UserContextProvider>

@@ -13,12 +13,10 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-
 export const ChangePasswordForm = () => {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { toast } = useToast()
-
 
   const form = useForm<z.infer<typeof updatePasswordSchema>>({
     resolver: zodResolver(updatePasswordSchema),
@@ -51,13 +49,15 @@ export const ChangePasswordForm = () => {
     router.push('/account')
   }
 
-
   return (
     <div className="space-y-6 bg-white p-4 w-5/6 md:w-2/3 lg:w-1/3 rounded-md">
       <h1 className="text-2xl font-bold">Change password</h1>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
           <FormField
             control={form.control}
             name="oldPassword"
@@ -65,7 +65,10 @@ export const ChangePasswordForm = () => {
               <FormItem className="w-full">
                 <FormLabel>Old password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" />
+                  <Input
+                    {...field}
+                    type="password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -78,8 +81,11 @@ export const ChangePasswordForm = () => {
               <FormItem className="w-full">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password"
-                         placeholder="Enter your new password, min 8 characters" />
+                  <Input
+                    {...field}
+                    type="password"
+                    placeholder="Enter your new password, min 8 characters"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -93,7 +99,11 @@ export const ChangePasswordForm = () => {
               <FormItem className="w-full">
                 <FormLabel>Repeat password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" placeholder="Re-enter your new password" />
+                  <Input
+                    {...field}
+                    type="password"
+                    placeholder="Re-enter your new password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,17 +111,23 @@ export const ChangePasswordForm = () => {
           />
 
           <HStack className="self-end mt-4">
-            <Button className="text-textPrimary" variant="link" onClick={() => router.back()}>
+            <Button
+              className="text-textPrimary"
+              variant="link"
+              onClick={() => router.back()}
+            >
               Cancel
             </Button>
-            <Button type="submit" disabled={loading} variant="primary">
+            <Button
+              type="submit"
+              disabled={loading}
+              variant="primary"
+            >
               {loading ? 'Saving...' : 'Save'}
             </Button>
           </HStack>
         </form>
       </Form>
-
     </div>
   )
 }
-

@@ -17,6 +17,7 @@ import * as XLSX from 'xlsx'
 import getSimulationsLog from '@/lib/hygraph/getSimulationsLog'
 import { useRouter, usePathname } from 'next/navigation'
 import { useCaseContext } from '@/lib/context/caseContext'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface UserProfile {
   country_of_practice: string
@@ -35,7 +36,7 @@ interface UserProfile {
 }
 
 interface UserFields {
-  userProfile: UserProfile
+  user: any
   email: string
 }
 
@@ -44,6 +45,7 @@ export const UserDropdown = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
   const [user, setUser] = useState<any>(null)
   const [email, setEmail] = useState<string>('')
+  const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
   const pathname = usePathname()
   const { isFormDirty } = useCaseContext()
@@ -64,25 +66,27 @@ export const UserDropdown = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Fetch both user and profile data
         const [userResult, profileResult] = await Promise.all([supabase.auth.getUser(), getUserProfile()])
 
-        // Handle user data
-        if (userResult.error) {
-          console.error('Error fetching user:', userResult.error)
-        } else if (userResult.data?.user) {
-          setUser(userResult.data.user)
-          setEmail(userResult.data.user.email || '')
+        if (userResult.error || !userResult.data?.user) {
+          setIsLoading(false)
+          router.push('/login')
+          return
         }
 
-        // Handle profile data
-        if (profileResult.error) {
-          console.error('Error fetching user profile:', profileResult.error)
-        } else {
-          setUserProfile(profileResult.data)
+        setUser(userResult.data.user)
+        setEmail(userResult.data.user.email || '')
+        setIsLoading(false)
+
+        if (profileResult.error || !profileResult.data) {
+          return
         }
+
+        setUserProfile(profileResult.data)
       } catch (err) {
         console.error('Error in fetchUserData:', err)
+        setIsLoading(false)
+        router.push('/login')
       }
     }
 
@@ -99,11 +103,12 @@ export const UserDropdown = () => {
         setUser(null)
         setEmail('')
         setUserProfile(null)
+        router.push('/login')
       }
     })
 
     return () => subscription.unsubscribe()
-  }, [supabase.auth])
+  }, [supabase.auth, router])
 
   async function handleSignOut() {
     try {
@@ -161,15 +166,16 @@ export const UserDropdown = () => {
     }
   }
 
-  if (!userProfile) {
-    return null
+  // If loading or no user, show skeleton
+  if (!user) {
+    return <UserDropdownSkeleton />
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <MenuTrigger
-          userProfile={userProfile}
+          user={user}
           email={email}
         />
       </DropdownMenuTrigger>
@@ -236,19 +242,57 @@ export const UserDropdown = () => {
   )
 }
 
-const MenuTrigger = ({ userProfile, email }: UserFields) => {
+const MenuTrigger = ({ user, email }: UserFields) => {
+  const firstName = user?.user_metadata?.first_name || ''
+  const lastName = user?.user_metadata?.last_name || ''
+  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
+
   return (
-    <div className="flex gap-2 bg-[#1026C40A] items-center w-fit px-2 py-1 lg:px-4 lg:py-3 rounded-lg">
-      <div className="flex flex-col items-end gap-1 lg:gap-2">
-        <p className="font-medium text-sm md:text-base">
-          {userProfile?.first_name} {userProfile?.last_name}
-        </p>
-        <p className="text-xs md:text-base">{email}</p>
+    <>
+      {/* Mobile: Avatar with initials and chevron */}
+      <div className="flex lg:hidden items-center gap-1">
+        <div className="w-8 h-8 rounded-full bg-textDark text-white flex items-center justify-center text-xs font-semibold">
+          {initials}
+        </div>
+        <ChevronDown
+          size={14}
+          className="text-textDark"
+        />
       </div>
-      <ChevronDown
-        size={20}
-        className="text-gray-500"
-      />
-    </div>
+
+      {/* Desktop: Full info */}
+      <div className="hidden lg:flex gap-3 items-center w-fit px-3 py-2 rounded-lg">
+        <div className="flex flex-col items-end gap-0.5">
+          <p className="font-medium text-sm text-textDark">
+            {firstName} {lastName}
+          </p>
+          <p className="text-xs text-textDark">{email}</p>
+        </div>
+        <ChevronDown
+          size={18}
+          className="text-textDark"
+        />
+      </div>
+    </>
+  )
+}
+
+const UserDropdownSkeleton = () => {
+  return (
+    <>
+      {/* Mobile Skeleton: Avatar circle and chevron */}
+      <div className="flex lg:hidden items-center gap-1">
+        <Skeleton className="w-8 h-8 rounded-full" />
+      </div>
+
+      {/* Desktop Skeleton: Full info */}
+      <div className="hidden lg:flex gap-3 items-center w-fit px-3 py-2">
+        <div className="flex flex-col items-end gap-1.5">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-3 w-40" />
+        </div>
+        <Skeleton className="w-12 h-12 rounded-full" />
+      </div>
+    </>
   )
 }

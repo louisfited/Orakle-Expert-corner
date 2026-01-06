@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-
 // TODO: Should contain all values from the registration form
 export const createAccountSchema = z.object({
   email: z.string().email(),
@@ -15,22 +14,30 @@ export const loginSchema = z.object({
   email: z.string().email({
     message: 'Please enter a valid email address',
   }),
-  password: z.string({
-    message: 'Please enter a valid password',
-  }).min(8, 'Password must be at least 8 characters long'),
+  password: z
+    .string({
+      message: 'Please enter a valid password',
+    })
+    .min(8, 'Password must be at least 8 characters long'),
 })
 
 // Schemas for steps.
 export const createAccountSchemaOne = z.object({
-  firstName: z.string({
-    message: 'Please enter a valid first name',
-  }).min(2, 'First name must be at least 2 characters long'),
-  lastName: z.string({
-    message: 'Please enter a valid last name',
-  }).min(2, 'Last name must be at least 2 characters long'),
-  countryOfPractice: z.string({
-    message: 'Please enter a valid country',
-  }).min(2, 'Please enter a valid country'),
+  firstName: z
+    .string({
+      message: 'Please enter a valid first name',
+    })
+    .min(2, 'First name must be at least 2 characters long'),
+  lastName: z
+    .string({
+      message: 'Please enter a valid last name',
+    })
+    .min(2, 'Last name must be at least 2 characters long'),
+  countryOfPractice: z
+    .string({
+      message: 'Please enter a valid country',
+    })
+    .min(2, 'Please enter a valid country'),
 })
 
 export const createAccountSchemaTwo = z.object({
@@ -50,13 +57,11 @@ export const createAccountSchemaTwo = z.object({
   secondarySpecialization: z.string().optional(),
 })
 
-
 export const createAccountSchemaThree = z.object({
   email: z.string().email(),
   password: z.string().min(8),
   phoneNumber: z.string().min(8),
 })
-
 
 export const fullAccountSchema = z.object({
   firstName: z.string().min(2),
@@ -73,31 +78,33 @@ export const fullAccountSchema = z.object({
   phoneNumber: z.string().min(8),
 })
 
-
-
-export const updatePasswordSchema = z.object({
-  oldPassword: z.string().min(8),
-  password: z.string().min(8),
-  confirmPassword: z.string().min(8),
-}).superRefine((data, ctx) => {
-  if (data.password !== data.confirmPassword) {
+export const updatePasswordSchema = z
+  .object({
+    oldPassword: z.string().min(8),
+    password: z.string().min(8),
+    confirmPassword: z.string().min(8),
+  })
+  .superRefine((data, ctx) => {
+    if (data.password !== data.confirmPassword) {
       // @ts-expect-error
-    ctx.addIssue({
-      path: ['confirmPassword'],
-      message: 'Passwords do not match',
-    });
-  }
-});
+      ctx.addIssue({
+        path: ['confirmPassword'],
+        message: 'Passwords do not match',
+      })
+    }
+  })
 
-export const resetPasswordFormSchema = z.object({
-  password: z.string().min(8),
-  confirmPassword: z.string().min(8),
-}).superRefine((data, ctx) => {
-  if (data.password !== data.confirmPassword) {
-    // @ts-expect-error
-    ctx.addIssue({
-      path: ['confirmPassword'],
-      message: 'Passwords do not match',
-    });
-  }
-})
+export const resetPasswordFormSchema = z
+  .object({
+    password: z.string().min(8),
+    confirmPassword: z.string().min(8),
+  })
+  .superRefine((data, ctx) => {
+    if (data.password !== data.confirmPassword) {
+      // @ts-expect-error
+      ctx.addIssue({
+        path: ['confirmPassword'],
+        message: 'Passwords do not match',
+      })
+    }
+  })

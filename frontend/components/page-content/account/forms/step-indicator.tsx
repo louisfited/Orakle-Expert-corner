@@ -6,11 +6,9 @@ export const StepIndicator = ({ step }: { step: number }) => {
       <p>STEP {stepPlus}</p>
       <div className="flex items-center gap-1 ">
         <div className="flex flex-col items-center">
-
           <div className={`w-12 h-1 mt-2 rounded-md ${step === 0 ? 'bg-textPrimary' : 'bg-gray-200'}`}></div>
         </div>
         <div className="flex flex-col items-center">
-
           <div className={`w-12 h-1 mt-2 rounded-md ${step === 1 ? 'bg-textPrimary' : 'bg-gray-200'}`}></div>
         </div>
         <div className="flex flex-col items-center">

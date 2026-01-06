@@ -94,31 +94,34 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
 
   return (
     <div className="w-full space-y-4">
-      <div className="flex md:flex-row gap-12 flex-col mb-10">
-        <div className="flex space-x-1 h-2 w-full items-center">
-          <span className="text-textPrimary mr-2 font-semibold">{fmt(elapsed)}</span>
-          {durations.map((dur, idx) => {
-            const cBefore = durations.slice(0, idx).reduce((a, b) => a + b, 0)
-            const playedIn = elapsed <= cBefore ? 0 : elapsed >= cBefore + dur ? dur : elapsed - cBefore
-            const pct = dur > 0 ? (playedIn / dur) * 100 : 0
+      <div className="grid grid-cols-2 lg:flex gap-4 lg:gap-12">
+        <div className="flex space-x-4 justify-start">
+          <button
+            onClick={prev}
+            aria-label="Previous"
+            className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
+          >
+            <FaBackward />
+          </button>
 
-            return (
-              <div
-                key={idx}
-                className="flex-1 bg-gray-200 rounded h-2"
-              >
-                <div
-                  className="bg-textPrimary h-2"
-                  style={{ width: `${pct}%` }}
-                />
-              </div>
-            )
-          })}
+          <button
+            onClick={toggle}
+            aria-label={playing ? 'Pause' : 'Play'}
+            className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
+          >
+            {playing ? <FaPause /> : <FaPlay />}
+          </button>
 
-          <span className="text-textPrimary ml-2 font-semibold">{fmt(total)}</span>
+          <button
+            onClick={next}
+            aria-label="Next"
+            className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
+          >
+            <FaForward />
+          </button>
         </div>
 
-        <div className="flex items-center space-x-2 px-2 mt-[-3px]">
+        <div className="flex items-center space-x-2 px-2 mt-[-3px] justify-end lg:order-last">
           {volume > 0 ? <FaVolumeUp className="text-textPrimary" /> : <FaVolumeMute className="text-textPrimary" />}
           <input
             type="range"
@@ -131,30 +134,29 @@ export const AudioStories: React.FC<StoriesProps> = ({ sources, onTrackChange })
             style={{ accentColor: '#1026C4' }}
           />
         </div>
-      </div>
 
-      <div className="flex space-x-4 justify-center">
-        <button
-          onClick={prev}
-          aria-label="Previous"
-          className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
-        >
-          <FaBackward />
-        </button>
-        <button
-          onClick={toggle}
-          aria-label={playing ? 'Pause' : 'Play'}
-          className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
-        >
-          {playing ? <FaPause /> : <FaPlay />}
-        </button>
-        <button
-          onClick={next}
-          aria-label="Next"
-          className="p-3 bg-textPrimary text-white rounded-full hover:opacity-75 transition"
-        >
-          <FaForward />
-        </button>
+        <div className="flex h-2 w-full items-center my-auto col-span-2 lg:col-span-1">
+          <span className="text-textPrimary mr-2 font-semibold">{fmt(elapsed)}</span>
+          {durations.map((dur, idx) => {
+            const cBefore = durations.slice(0, idx).reduce((a, b) => a + b, 0)
+            const playedIn = elapsed <= cBefore ? 0 : elapsed >= cBefore + dur ? dur : elapsed - cBefore
+            const pct = dur > 0 ? (playedIn / dur) * 100 : 0
+
+            return (
+              <div
+                key={idx}
+                className="flex-1 bg-gray-200 rounded h-2 mr-2"
+              >
+                <div
+                  className="bg-textPrimary h-2"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            )
+          })}
+
+          <span className="text-textPrimary ml-auto font-semibold">{fmt(total)}</span>
+        </div>
       </div>
 
       <audio ref={audioRef} />

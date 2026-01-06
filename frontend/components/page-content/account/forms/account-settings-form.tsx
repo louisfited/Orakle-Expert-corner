@@ -19,12 +19,10 @@ type AccountSettingsFormProps = {
 export const AccountSettingsForm = ({ defaultValues }: AccountSettingsFormProps) => {
   const { toast } = useToast()
   const [isEditing, setIsEditing] = useState<boolean>(false)
-  const form = useForm<z.infer<typeof phoneSchema>>(
-    {
-      resolver: zodResolver(phoneSchema),
-      defaultValues,
-    },
-  )
+  const form = useForm<z.infer<typeof phoneSchema>>({
+    resolver: zodResolver(phoneSchema),
+    defaultValues,
+  })
 
   async function onSubmit(data: z.infer<typeof phoneSchema>) {
     const { status, message } = await partialUpdateUserProfile(data)
@@ -47,8 +45,11 @@ export const AccountSettingsForm = ({ defaultValues }: AccountSettingsFormProps)
 
   return (
     <div id="account-settings">
-      <Form {...form} >
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full items-center justify-between space-y-4">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex w-full items-center justify-between space-y-4"
+        >
           <FormField
             control={form.control}
             name="phoneNumber"
@@ -65,7 +66,8 @@ export const AccountSettingsForm = ({ defaultValues }: AccountSettingsFormProps)
                   ) : (
                     <TriggerEditInput
                       field={field}
-                      onClick={() => setIsEditing(true)} />
+                      onClick={() => setIsEditing(true)}
+                    />
                   )}
                 </FormControl>
                 <FormMessage />
@@ -75,6 +77,5 @@ export const AccountSettingsForm = ({ defaultValues }: AccountSettingsFormProps)
         </form>
       </Form>
     </div>
-
   )
 }

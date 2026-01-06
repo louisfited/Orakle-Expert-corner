@@ -14,16 +14,12 @@ export const Accordion: FC<{ title: string; children: React.ReactNode }> = ({ ti
         className="flex justify-between items-center w-full text-left font-semibold text-gray-900"
       >
         <div className="flex items-center">
-          <span className="mr-2">{isOpen ? '−' : '+'}</span> {/* Icon on the left */}
-          <span className="font-semibold">{title}</span>
+          <span className="mr-2 text-textPrimary">{isOpen ? '−' : '+'}</span> {/* Icon on the left */}
+          <span className="font-semibold text-textPrimary">{title}</span>
         </div>
       </button>
 
-      {isOpen && (
-        <div className="mt-3 text-gray-500 text-sm">
-          {children}
-        </div>
-      )}
+      {isOpen && <div className="mt-3 text-textDark text-sm">{children}</div>}
     </div>
   )
 }

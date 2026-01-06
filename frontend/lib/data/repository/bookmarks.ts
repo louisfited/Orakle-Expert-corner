@@ -11,12 +11,10 @@ export const getBookmarks = async (): Promise<{
   data: Tables<'bookmarks'>[] | null
 }> => {
   const supabase = createSupabaseServerClient()
-  
-
 
   try {
     const { data: user, error: userError } = await getSafeUser()
-    if (!user ) {
+    if (!user) {
       return {
         status: 'error',
         message: 'no user',
@@ -82,8 +80,8 @@ export async function getBookmarkByCaseIdAction(caseId: string) {
 
     if (!user) {
       return {
-        data:[],
-        error:null
+        data: [],
+        error: null,
       }
     }
 

@@ -11,7 +11,6 @@ export default async function AdminPage() {
     redirect('/')
   }
 
-
   const { data, status } = await getApplicationsAction()
 
   if (status === 'error' || !data) {
@@ -34,5 +33,3 @@ export default async function AdminPage() {
     </div>
   )
 }
-
-

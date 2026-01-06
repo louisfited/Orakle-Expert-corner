@@ -11,7 +11,7 @@ import { Loader2 } from 'lucide-react'
 type ApplicationsWithEmail = Tables<'profiles'> & { email: string }
 
 type ApplicantsTableProps = {
-  applications: ApplicationsWithEmail[];
+  applications: ApplicationsWithEmail[]
 }
 export const ApplicantsTable = ({ applications }: ApplicantsTableProps) => {
   const { toast } = useToast()
@@ -45,7 +45,7 @@ export const ApplicantsTable = ({ applications }: ApplicantsTableProps) => {
     })
   }
 
-  async function requestEvidence(email: string, firstName: string ) {
+  async function requestEvidence(email: string, firstName: string) {
     setIsRequesting(email)
     const { status, message } = await requestEvidenceAction(email, firstName)
     toast({
@@ -78,21 +78,32 @@ export const ApplicantsTable = ({ applications }: ApplicantsTableProps) => {
           return (
             <TableRow key={application.id}>
               <TableCell>{application.email}</TableCell>
-              <TableCell>{application.first_name} {application.last_name}</TableCell>
+              <TableCell>
+                {application.first_name} {application.last_name}
+              </TableCell>
               <TableCell>{application.phone_number}</TableCell>
               <TableCell>
                 <div className="space-x-4">
-                  <Button variant="destructive" onClick={() => rejectApplication(application.id)}>
+                  <Button
+                    variant="destructive"
+                    onClick={() => rejectApplication(application.id)}
+                  >
                     {isRejecting === application.id && <Loader2 className="animate-spin mr-2" />}
                     Reject
                   </Button>
 
-                  <Button variant="primary" onClick={() => acceptApplication(application.id)}>
+                  <Button
+                    variant="primary"
+                    onClick={() => acceptApplication(application.id)}
+                  >
                     {isLoading === application.id && <Loader2 className="animate-spin mr-2" />}
                     Accept
                   </Button>
 
-                  <Button variant="secondary" onClick={() => requestEvidence(application.email, application.first_name)}>
+                  <Button
+                    variant="secondary"
+                    onClick={() => requestEvidence(application.email, application.first_name)}
+                  >
                     {isRequesting === application.email && <Loader2 className="animate-spin mr-2" />}
                     Request evidence
                   </Button>

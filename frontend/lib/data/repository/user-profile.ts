@@ -11,14 +11,11 @@ export async function getUserProfile(): Promise<ServerActionReturn<Tables<'profi
   try {
     const supabase = createSupabaseServerClient()
 
-
     const { data: userId, error: userIdError } = await getCurrentUserId()
 
-    
     if (userIdError || !userId) {
-     
       return {
-        error: new Error('Failed to get user id'),
+        error: { message: 'Failed to get user id' },
         data: null,
       }
     }
@@ -27,7 +24,7 @@ export async function getUserProfile(): Promise<ServerActionReturn<Tables<'profi
 
     if (error) {
       return {
-        error: new Error('Failed to get profile'),
+        error: { message: 'Failed to get profile' },
         data: null,
       }
     }
@@ -40,7 +37,7 @@ export async function getUserProfile(): Promise<ServerActionReturn<Tables<'profi
     }
   } catch (err) {
     return {
-      error: err instanceof Error ? err : new Error('Unknown error occurred'),
+      error: { message: err instanceof Error ? err.message : 'Unknown error occurred' },
       data: null,
     }
   }

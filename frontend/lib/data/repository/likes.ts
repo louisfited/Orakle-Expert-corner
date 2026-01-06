@@ -39,17 +39,16 @@ export async function getAllLikes() {
   try {
     const supabase = createSupabaseServerClient()
 
-
     const { data: user, error } = await getSafeUser()
- 
-    if (!user ) {
+
+    if (!user) {
       return {
         status: 'false',
         message: 'cant fetch likes',
         data: [],
       }
     }
-    if (error || !user ) throw error || new Error('User not found')
+    if (error || !user) throw error || new Error('User not found')
 
     const { id } = user
 
@@ -73,11 +72,10 @@ export async function getLikesByMedicalCaseId(caseId: string) {
     const { data: user, error } = await getSafeUser()
     if (!user) {
       return {
-        data:[],
-        error:null
+        data: [],
+        error: null,
       }
     }
-
 
     if (error || !user) throw error || new Error('User not found')
 
@@ -97,30 +95,23 @@ export async function getLikesByMedicalCaseId(caseId: string) {
       data: likes,
     }
   } catch (err) {
-    console.log("likes error", err);
-    
+    console.log('likes error', err)
+
     throw err instanceof Error ? err : new Error('Unknown error occurred')
   }
 }
 
-
-
 // check if user is authenticated
-export const checkUserAuth = async():Promise<{userSignedIn:boolean}>=>{
+export const checkUserAuth = async (): Promise<{ userSignedIn: boolean }> => {
   const supabase = createSupabaseServerClient()
   const { data: user, error } = await getSafeUser()
   if (!user) {
-
-    return{
-      userSignedIn:false,
-    }
-  
-  }
-  else {
     return {
-      userSignedIn:true
+      userSignedIn: false,
+    }
+  } else {
+    return {
+      userSignedIn: true,
     }
   }
-
-
 }

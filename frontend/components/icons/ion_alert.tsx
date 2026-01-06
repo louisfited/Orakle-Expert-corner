@@ -1,12 +1,25 @@
 export const IonAlert = ({ className }: { className?: string }) => (
-  <svg width="22" height="22" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
-  className={className}
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 14 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
   >
     <path
       d="M7.0002 2.22314C6.78273 2.22314 6.58384 2.40797 6.59841 2.62493L6.7993 8.04904C6.7993 8.10232 6.82047 8.15342 6.85814 8.19109C6.89582 8.22877 6.94692 8.24993 7.0002 8.24993C7.05348 8.24993 7.10457 8.22877 7.14225 8.19109C7.17992 8.15342 7.20109 8.10232 7.20109 8.04904L7.40198 2.62493C7.41655 2.40797 7.21766 2.22314 7.0002 2.22314Z"
-      stroke="#E10028" stroke-width="0.803571" stroke-linecap="round" stroke-linejoin="round" />
+      stroke="#E10028"
+      stroke-width="0.803571"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
     <path
       d="M7.0014 11.0625C7.2233 11.0625 7.40318 10.8826 7.40318 10.6607C7.40318 10.4388 7.2233 10.2589 7.0014 10.2589C6.77949 10.2589 6.59961 10.4388 6.59961 10.6607C6.59961 10.8826 6.77949 11.0625 7.0014 11.0625Z"
-      stroke="#E10028" stroke-width="0.803571" stroke-linecap="round" stroke-linejoin="round" />
+      stroke="#E10028"
+      stroke-width="0.803571"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
   </svg>
 )

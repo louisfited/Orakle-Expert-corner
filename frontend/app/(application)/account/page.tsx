@@ -1,4 +1,3 @@
-import { BookmarksTable } from '@/components/page-content/account/bookmarks-table'
 import { ChangeEmailForm } from '@/components/page-content/account/forms/change-email-form'
 import { getUserProfile } from '@/lib/data/repository/user-profile'
 import { GeneralInformationForm } from '@/components/page-content/account/forms/general-information-form'
@@ -11,9 +10,7 @@ export default async function Account() {
   const { data: profileData, error } = await getUserProfile()
 
   if (error) {
-    return (
-      <div>Something went wrong with getting your profile.</div>
-    )
+    return <div>Something went wrong with getting your profile.</div>
   }
 
   return (
@@ -44,12 +41,12 @@ export default async function Account() {
         {/* Separate forms here as each of these need different actions to change*/}
         <ChangeEmailForm />
         <ChangePasswordDisplay />
-        <AccountSettingsForm defaultValues={{
-          phoneNumber: profileData?.phone_number || '',
-        }} />
+        <AccountSettingsForm
+          defaultValues={{
+            phoneNumber: profileData?.phone_number || '',
+          }}
+        />
       </AccountInformationContainer>
-
-
     </div>
   )
 }

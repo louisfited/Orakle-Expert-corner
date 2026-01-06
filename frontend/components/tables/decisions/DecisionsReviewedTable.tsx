@@ -10,16 +10,13 @@ import languageTexts from '@/lib/utils/language'
 export const DecisionsReviewedTable = ({ reviewedDecisions }: { reviewedDecisions: any[] }) => {
   const { isOpen, onToggle } = useDisclose()
   const [selectedReviewedDecision, setSelectedReviewedDecision] = React.useState<any>(null)
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
-  
-  const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-  
- 
-  
-    useEffect(()=>{
-      setIsMounted(true)
-        },[])
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
   return (
     <>
       <ul>

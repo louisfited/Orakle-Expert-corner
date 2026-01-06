@@ -1,24 +1,31 @@
-"use client";
+'use client'
 
-import React, { FC, ReactNode } from 'react';
-import { twMerge } from 'tailwind-merge';
+import React, { FC, ReactNode } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface Props {
-    className?: string;
-    children: ReactNode
-    onClick?: () => void;
-    disabled?: boolean;
+  className?: string
+  children: ReactNode
+  onClick?: () => void
+  disabled?: boolean
 }
 
-const Button: FC<Props> = ({className, children, onClick, disabled }) => {
+const Button: FC<Props> = ({ className, children, onClick, disabled }) => {
   if (disabled) {
     return (
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            <button disabled={disabled} onClick={onClick}
-                    className={twMerge('rounded-[5px] border border-sei-standard text-sei-standard bg-white bg-opacity-10 font-normal text-base flex justify-center px-3 py-1', disabled ? 'bg-gray-100 border-gray-500 text-gray-500' : '', className)}>
+            <button
+              disabled={disabled}
+              onClick={onClick}
+              className={twMerge(
+                'rounded-[5px] border border-sei-standard text-sei-standard bg-white bg-opacity-10 font-normal text-base flex justify-center px-3 py-1',
+                disabled ? 'bg-gray-100 border-gray-500 text-gray-500' : '',
+                className
+              )}
+            >
               {children}
             </button>
           </TooltipTrigger>
@@ -30,11 +37,18 @@ const Button: FC<Props> = ({className, children, onClick, disabled }) => {
     )
   }
   return (
-    <button disabled={disabled} onClick={onClick}
-            className={twMerge('rounded-[5px] border border-sei-standard text-sei-standard bg-white bg-opacity-10 font-normal text-base flex justify-center px-3 py-1', disabled ? "bg-gray-100 border-gray-500 text-gray-500" : "", className)}>
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      className={twMerge(
+        'rounded-[5px] border border-sei-standard text-sei-standard bg-white bg-opacity-10 font-normal text-base flex justify-center px-3 py-1',
+        disabled ? 'bg-gray-100 border-gray-500 text-gray-500' : '',
+        className
+      )}
+    >
       {children}
     </button>
-  );
+  )
 }
 
-export default Button;
+export default Button

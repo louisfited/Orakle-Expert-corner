@@ -74,22 +74,26 @@ async function getMedicalCaseV2ById(id: string, { email, password }: any): Promi
     },
     cache: 'no-store',
     body: JSON.stringify({
-      query: `
-        {
-  medicalCaseV2(where: {id: "${id}"}) {
-  id,
-  title,
-  finishUrl
-  title
-  caseDescription {html}
-  medicalCaseInformation {
-  id,
-  title,
-  clinicalBackground {
-  html
-  }
-  }
- diagnose(first: 150) {
+      query: `{
+                    medicalCaseV2(where: {id: "${id}"}${type}) {
+                      id,
+                      title,
+                      finishUrl,
+                      medicalCaseInformation {
+                        id,
+                        title,
+                        clinicalBackground {
+                          html
+                        },
+                        followUp {
+                          html
+                        },
+                        audioUrl {
+                          audioTitle,
+                          url
+                        },
+                      },
+                      diagnose(first: 150) {
                         id
                         name
                         startDate
@@ -98,23 +102,8 @@ async function getMedicalCaseV2ById(id: string, { email, password }: any): Promi
                         guidanceText {
                           html  
                         }
-                      } 
-    
-     patient {
-                        id,
-                        firstName,
-                        lastName,
-                        patientDescription,
-                        age,
-                        gender,
-                        profileImage {
-                          url
-                        }
-                      }
-     silhouette { url }
-                      likes,
-    
-     treatment(first: 150) {
+                      },
+                      cidpTreatment(first: 150) {
                         id
                         name
                         guidanceType
@@ -125,11 +114,21 @@ async function getMedicalCaseV2ById(id: string, { email, password }: any): Promi
                           }
                         }
                       }
-    
-
-  }
-  }
-      `,
+                      patient {
+                        id,
+                        firstName,
+                        lastName,
+                        patientDescription,
+                        age,
+                        gender,
+                        profileImage {
+                          url
+                        }
+                      },
+                      silhouette { url }
+                      likes,
+                    }
+                }`,
     }),
   })
   const res = await response.json()
@@ -163,8 +162,6 @@ export async function getCombinedMedicalCaseV2ById(id: string): Promise<MedicalC
 
 export default getMedicalCaseV2ById
 
-
-
 // {
 //   medicalCaseV2(where: {id: "${id}"}${type}) {
 //     id,
@@ -191,7 +188,7 @@ export default getMedicalCaseV2ById
 //       guidance
 //       isExisting
 //       guidanceText {
-//         html  
+//         html
 //       }
 //     },
 //     cidpTreatment(first: 150) {

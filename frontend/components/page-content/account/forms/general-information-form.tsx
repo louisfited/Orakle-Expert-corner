@@ -1,6 +1,5 @@
 'use client'
 
-
 import { createAccountSchemaOne } from '@/lib/schemas/auth-schemas'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -11,7 +10,6 @@ import React, { useState } from 'react'
 import { partialUpdateUserProfile } from '@/lib/actions/userActions'
 import { useToast } from '@/components/ui/use-toast'
 import { InlineEditInput, TriggerEditInput } from '@/components/page-content/account/forms/custom-input-fields'
-
 
 type IsEditing = {
   firstName: boolean
@@ -59,15 +57,21 @@ export const GeneralInformationForm = ({ defaultValues }: GeneralInformationForm
 
   function handleResetField(fieldName: 'firstName' | 'lastName' | 'countryOfPractice') {
     form.setValue(fieldName, defaultValues[fieldName])
-    setIsEditing(prev => {
+    setIsEditing((prev) => {
       return { ...prev, [fieldName]: false }
     })
   }
 
   return (
-    <div className="space-y-4 w-full" id="general-information">
-      <Form {...form} >
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+    <div
+      className="space-y-4 w-full"
+      id="general-information"
+    >
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8"
+        >
           <FormField
             control={form.control}
             name="firstName"
@@ -84,9 +88,12 @@ export const GeneralInformationForm = ({ defaultValues }: GeneralInformationForm
                   ) : (
                     <TriggerEditInput
                       field={field}
-                      onClick={() => setIsEditing(prev => {
-                        return { ...prev, firstName: true }
-                      })} />
+                      onClick={() =>
+                        setIsEditing((prev) => {
+                          return { ...prev, firstName: true }
+                        })
+                      }
+                    />
                   )}
                 </FormControl>
                 <FormMessage />
@@ -110,9 +117,12 @@ export const GeneralInformationForm = ({ defaultValues }: GeneralInformationForm
                   ) : (
                     <TriggerEditInput
                       field={field}
-                      onClick={() => setIsEditing(prev => {
-                        return { ...prev, lastName: true }
-                      })} />
+                      onClick={() =>
+                        setIsEditing((prev) => {
+                          return { ...prev, lastName: true }
+                        })
+                      }
+                    />
                   )}
                 </FormControl>
                 <FormMessage />
@@ -136,9 +146,12 @@ export const GeneralInformationForm = ({ defaultValues }: GeneralInformationForm
                 ) : (
                   <TriggerEditInput
                     field={field}
-                    onClick={() => setIsEditing(prev => {
-                      return { ...prev, countryOfPractice: true }
-                    })} />
+                    onClick={() =>
+                      setIsEditing((prev) => {
+                        return { ...prev, countryOfPractice: true }
+                      })
+                    }
+                  />
                 )}
                 <FormMessage />
               </FormItem>

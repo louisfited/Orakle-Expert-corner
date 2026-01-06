@@ -14,14 +14,14 @@ import { shortenString, checkEmptyRichText } from '@/lib/utils'
 import { useDisclose } from '@/lib/hooks/useDisclose'
 import countriesJson from '@/lib/countries.json'
 import categoriesJson from '@/lib/categories.json'
-import Cookies from "js-cookie"
+import Cookies from 'js-cookie'
 import languageTexts from '@/lib/utils/language'
 
 interface MedicalCase {
   id: string
   version: string
   title: string
-  contentType:string
+  contentType: string
   supporter: string
   faculty: string
   caseDescription: {
@@ -71,17 +71,14 @@ interface MedicalCasesTableProps {
 const MedicalCasesTable: React.FC<MedicalCasesTableProps> = ({ medicalCases, bookmarks, likes, user }) => {
   const router = useRouter()
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [isMounted,setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
   const [searchInput, setSearchInput] = useState('')
   const [filteredMedicalCases, setFilteredMedicalCases] = useState<MedicalCase[] | null>(medicalCases)
   const [selectedMedicalCase, setSelectedMedicalCase] = useState<MedicalCase | null>(null)
 
-
-  
   const { isOpen: isConfirmationOpen, onToggle: onConfirmationToggle } = useDisclose()
 
   const countryCode = countriesJson.find((c) => c.name === user?.country_of_practice)?.code || ''
-
 
   const checkForSearchTerms = (term: string, value: any): boolean => {
     if (!value) return false
@@ -92,10 +89,7 @@ const MedicalCasesTable: React.FC<MedicalCasesTableProps> = ({ medicalCases, boo
     return false
   }
 
-const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "fr" | "de"| undefined
-
-
-
+  const lang: 'en' | 'fr' | 'de' | undefined = Cookies.get('language') as 'en' | 'fr' | 'de' | undefined
 
   const filterCases = useCallback(
     (term: string, allCases: MedicalCase[]) => {
@@ -115,9 +109,9 @@ const lang: "en" | "fr" | "de"| undefined = Cookies.get("language") as "en" | "f
     },
     [selectedCategory]
   )
-  useEffect(()=>{
-setIsMounted(true)
-  },[])
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -130,42 +124,38 @@ setIsMounted(true)
   const handleRowClick = (id: string, version: string) => {
     const selectedCase = filteredMedicalCases?.find((medicalCase) => medicalCase.id === id)
 
-    const isV2 = version === '5m'
-
-    const isVideo = version === "20m"
-    
-    
-    
-    
+    const isV2 = version === '5m' || version === '5 min'
+    const isVideo = version === 'webinar'
 
     if (!selectedCase) return
-
-
 
     if (isV2) {
       router.push(`/cases-v2/${id}`)
     } else if (selectedCase.preCaseInformation && !checkEmptyRichText(selectedCase.preCaseInformation.html)) {
       setSelectedMedicalCase(selectedCase)
       onConfirmationToggle()
-    }
-    else if (isVideo) {
+    } else if (isVideo) {
       router.push(`/webinar-video/${id}`)
-    }
-    else {
+    } else {
       router.push(`/cases/${id}`)
     }
   }
 
   const handlePreCaseDialogButton = () => {
     onConfirmationToggle()
-   const isVideo = selectedMedicalCase?.version == "20m"
+    const isVideo = selectedMedicalCase?.version == 'webinar'
+    const isV2 = selectedMedicalCase?.version === '5m' || selectedMedicalCase?.version === '5 min'
 
-   if (isVideo) {
-    router.push(`/webinar-video/${selectedMedicalCase.id}`)
-    return
-    
-  }
-    router.push(`/cases/${selectedMedicalCase?.id}`)
+    if (isVideo) {
+      router.push(`/webinar-video/${selectedMedicalCase.id}`)
+      return
+    }
+
+    if (isV2) {
+      router.push(`/cases-v2/${selectedMedicalCase?.id}`)
+    } else {
+      router.push(`/cases/${selectedMedicalCase?.id}`)
+    }
   }
 
   const getCategoryLabel = (key: string): string | null => {
@@ -212,7 +202,9 @@ setIsMounted(true)
             <TableCell />
             <TableHead className="w-[100px]">{isMounted && languageTexts(lang)?.tableHeader.name}</TableHead>
             <TableHead className="w-2/5">{isMounted && languageTexts(lang)?.tableHeader.description}</TableHead>
-            <TableHead className='w-[150px] text-center'>{isMounted && languageTexts(lang)?.tableHeader.contentType}</TableHead>
+            <TableHead className="w-[150px] text-center">
+              {isMounted && languageTexts(lang)?.tableHeader.contentType}
+            </TableHead>
             <TableHead>{isMounted && languageTexts(lang)?.tableHeader.supporter}</TableHead>
             <TableHead>{isMounted && languageTexts(lang)?.tableHeader.faculty}</TableHead>
             <TableCell />
@@ -222,8 +214,6 @@ setIsMounted(true)
           {filteredMedicalCases?.map((medicalCase) => {
             const isVisibleToUser = !medicalCase.countries?.length || medicalCase.countries.includes(countryCode)
 
-            
-            
             if (!isVisibleToUser) return null
 
             return (
@@ -248,7 +238,7 @@ setIsMounted(true)
                     htmlString={shortenString(medicalCase.caseDescription.html)}
                   />
                 </TableCell>
-                <TableCell className='capitalize  text-center'>{medicalCase.contentType}</TableCell>
+                <TableCell className="capitalize  text-center">{medicalCase.contentType}</TableCell>
                 <TableCell>{medicalCase.supporter}</TableCell>
                 <TableCell>{medicalCase.faculty}</TableCell>
 
