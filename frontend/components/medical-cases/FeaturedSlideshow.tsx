@@ -62,7 +62,7 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
   return (
     <>
       <div
-        className="w-full px-4 py-6 lg:pl-[72px] lg:pt-[66px] lg:pb-[44px] bg-cover bg-center rounded-3xl overflow-hidden"
+        className="w-full h-[412px] px-4 py-6 lg:pl-[72px] lg:pt-[66px] lg:pb-[44px] bg-cover bg-center rounded-3xl overflow-hidden"
         style={{ backgroundImage: `url(${SlideshowBackground.src})` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -79,8 +79,8 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
               >
                 <MedicalCaseThumbnail
                   medicalCase={currentCase}
-                  width="w-full lg:w-[454px]"
-                  height="h-[280px] lg:h-[272px]"
+                  width="w-[270px] xl:w-[450px]"
+                  height="h-[160px] xl:h-[270px]"
                   avatarSize="w-40 h-40"
                   showVersion={false}
                   showHoverButtons={true}
@@ -194,8 +194,8 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
                 >
                   <MedicalCaseThumbnail
                     medicalCase={displayCase}
-                    width="w-[350px]"
-                    height="h-[250px]"
+                    width="w-[395px]"
+                    height="h-[236px]"
                     titleSize="text-xl"
                     avatarSize="w-36 h-36"
                     showVersion={false}

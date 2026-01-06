@@ -31,6 +31,7 @@ export type MergedMedicalCase = {
   thumbnailBackground: { url: string }
   status?: string
   isBookmarked?: boolean
+  isRecommended?: boolean
 }
 
 export const getAllMedicalCases = async (): Promise<MergedMedicalCase[]> => {
@@ -276,6 +277,7 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
           patient {
             profileImage { url }
           }
+          isRecommended
         }
         medicalCasesV2(locales:[${
           languageValue ? languageValue : 'en'
@@ -293,6 +295,7 @@ export const getAllMedicalCasesForStaging = async (ids?: string[]): Promise<Merg
             profileImage { url }
           }
             thumbnailBackground { url }
+          isRecommended
         }
       }`,
     }),

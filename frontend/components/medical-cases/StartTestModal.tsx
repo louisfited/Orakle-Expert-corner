@@ -41,7 +41,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
           <div className="flex flex-col lg:flex-row">
             <div className="flex flex-col lg:w-1/2 w-full ltr">
               <div
-                className="flex flex-col relative sm:rounded-2xl h-[236px] bg-cover bg-center px-5 overflow-hidden"
+                className="flex flex-col relative sm:rounded-tl-2xl h-[236px] bg-cover bg-center px-5 overflow-hidden"
                 style={{
                   backgroundImage: `url(${
                     medicalCase.thumbnailBackground ? medicalCase.thumbnailBackground.url : ThumbnailPlaceholder.src
