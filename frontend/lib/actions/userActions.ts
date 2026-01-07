@@ -19,6 +19,13 @@ import { getAllValidatedSuffixes } from '../hygraph/getAllValidatedSuffixes'
 import { getSafeUser } from '@/lib/auth/safe-user'
 import { cookies } from 'next/headers'
 
+export async function logoutAction() {
+  const supabase = createSupabaseServerClient()
+  await supabase.auth.signOut()
+  revalidatePath('/', 'layout')
+  redirect('/login')
+}
+
 export async function loginAction(formData: FormData, originalUrl: string | null) {
   const supabase = createSupabaseServerClient()
 
