@@ -13,6 +13,7 @@ import { checkUserAuth } from '@/lib/data/repository/likes'
 import languageTexts from '@/lib/utils/language'
 import { getCasesStartedForUser, startTestAction, finishTestAction } from '@/lib/data/repository/case-status-per-user'
 import Cookies from 'js-cookie'
+import { StatusEnum } from '@/lib/types/types'
 
 export const FormStepsAndProgress = ({
   progress,
@@ -85,7 +86,7 @@ export const FormStepsAndProgress = ({
     }
 
     if (isFirstStep) {
-      const startedTests = await getCasesStartedForUser(medicalCase?.id)
+      const startedTests = await getCasesStartedForUser(medicalCase?.id, StatusEnum.started)
       if (medicalCase && startedTests.data && startedTests.data.length < 1) {
         startTestAction(medicalCase.id)
       }
