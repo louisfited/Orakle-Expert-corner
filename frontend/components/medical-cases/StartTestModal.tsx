@@ -37,7 +37,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
         >
           <X className="h-8 w-8 text-white" />
         </button>
-        <div className="rounded-2xl">
+        <div className="rounded-2xl overflow-y-auto">
           <div className="flex flex-col lg:flex-row">
             <div className="flex flex-col lg:w-1/2 w-full ltr">
               <div
