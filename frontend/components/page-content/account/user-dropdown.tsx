@@ -100,6 +100,14 @@ export const UserDropdown = () => {
       if (session?.user) {
         setUser(session.user)
         setEmail(session.user.email || '')
+
+        // Fetch user profile when auth state changes to logged in
+        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          const profileResult = await getUserProfile()
+          if (!profileResult.error && profileResult.data) {
+            setUserProfile(profileResult.data)
+          }
+        }
       } else {
         setUser(null)
         setEmail('')
