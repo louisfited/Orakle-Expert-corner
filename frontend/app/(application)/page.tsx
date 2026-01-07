@@ -40,14 +40,14 @@ const NewHomePage = async () => {
         )}
         {continueTestsRow && continueTestsRow.length > 0 && (
           <div>
-            <div className="text-[28px] font-medium">Continue Tests</div>
+            <div className="text-[28px] font-medium">Continue Activities</div>
             <MedicalCasesLandscapeRow medicalCases={continueTestsRow} />
           </div>
         )}
         {topCases && topCases.length > 0 && (
           <>
             <div>
-              <div className="text-[28px] font-medium mb-5">Popular Tests</div>
+              <div className="text-[28px] font-medium mb-5">Popular Activities</div>
               <MedicalCasesPortraitRow medicalCases={topCases} />
             </div>
           </>

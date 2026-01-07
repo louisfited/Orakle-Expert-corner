@@ -6,6 +6,7 @@
     "anesthesiology": "Anesthesiology",
     "cardiology": "Cardiology",
     "clinicalImmunology": "Clinical Immunology",
+    "clinicalNutrition": "Clinical Nutrition",
     "clinicalPathology": "Clinical Pathology",
     "criticalCareMedicine": "Critical Care Medicine",
     "dermatology": "Dermatology",
@@ -46,7 +47,6 @@
     "surgery": "Surgery",
     "transplantationMedicine": "Transplantation Medicine",
     "traumaAndOrthopedics": "Trauma and Orthopedics",
-    "urology": "Urology",
-    "clinicalNutrition": "Clinical Nutrition"
+    "urology": "Urology"
   }
 }
