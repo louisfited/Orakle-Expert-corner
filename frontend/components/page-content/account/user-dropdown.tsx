@@ -225,11 +225,11 @@ export const UserDropdown = () => {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem
-          onClick={handleSignOut}
-          asChild
-        >
-          <div className="flex items-center gap-2">
+        <DropdownMenuItem asChild>
+          <div
+            className="flex items-center gap-2"
+            onClick={handleSignOut}
+          >
             <LogOut
               size={18}
               className="text-red-500"
