@@ -71,7 +71,7 @@ export const MedicalCaseThumbnail = ({
               onStartTest?.()
             }}
           >
-            Start Test
+            Begin Activity
           </button>
           <div
             className="w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg flex justify-center items-center"
