@@ -11,6 +11,16 @@ interface SearchPageContentProps {
   medicalCases: MergedMedicalCase[]
 }
 
+// Helper function to check if a value contains the search term
+const checkForSearchTerms = (term: string, value: unknown): boolean => {
+  if (!value) return false
+  if (typeof value === 'string') return value.toLowerCase().includes(term.toLowerCase())
+  if (typeof value === 'object' && value !== null && 'html' in value) {
+    return (value as { html: string }).html.toLowerCase().includes(term.toLowerCase())
+  }
+  return false
+}
+
 export default function SearchPageContent({ medicalCases }: SearchPageContentProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -97,15 +107,11 @@ export default function SearchPageContent({ medicalCases }: SearchPageContentPro
   const filteredResults = useMemo(() => {
     let results = medicalCases
 
-    // Filter by search query
+    // Filter by search query - search through all fields including HTML content
     if (query) {
       const lowerQuery = query.toLowerCase()
-      results = results.filter(
-        (medicalCase) =>
-          medicalCase.title?.toLowerCase().includes(lowerQuery) ||
-          medicalCase.shortDescription?.toLowerCase().includes(lowerQuery) ||
-          medicalCase.supporter?.toLowerCase().includes(lowerQuery) ||
-          medicalCase.faculty?.toLowerCase().includes(lowerQuery)
+      results = results.filter((medicalCase) =>
+        Object.values(medicalCase).some((val) => checkForSearchTerms(lowerQuery, val))
       )
     }
 
@@ -129,15 +135,11 @@ export default function SearchPageContent({ medicalCases }: SearchPageContentPro
     const counts: Record<string, number> = {}
     let resultsForCounting = medicalCases
 
-    // Apply only search query filter, not category filters
+    // Apply only search query filter, not category filters - search through all fields
     if (query) {
       const lowerQuery = query.toLowerCase()
-      resultsForCounting = resultsForCounting.filter(
-        (medicalCase) =>
-          medicalCase.title?.toLowerCase().includes(lowerQuery) ||
-          medicalCase.shortDescription?.toLowerCase().includes(lowerQuery) ||
-          medicalCase.supporter?.toLowerCase().includes(lowerQuery) ||
-          medicalCase.faculty?.toLowerCase().includes(lowerQuery)
+      resultsForCounting = resultsForCounting.filter((medicalCase) =>
+        Object.values(medicalCase).some((val) => checkForSearchTerms(lowerQuery, val))
       )
     }
 
