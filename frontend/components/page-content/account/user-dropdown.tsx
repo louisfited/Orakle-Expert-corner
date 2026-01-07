@@ -13,7 +13,6 @@ import { Check, ChevronDown, Cog, Download, LogOut, User } from 'lucide-react'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { getUserProfile } from '@/lib/data/repository/user-profile'
-import { logoutAction } from '@/lib/actions/userActions'
 import * as XLSX from 'xlsx'
 import getSimulationsLog from '@/lib/hygraph/getSimulationsLog'
 import { useRouter, usePathname } from 'next/navigation'
@@ -119,7 +118,12 @@ export const UserDropdown = () => {
         document.cookie = 'language=; path=/;'
       }
 
-      await logoutAction()
+      const { error } = await supabase.auth.signOut()
+      if (error) {
+        console.error('Sign out error', error)
+      }
+
+      router.refresh()
     } catch (err) {
       console.error('Error in handleSignOut:', err)
     }
