@@ -94,6 +94,7 @@ export async function finishTestAction(caseId: string) {
         status: StatusEnum.completed,
       })
       .eq('case_id', caseId)
+      .eq('user_id', id)
 
     if (insertError) throw insertError
     return {

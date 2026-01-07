@@ -15,6 +15,7 @@ import { TopProfileMedicalCaseV2 } from './custom/PatientCaseCard/components/Top
 import { AudioStories } from './Audio'
 import { Button } from './ui/button'
 import { startTestAction, finishTestAction, getCasesStartedForUser } from '@/lib/data/repository/case-status-per-user'
+import { StatusEnum } from '@/lib/types/types'
 
 interface Props {
   medicalCaseV2: MedicalCaseV2 | null
@@ -58,7 +59,7 @@ export const SimulationPageV2: FC<Props> = ({ medicalCaseV2, patientCase, medica
   useEffect(() => {
     const startTest = async () => {
       if (currentCardIndex === 1) {
-        const startedTests = await getCasesStartedForUser(medicalCaseV2?.id)
+        const startedTests = await getCasesStartedForUser(medicalCaseV2?.id, StatusEnum.started)
         if (medicalCaseV2 && startedTests.data && startedTests.data.length < 1) {
           startTestAction(medicalCaseV2.id)
         }
