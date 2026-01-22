@@ -1,4 +1,4 @@
-{
+`{
   "eslint.options": {
     "overrideConfigFile": ".eslintrc.json"
   },
