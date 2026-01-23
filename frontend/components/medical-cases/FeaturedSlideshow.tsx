@@ -150,7 +150,7 @@ export const FeaturedSlideshow = ({ medicalCases }: FeaturedSlideshowProps) => {
 
                 {/* Version */}
                 <div className="flex items-center gap-4 text-textPrimaryFaded">
-                  <span className="text-sm font-medium text-white">{currentCase.version}</span>
+                  <span className=" font-medium text-white capitalize">{currentCase.version}</span>
                 </div>
               </div>
 

@@ -84,7 +84,7 @@ export const en = {
   weight: 'Weight',
   height: 'Height',
   allergies: 'Allergies',
-  noPreviousTests: 'no previous tests',
+  noPreviousTests: 'No previous tests',
   pastVisits: 'Past Visits',
   labsImaging: 'Labs/Imaging',
   pastOrders: 'Past Orders',

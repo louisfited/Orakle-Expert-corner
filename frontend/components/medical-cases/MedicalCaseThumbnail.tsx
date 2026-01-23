@@ -32,6 +32,10 @@ export const MedicalCaseThumbnail = ({
   onStartTest,
   onClick,
 }: MedicalCaseThumbnailProps) => {
+  const text = 'Virtual Patient: Hausa Street Operation Orakle Solution Christain Jehover'
+  console.log(text.length)
+
+  const actualText = (medicalCase as any).name ? (medicalCase as any).name : medicalCase.title
   return (
     <div
       className={`${width} ${height} rounded-2xl bg-cover bg-center px-5 flex flex-col justify-between py-5 shadow-xl relative overflow-hidden ${opacity} group ${
@@ -43,13 +47,17 @@ export const MedicalCaseThumbnail = ({
         })`,
       }}
     >
-      <span className={`${titleSize} w-2/3 text-white leading-tight font-medium`}>
+      <span
+        className={`${titleSize} w-2/3 text-white leading-tight font-medium ${actualText.length > 15 ? 'text-[1.2rem]' : actualText.length > 25 ? 'text-[1rem]' : actualText.length > 40 ? 'text-[0.8rem] ' : 'text-[1.6rem]'}`}
+      >
         {(medicalCase as any).name || medicalCase.title}
       </span>
 
       <div className={`flex items-end justify-between ${showHoverButtons ? 'group-hover:hidden' : ''}`}>
         {showVersion && (
-          <span className="text-white text-sm font-medium p-2 rounded-2xl bg-opacity-25">{medicalCase.version}</span>
+          <span className="text-white text-sm font-medium p-2 rounded-2xl bg-opacity-25 capitalize">
+            {medicalCase.version}
+          </span>
         )}
         <img
           src={

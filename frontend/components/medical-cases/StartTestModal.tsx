@@ -69,7 +69,7 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                   </div>
                   <div className="flex flex-col text-[15px] font-medium">
                     <span className="text-textGray text-opacity-60">Time</span>
-                    <span>{medicalCase.version}</span>
+                    <span className="capitalize">{medicalCase.version}</span>
                   </div>
                 </div>
                 <div className="flex flex-col text-[15px] font-medium">
