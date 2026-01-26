@@ -6,6 +6,7 @@ import { FeaturedSlideshow } from '@/components/medical-cases/FeaturedSlideshow'
 import { MedicalCasesPortraitRow } from '@/components/medical-cases/MedicalCasesPortraitRow'
 import { getCasesStartedForUser } from '@/lib/data/repository/case-status-per-user'
 import { StatusEnum } from '@/lib/types/types'
+import ComparisonSlide from '@/components/ComparisonSlide'
 
 const NewHomePage = async () => {
   const medicalCases = await getAllMedicalCasesWithBookmarks()
@@ -30,7 +31,10 @@ const NewHomePage = async () => {
           <FeaturedSlideshow medicalCases={newActivities} />
         </div>
       )}
-
+      {/* Comparison Slide */}
+      <>
+        <ComparisonSlide />
+      </>
       <div className="px-5 lg:px-[60px] pb-4">
         {recommendedCases && recommendedCases.length > 0 && (
           <div>

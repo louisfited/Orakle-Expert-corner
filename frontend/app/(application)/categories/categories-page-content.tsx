@@ -141,23 +141,29 @@ export default function CategoriesPageContent({ medicalCases }: CategoriesPageCo
         </div>
 
         <div className="space-y-2 max-h-[300px] lg:max-h-[calc(100vh-250px)] overflow-y-auto">
-          {filteredCategories.map(([key, label]) => (
-            <label
-              key={key}
-              className="flex items-center justify-between cursor-pointer p-2 rounded hover:bg-white/50"
-            >
-              <div className="flex items-center space-x-2 flex-1">
-                <input
-                  type="checkbox"
-                  checked={selectedCategories.includes(key)}
-                  onChange={() => handleCategoryToggle(key)}
-                  className="w-4 h-4 text-textDark border-gray-300 rounded-lg focus:text-textPrimary"
-                />
-                <span className="text-sm text-textDark">{label}</span>
-              </div>
-              <span className="text-xs text-gray-400 ml-2">{categoryCounts[key] || 0}</span>
-            </label>
-          ))}
+          {filteredCategories.map(([key, label]) => {
+            if (!categoryCounts[key]) {
+              return
+            }
+
+            return (
+              <label
+                key={key}
+                className="flex items-center justify-between cursor-pointer p-2 rounded hover:bg-white/50"
+              >
+                <div className="flex items-center space-x-2 flex-1">
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(key)}
+                    onChange={() => handleCategoryToggle(key)}
+                    className="w-4 h-4 text-textDark border-gray-300 rounded-lg focus:text-textPrimary"
+                  />
+                  <span className="text-sm text-textDark">{label}</span>
+                </div>
+                <span className="text-xs text-gray-400 ml-2">{categoryCounts[key] || 0}</span>
+              </label>
+            )
+          })}
         </div>
 
         {selectedCategories.length > 0 && (
