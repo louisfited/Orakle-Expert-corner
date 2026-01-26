@@ -26,19 +26,19 @@ type Slide = {
 const slides: Slide[] = [
   {
     id: 1,
-    before: '/com-one.jpg',
-    after: '/com-two.jpg',
+    before: '/leg-before.png',
+    after: '/leg-after.png',
   },
   {
     id: 2,
-    before: '/com-one.jpg',
-    after: '/com-two.jpg',
+    before: '/hand-before.png',
+    after: '/hand-after.png',
   },
-  {
-    id: 3,
-    before: '/com-one.jpg',
-    after: '/com-two.jpg',
-  },
+  //   {
+  //     id: 3,
+  //     before: '/com-one.jpg',
+  //     after: '/com-two.jpg',
+  //   },
 ]
 
 export default function ComparisonSlide() {
@@ -55,7 +55,7 @@ export default function ComparisonSlide() {
   return (
     <div className="relative w-full max-w-5xl mx-auto overflow-hidden rounded-xl">
       {/* Track */}
-      <h1 className="font-bold text-3xl text-center">Radiological Images</h1>
+      {/* <h1 className="font-bold text-3xl text-center">Radiological Images</h1> */}
       <div
         className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${index * 100}%)` }}
