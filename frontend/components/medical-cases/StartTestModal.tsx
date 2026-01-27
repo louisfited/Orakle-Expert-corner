@@ -24,6 +24,8 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
       router.push(`/cases/${id}`)
     }
   }
+
+  const actualText = (medicalCase as any).name || medicalCase.title
   return (
     <DialogV2
       open={open}
@@ -49,7 +51,31 @@ export const StartTestModal = ({ medicalCase, open, onOpenChange }: StartTestMod
                 }}
               >
                 <div className="flex flex-col mt-5">
-                  <span className="text-[36px] w-5/6 text-white">{(medicalCase as any).name || medicalCase.title}</span>
+                  <span
+                    className={` w-5/6 text-white  ${
+                      actualText.length > 100
+                        ? 'text-[0.9rem]'
+                        : actualText.length > 90
+                          ? 'text-[1rem]'
+                          : actualText.length > 80
+                            ? 'text-[1.1rem]'
+                            : actualText.length > 70
+                              ? 'text-[1.2rem]'
+                              : actualText.length > 60
+                                ? 'text-[1.3rem]'
+                                : actualText.length > 50
+                                  ? 'text-[1.4rem]'
+                                  : actualText.length > 40
+                                    ? 'text-[1.5rem]'
+                                    : actualText.length > 25
+                                      ? 'text-[1.6rem]'
+                                      : actualText.length > 15
+                                        ? 'text-[1.7rem]'
+                                        : 'text-[1.8rem]'
+                    }`}
+                  >
+                    {actualText}
+                  </span>
                   <img
                     src={
                       medicalCase.patient.profileImage

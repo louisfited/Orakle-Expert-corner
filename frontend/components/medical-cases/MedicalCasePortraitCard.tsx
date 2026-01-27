@@ -12,7 +12,7 @@ interface MedicalCasePortraitCardProps {
 
 export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCardProps) => {
   const { isOpen: isConfirmationOpen, onToggle: onConfirmationToggle } = useDisclose()
-
+  const actualText = medicalCase.title
   return (
     <>
       <div
@@ -31,8 +31,30 @@ export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCard
           onClick={onConfirmationToggle}
         >
           {/* Title at top */}
-          <div className="text-white h-16 text-[36px] leading-tight font-normal text-center mb-[60px]">
-            {medicalCase.title}
+          <div
+            className={`text-white h-16 leading-tight font-normal text-center mb-[60px] ${
+              actualText.length > 100
+                ? 'text-[0.9rem]'
+                : actualText.length > 90
+                  ? 'text-[1rem]'
+                  : actualText.length > 80
+                    ? 'text-[1.1rem]'
+                    : actualText.length > 70
+                      ? 'text-[1.2rem]'
+                      : actualText.length > 60
+                        ? 'text-[1.3rem]'
+                        : actualText.length > 50
+                          ? 'text-[1.4rem]'
+                          : actualText.length > 40
+                            ? 'text-[1.6rem]'
+                            : actualText.length > 25
+                              ? 'text-[1.8rem]'
+                              : actualText.length > 15
+                                ? 'text-[2.0rem]'
+                                : 'text-[2.2rem]'
+            }`}
+          >
+            {actualText}
           </div>
 
           {/* Avatar */}

@@ -32,7 +32,7 @@ export const MedicalCaseThumbnail = ({
   onStartTest,
   onClick,
 }: MedicalCaseThumbnailProps) => {
-  const text = 'Virtual Patient: Hausa Street Operation Orakle Solution Christain Jehover'
+  // const text = 'Virtual Patient: Hausa Street Operation Orakle Solution Christain Jehover'
   // console.log(text.length)
 
   const actualText = (medicalCase as any).name ? (medicalCase as any).name : medicalCase.title
@@ -51,19 +51,25 @@ export const MedicalCaseThumbnail = ({
       <span
         className={`
          w-2/3 text-white leading-tight font-medium ${
-           actualText.length > 70
-             ? 'text-[0.9rem]'
-             : actualText.length > 60
-               ? 'text-[1rem]'
-               : actualText.length > 50
-                 ? 'text-[1.1rem]'
-                 : actualText.length > 40
-                   ? 'text-[1.2rem]'
-                   : actualText.length > 25
-                     ? 'text-[1.3rem]'
-                     : actualText.length > 15
-                       ? 'text-[1.4rem]'
-                       : 'text-[1.6rem]'
+           actualText.length > 100
+             ? 'text-[0.68rem]'
+             : actualText.length > 90
+               ? 'text-[0.75rem]'
+               : actualText.length > 80
+                 ? 'text-[0.85rem]'
+                 : actualText.length > 70
+                   ? 'text-[0.9rem]'
+                   : actualText.length > 60
+                     ? 'text-[1rem]'
+                     : actualText.length > 50
+                       ? 'text-[1.1rem]'
+                       : actualText.length > 40
+                         ? 'text-[1.2rem]'
+                         : actualText.length > 25
+                           ? 'text-[1.3rem]'
+                           : actualText.length > 15
+                             ? 'text-[1.4rem]'
+                             : 'text-[1.6rem]'
          }`}
       >
         {actualText}
