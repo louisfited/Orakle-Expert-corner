@@ -54,9 +54,9 @@ export const MedicalCaseThumbnail = ({
            actualText.length > 70
              ? 'text-[0.9rem]'
              : actualText.length > 60
-               ? 'text-[0.1rem]'
+               ? 'text-[1rem]'
                : actualText.length > 50
-                 ? 'text-[0.1.1rem]'
+                 ? 'text-[1.1rem]'
                  : actualText.length > 40
                    ? 'text-[1.2rem]'
                    : actualText.length > 25
