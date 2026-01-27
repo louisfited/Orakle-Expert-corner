@@ -27,7 +27,7 @@ export default function Home({ children }: { children: ReactNode }) {
         style={hasGradientBg ? { backgroundImage: 'url(/gradient.png)' } : undefined}
       >
         <Navbar />
-        <ComparisonSlide />
+        {/* <ComparisonSlide /> */}
         <div className="flex-1">{children}</div>
         {shouldShowFooter && <Footer />}
       </div>
