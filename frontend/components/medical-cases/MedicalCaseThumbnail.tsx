@@ -33,7 +33,7 @@ export const MedicalCaseThumbnail = ({
   onClick,
 }: MedicalCaseThumbnailProps) => {
   const text = 'Virtual Patient: Hausa Street Operation Orakle Solution Christain Jehover'
-  console.log(text.length)
+  // console.log(text.length)
 
   const actualText = (medicalCase as any).name ? (medicalCase as any).name : medicalCase.title
   return (
@@ -47,10 +47,26 @@ export const MedicalCaseThumbnail = ({
         })`,
       }}
     >
+      {/* ${titleSize} */}
       <span
-        className={`${titleSize} w-2/3 text-white leading-tight font-medium ${actualText.length > 15 ? 'text-[1.2rem]' : actualText.length > 25 ? 'text-[1rem]' : actualText.length > 40 ? 'text-[0.8rem] ' : 'text-[1.6rem]'}`}
+        className={`
+         w-2/3 text-white leading-tight font-medium ${
+           actualText.length > 70
+             ? 'text-[0.9rem]'
+             : actualText.length > 60
+               ? 'text-[0.1rem]'
+               : actualText.length > 50
+                 ? 'text-[0.1.1rem]'
+                 : actualText.length > 40
+                   ? 'text-[1.2rem]'
+                   : actualText.length > 25
+                     ? 'text-[1.3rem]'
+                     : actualText.length > 15
+                       ? 'text-[1.4rem]'
+                       : 'text-[1.6rem]'
+         }`}
       >
-        {(medicalCase as any).name || medicalCase.title}
+        {actualText}
       </span>
 
       <div className={`flex items-end justify-between ${showHoverButtons ? 'group-hover:hidden' : ''}`}>

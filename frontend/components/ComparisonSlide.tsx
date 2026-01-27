@@ -1,115 +1,47 @@
-// import React from 'react'
-
-// const slides = [
-//     {id:1,
-//         before:"",
-//         after:""
-//     },
-// ]
-
-// const ComparisonSlide = () => {
-//   return <div>ComparisonSlide</div>
-// }
-
-// export default ComparisonSlide
-
 'use client'
+import { useComparisonStore } from '@/store/useComparisonStore'
+import { ImgComparisonSlider } from '@img-comparison-slider/react'
+import { X } from 'lucide-react'
 
-import { useRef, useState } from 'react'
-
-type Slide = {
-  id: number
-  before: string
-  after: string
-}
-
-const slides: Slide[] = [
-  {
-    id: 1,
-    before: '/leg-before.png',
-    after: '/leg-after.png',
-  },
-  {
-    id: 2,
-    before: '/hand-before.png',
-    after: '/hand-after.png',
-  },
-  //   {
-  //     id: 3,
-  //     before: '/com-one.jpg',
-  //     after: '/com-two.jpg',
-  //   },
-]
-
-export default function ComparisonSlide() {
-  const [index, setIndex] = useState(0)
-
-  const next = () => {
-    setIndex((prev) => (prev + 1) % slides.length)
-  }
-
-  const prev = () => {
-    setIndex((prev) => (prev - 1 + slides.length) % slides.length)
-  }
-
+const ComparisonSlide = () => {
+  const { isOpen, closeModal } = useComparisonStore()
   return (
-    <div className="relative w-full max-w-5xl mx-auto overflow-hidden rounded-xl">
-      {/* Track */}
-      {/* <h1 className="font-bold text-3xl text-center">Radiological Images</h1> */}
-      <div
-        className="flex transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${index * 100}%)` }}
-      >
-        {slides.map((slide) => (
-          <div
-            key={slide.id}
-            className="min-w-full grid grid-cols-2"
-          >
-            {/* Before */}
-            <div className="relative">
-              <img
-                src={slide.before}
-                alt="Before"
-                className="w-full h-full object-cover"
-                draggable={false}
-              />
-              <span className="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded">Before</span>
-            </div>
-
-            {/* After */}
-            <div className="relative">
-              <img
-                src={slide.after}
-                alt="After"
-                className="w-full h-full object-cover"
-                draggable={false}
-              />
-              <span className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded">After</span>
-            </div>
-          </div>
-        ))}
+    <div
+      className={`fixed h-screen w-screen ${isOpen ? 'flex' : 'hidden'} flex-col items-center justify-center inset-0  bg-gray-500/50 `}
+      style={{ zIndex: '200' }}
+    >
+      <div className="font-bold flex justify-end text-4xl w-[80%] text-black  cursor-pointer">
+        <button
+          type="button"
+          onClick={() => {
+            console.log('kyeap')
+            closeModal()
+          }}
+        >
+          <X className="h-8 w-8 text-white" />
+        </button>
       </div>
-
-      {/* Center navigation button */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="flex gap-2 pointer-events-auto">
-          <button
-            onClick={prev}
-            className="w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center"
-            aria-label="Previous"
-          >
-            ←
-          </button>
-
-          <button
-            onClick={next}
-            className="w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center"
-            aria-label="Next"
-          >
-            →
-          </button>
-        </div>
+      <div className="w-[50%] h-[70vh] bg-red-500 mx-auto rounded-2xl overflow-hidden">
+        <ImgComparisonSlider
+          className="block w-full h-full"
+          style={{ width: '100%', height: '100%' }}
+        >
+          <img
+            slot="first"
+            src="/hand-before.png"
+            alt="Before"
+            className="w-full h-full object-cover"
+          />
+          <img
+            slot="second"
+            src="/hand-after.png"
+            alt="After"
+            className="w-full h-full object-cover"
+          />
+        </ImgComparisonSlider>
       </div>
     </div>
   )
 }
+
+export default ComparisonSlide

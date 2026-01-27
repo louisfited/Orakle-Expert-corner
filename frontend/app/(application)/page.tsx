@@ -31,10 +31,8 @@ const NewHomePage = async () => {
           <FeaturedSlideshow medicalCases={newActivities} />
         </div>
       )}
-      {/* Comparison Slide */}
-      <>
-        <ComparisonSlide />
-      </>
+     
+
       <div className="px-5 lg:px-[60px] pb-4">
         {recommendedCases && recommendedCases.length > 0 && (
           <div>

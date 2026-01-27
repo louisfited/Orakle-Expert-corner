@@ -5,6 +5,7 @@ import { CaseContextProvider } from '@/lib/context/caseContext'
 import { ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import ComparisonSlide from '../ComparisonSlide'
 
 export default function Home({ children }: { children: ReactNode }) {
   const pathname = usePathname()
@@ -26,6 +27,7 @@ export default function Home({ children }: { children: ReactNode }) {
         style={hasGradientBg ? { backgroundImage: 'url(/gradient.png)' } : undefined}
       >
         <Navbar />
+        <ComparisonSlide />
         <div className="flex-1">{children}</div>
         {shouldShowFooter && <Footer />}
       </div>
