@@ -5,7 +5,7 @@ import { CaseContextProvider } from '@/lib/context/caseContext'
 import { ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import ComparisonSlide from '../ComparisonSlide'
+// import ComparisonSlide from '../ComparisonSlide'
 
 export default function Home({ children }: { children: ReactNode }) {
   const pathname = usePathname()
