@@ -56,6 +56,7 @@ export const MedicalCasePortraitCard = ({ medicalCase }: MedicalCasePortraitCard
           >
             {actualText}
           </div>
+          <div className="w-full text-sm text-gray-600  leading-tight text-center">{medicalCase.supporter}</div>
 
           {/* Avatar */}
           <div className="flex justify-center">

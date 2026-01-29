@@ -49,6 +49,8 @@ export const MedicalCaseCard = ({ medicalCase, hasDescription }: MedicalCaseCard
     }
   }, [])
 
+  // console.log('medical cases', medicalCase)
+
   return (
     <>
       <div

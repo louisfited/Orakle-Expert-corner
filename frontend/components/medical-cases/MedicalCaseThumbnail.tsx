@@ -42,6 +42,7 @@ export const MedicalCaseThumbnail = ({
         interactive ? 'transform transition-transform duration-300 hover:scale-105' : 'pointer-events-none'
       }`}
       style={{
+        height: '220px',
         backgroundImage: `url(${
           medicalCase.thumbnailBackground ? medicalCase.thumbnailBackground.url : ThumbnailPlaceholder.src
         })`,
@@ -74,6 +75,7 @@ export const MedicalCaseThumbnail = ({
       >
         {actualText}
       </span>
+      <div className="w-[70%] text-sm text-gray-600  leading-tight">{medicalCase.supporter}</div>
 
       <div className={`flex items-end justify-between ${showHoverButtons ? 'group-hover:hidden' : ''}`}>
         {showVersion && (
