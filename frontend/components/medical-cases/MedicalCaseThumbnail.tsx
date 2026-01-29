@@ -75,7 +75,7 @@ export const MedicalCaseThumbnail = ({
       >
         {actualText}
       </span>
-      <div className="w-[70%] text-sm text-gray-600  leading-tight">{medicalCase.supporter}</div>
+      <div className="w-[70%] text-sm text-white  leading-tight">{medicalCase.supporter}</div>
 
       <div className={`flex items-end justify-between ${showHoverButtons ? 'group-hover:hidden' : ''}`}>
         {showVersion && (
