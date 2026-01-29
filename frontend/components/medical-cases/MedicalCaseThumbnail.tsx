@@ -75,12 +75,14 @@ export const MedicalCaseThumbnail = ({
       >
         {actualText}
       </span>
-      <div className="w-[70%] text-sm text-white font-semibold leading-tight">{medicalCase.supporter}</div>
-
+      <div className="w-full text-sm text-white leading-tight flex flex-col font-bold">
+        <span className=" text-white">Supported by</span>
+        <span className="text-white w-3/5">{medicalCase.supporter}</span>
+      </div>
       <div className={`flex items-end justify-between ${showHoverButtons ? 'group-hover:hidden' : ''}`}>
         {showVersion && (
           <span className="text-white text-sm font-medium p-2 rounded-2xl bg-opacity-25 capitalize">
-            {medicalCase.version}
+            {medicalCase.duration}
           </span>
         )}
         <img

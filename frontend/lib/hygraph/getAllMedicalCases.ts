@@ -5,7 +5,7 @@ import { getUserProfile } from '@/lib/data/repository/user-profile'
 import countriesJson from '@/lib/countries.json'
 
 export type MergedMedicalCase = {
-  version: '15m' | '5m'
+  version: '15m' | '5m' | 'webinar'
   id: string
   title: string
   contentType: string
@@ -34,13 +34,14 @@ export type MergedMedicalCase = {
   status?: string
   isBookmarked?: boolean
   isRecommended?: boolean
+  duration: string
 }
 
 export const getAllMedicalCases = async (ids?: string[]): Promise<MergedMedicalCase[]> => {
   const languageValue: string | undefined = cookies().get('language')?.value
   const { data: userProfile } = await getUserProfile()
   const userCountry = userProfile?.country_of_practice
-    ? countriesJson.find((c) => c.name === userProfile.country_of_practice)?.code ?? null
+    ? (countriesJson.find((c) => c.name === userProfile.country_of_practice)?.code ?? null)
     : null
 
   const whereFilters: string[] = []
@@ -98,6 +99,7 @@ export const getAllMedicalCases = async (ids?: string[]): Promise<MergedMedicalC
           }
           finishUrl
           isRecommended
+          duration
         }
         medicalCases(locales:[${
           languageValue ? languageValue : 'en'
@@ -126,6 +128,7 @@ export const getAllMedicalCases = async (ids?: string[]): Promise<MergedMedicalC
           thumbnailBackground { url }
           shortDescription
           isRecommended
+          duration
         }
         medicalCasesV2(locales:[${
           languageValue ? languageValue : 'en'
