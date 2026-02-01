@@ -95,6 +95,7 @@ export async function finishTestAction(caseId: string) {
       })
       .eq('case_id', caseId)
       .eq('user_id', id)
+    // (console.log(insertError), 'completed error')
 
     if (insertError) throw insertError
     return {

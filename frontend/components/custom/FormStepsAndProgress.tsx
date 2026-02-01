@@ -76,6 +76,9 @@ export const FormStepsAndProgress = ({
   })
 
   const handleNextStep = async () => {
+    console.log(isFirstStep, 'nah first step')
+    console.log(isLastStep, 'nah step step')
+
     // check if user is signedIn
     const { userSignedIn } = await checkUserAuth()
 
@@ -93,16 +96,20 @@ export const FormStepsAndProgress = ({
     }
 
     if (isLastStep) {
-      const urlParams = new URLSearchParams(window?.location?.search)
-      if (urlParams.has('email') && urlParams.has('password')) {
-        window?.location?.reload()
-      }
+      // const urlParams = new URLSearchParams(window?.location?.search)
+      // if (urlParams.has('email') && urlParams.has('password')) {
+      //   window?.location?.reload()
+      // }
+
+      console.log('medical cases', medicalCase)
 
       if (medicalCase) {
         finishTestAction(medicalCase.id)
       }
       saveLog()
-      router.push(medicalCase?.finishUrl || '/')
+      setTimeout(() => {
+        router.push(medicalCase?.finishUrl || '/')
+      }, 3000)
     }
 
     nextStep()
